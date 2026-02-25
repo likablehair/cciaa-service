@@ -8,17 +8,18 @@ export class AIWSService {
   public imprese: ImpresaService;
 
   constructor(config: AIWSConfig) {
-    const baseURL = config.environment === 'production'
-      ? 'https://aiws.infocamere.it/aiws/rest'
-      : 'https://aiwscl.infocamere.it/aiws/rest';
+    const baseURL =
+      config.environment === 'production'
+        ? 'https://aiws.infocamere.it/aiws/rest'
+        : 'https://aiwscl.infocamere.it/aiws/rest';
     this.axiosInstance = axios.create({
       baseURL,
       headers: {
-        'username': config.username,
-        'password': config.password,
-        'Accept': 'application/xml'
+        username: config.username,
+        password: config.password,
+        Accept: 'application/xml',
       },
-      validateStatus: () => true
+      validateStatus: () => true,
     });
 
     // Iniezione dell'istanza axios nel servizio
