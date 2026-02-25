@@ -9,7 +9,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/main.ts'),
       formats: ['es', 'cjs'],
-      fileName: (format) => `sister-service.${format === 'cjs' ? 'cjs' : 'js'}`,
+      fileName: (format) => `cciaa-service.${format === 'cjs' ? 'cjs' : 'js'}`,
     },
     //target: 'node20',
     rollupOptions: {

@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { XMLParser } from 'fast-xml-parser';
-import { AnagraficaImpresa, ImpresaResponse, ParsedAIWSResponse } from 'src/types/aiws.types';
+import { AnagraficaImpresa, ParsedAIWSResponse } from 'src/types/aiws.types';
 
 export class ImpresaService {
   private parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "" });
@@ -38,9 +38,9 @@ export class ImpresaService {
     }
     
     return info;
-      } catch (err: any) {
-    if (err.response) {
-      throw new Error(`Errore HTTP CCIAA ${err.response.status}`);
+      } catch (err) {
+    if (err) {
+      throw new Error(`Errore HTTP CCIAA ${(err)}`);
     }
     throw err;
   }
