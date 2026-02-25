@@ -1,0 +1,82 @@
+{
+  "name": "@likable-hair/cciaa-service",
+  "private": false,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vitest",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "prepublishOnly": "npm run build",
+    "format": "prettier --write .",
+    "prepare": "husky",
+    "test": "vitest run"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/cciaa-service.cjs",
+  "module": "./dist/cciaa-service.cjs",
+  "types": "./dist/src/main.d.ts",
+  "devDependencies": {
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@eslint/js": "^9.5.0",
+    "@types/node": "^20.14.9",
+    "@types/node-forge": "^1.3.11",
+    "@types/xml2js": "^0.4.14",
+    "eslint": "^9.5.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "globals": "^15.6.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.7",
+    "prettier": "^3.3.2",
+    "typescript": "^5.2.2",
+    "typescript-eslint": "^7.14.1",
+    "vite": "^5.3.1",
+    "vite-plugin-dts": "^3.9.1",
+    "vitest": "^1.6.0"
+  },
+  "engines": {
+    "node": ">=20.11.1"
+  },
+  "overrides": {
+    "eslint": "^9.5.0"
+  },
+  "lint-staged": {
+    "**/*.{js,ts,tsx}": [
+      "eslint --fix"
+    ],
+    "**/*": "prettier --write --ignore-unknown"
+  },
+  "dependencies": {
+    "@paralleldrive/cuid2": "^2.2.2",
+    "axios": "^1.13.5",
+    "fast-xml-parser": "^5.3.7",
+    "node-fetch": "^3.3.2",
+    "node-forge": "^1.3.1",
+    "pdf2json": "^3.1.4",
+    "puppeteer": "^23.7.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "soap": "^1.0.4",
+    "xadesjs": "^2.4.4",
+    "xml2js": "^0.6.2"
+  },
+  "description": "CCIAA service for CCIAA API",
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/likablehair/cciaa-service.git"
+  },
+  "author": "Filippo Passalacqua",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/likablehair/cciaa-service/issues"
+  },
+  "homepage": "https://github.com/likablehair/cciaa-service#readme"
+}
