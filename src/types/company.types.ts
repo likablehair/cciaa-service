@@ -1,4 +1,3 @@
-
 export type CompanySummary = {
   /* === Identità azienda === */
   companyName: string;

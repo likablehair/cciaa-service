@@ -1,10 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { XMLParser } from 'fast-xml-parser';
 import { CompanySummary } from 'src/main';
-import {
-  AnagraficaImpresa,
-  ParsedAIWSResponse,
-} from 'src/types/aiws.types';
+import { AnagraficaImpresa, ParsedAIWSResponse } from 'src/types/aiws.types';
 
 export function mapAnagraficaImpresaToCompanySummary(
   impresa: AnagraficaImpresa,
@@ -74,7 +71,9 @@ export class CompanyService {
    * Ragione Sociale e Stato Azienda
    * Endpoint: /registroimprese/imprese/ricerca/partitaiva [cite: 985]
    */
-  public async getCompanySummaryByVatNumber(vatNumber: string): Promise<CompanySummary> {
+  public async getCompanySummaryByVatNumber(
+    vatNumber: string,
+  ): Promise<CompanySummary> {
     try {
       const response = await this.client.get(
         '/registroimprese/imprese/ricerca/partitaiva',

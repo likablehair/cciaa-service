@@ -76,4 +76,3 @@ export interface IndirizzoSede {
   NCivicoSede: number;
   CapSede: number;
 }
-
