@@ -1,5 +1,5 @@
+import { AIWSService } from 'src/main';
 import { expect, test, describe, beforeAll } from 'vitest';
-import { AIWSService } from '../src/clients/AIWSService';
 
 describe('CCIAA Integration - Dati Aziendali', () => {
   let service: AIWSService;
@@ -12,14 +12,28 @@ describe('CCIAA Integration - Dati Aziendali', () => {
     });
   });
 
-  test('Recupero Ragione Sociale per P.IVA 02650200203', async () => {
+  test('Recupero Ragione Sociale per P.IVA 13619250965', async () => {
+    const piva = '13619250965';
+    const info = await service.imprese.ricercaPerPartitaIva(piva);
+
+    console.log(info)
+    expect(info.companyName).toBe('TRENDAFIL S.R.L.');
+    expect(info.companyStatusCode).toBe('R');
+
+    expect(info.companyCciaaCode).toBe('MI');
+    expect(info.companyReaNumber).toBeDefined();
+  });
+
+
+    test('Recupero Ragione Sociale per P.IVA 02650200203', async () => {
     const piva = '02650200203';
     const info = await service.imprese.ricercaPerPartitaIva(piva);
 
-    expect(info.Denominazione).toBe('LH S.R.L.');
-    expect(info.StatoAttivita).toBe('R');
+    console.log(info)
+    expect(info.companyName).toBe('LH S.R.L.');
+    expect(info.companyStatusCode).toBe('R');
 
-    expect(info.Cciaa).toBe('MN');
-    expect(info.NRea).toBeDefined();
+    expect(info.companyCciaaCode).toBe('MN');
+    expect(info.companyReaNumber).toBeDefined();
   });
 });

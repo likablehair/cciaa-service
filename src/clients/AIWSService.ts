@@ -3,7 +3,7 @@ import { AIWSConfig } from '../types/aiws.types';
 import { ImpresaService } from '../services/ImpresaService';
 import axios, { AxiosInstance } from 'axios';
 
-export class AIWSService {
+export default class AIWSService {
   private axiosInstance: AxiosInstance;
   public imprese: ImpresaService;
 
@@ -22,7 +22,6 @@ export class AIWSService {
       validateStatus: () => true,
     });
 
-    // Iniezione dell'istanza axios nel servizio
     this.imprese = new ImpresaService(this.axiosInstance);
   }
 }

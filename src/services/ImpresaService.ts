@@ -1,6 +1,62 @@
 import { AxiosInstance } from 'axios';
 import { XMLParser } from 'fast-xml-parser';
-import { AnagraficaImpresa, ParsedAIWSResponse } from 'src/types/aiws.types';
+import { AnagraficaImpresa, CompanySummary, ParsedAIWSResponse } from 'src/types/aiws.types';
+
+export function mapAnagraficaImpresaToCompanySummary(
+  impresa: AnagraficaImpresa
+): CompanySummary {
+  return {
+    /* === Identità === */
+    companyName: impresa.Denominazione,
+    companyFiscalCode: impresa.CodFisc,
+    companyVatNumber: impresa.PIva,
+    companyLegalFormCode: impresa.NatGiu,
+    companyLegalFormDescription: impresa.DescNatGiu,
+
+    /* === CCIAA === */
+    companyCciaaCode: impresa.Cciaa,
+    companyCciaaDescription: impresa.DescCciaa,
+    companyReaNumber: impresa.NRea,
+
+    /* === Stato === */
+    companyStatusCode: impresa.StatoAttivita,
+    companyStatusDescription: impresa.DescStatoAttivita,
+    companyRegistryStatusCode: impresa.StatoAttivitaReg,
+    companyRegistryStatusDescription: impresa.DescStatoAttivitaReg,
+    companySourceCode: impresa.Fonte,
+    companySourceDescription: impresa.DescFonte,
+
+    /* === Attività === */
+    companyDeclaredActivity: impresa.AttivitaDichiarata,
+    companyAtecoCode: impresa.ClassificazioneAteco.CodAttivita,
+    companyAtecoDescription: impresa.ClassificazioneAteco.DescAttivita,
+    companyAtecoClassificationCode: impresa.ClassificazioneAteco.CodCodifica,
+    companyAtecoClassificationDescription:
+      impresa.ClassificazioneAteco.DescCodifica,
+
+    /* === Sede === */
+    companyProvinceCode: impresa.IndirizzoSede.SglPrvSede,
+    companyProvinceDescription: impresa.IndirizzoSede.DescPrvSede,
+    companyMunicipalityCode: impresa.IndirizzoSede.CodComSede,
+    companyMunicipalityDescription: impresa.IndirizzoSede.DescComSede,
+    companyToponymCode: impresa.IndirizzoSede.CodToponSede,
+    companyToponymDescription: impresa.IndirizzoSede.DescToponSede,
+    companyStreet: impresa.IndirizzoSede.ViaSede,
+    companyStreetNumber: String(impresa.IndirizzoSede.NCivicoSede),
+    companyPostalCode: impresa.IndirizzoSede.CapSede,
+
+    /* === Contatti === */
+    companyPec: impresa.IndirizzoPostaCertificata,
+
+    /* === Economici === */
+    companyShares: null,
+    companyProfit: null,
+    companyRevenue: null,
+
+    /* === Societari === */
+    companyIncorporationDate: null
+  }
+}
 
 export class ImpresaService {
   private parser = new XMLParser({
@@ -14,7 +70,7 @@ export class ImpresaService {
    * Ragione Sociale e Stato Azienda
    * Endpoint: /registroimprese/imprese/ricerca/partitaiva [cite: 985]
    */
-  public async ricercaPerPartitaIva(piva: string): Promise<AnagraficaImpresa> {
+  public async ricercaPerPartitaIva(piva: string): Promise<CompanySummary> {
     try {
       const response = await this.client.get(
         '/registroimprese/imprese/ricerca/partitaiva',
@@ -43,7 +99,7 @@ export class ImpresaService {
         );
       }
 
-      return info;
+      return mapAnagraficaImpresaToCompanySummary(info);
     } catch (err) {
       if (err) {
         throw new Error(`Errore HTTP CCIAA ${err}`);
@@ -58,4 +114,6 @@ export class ImpresaService {
       throw new Error(`[${msg.CodiceErrore}] ${msg.DescrizioneErrore}`);
     }
   }
+
+  
 }
