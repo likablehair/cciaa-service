@@ -1,11 +1,11 @@
-import { AIWSService } from 'src/main';
+import { AIWSClient } from 'src/main';
 import { expect, test, describe, beforeAll } from 'vitest';
 
 describe('CCIAA Integration - Dati Aziendali', () => {
-  let service: AIWSService;
+  let service: AIWSClient;
 
   beforeAll(() => {
-    service = new AIWSService({
+    service = new AIWSClient({
       username: process.env.VITE_CCIAA_USERNAME || 'test_user',
       password: process.env.VITE_CCIAA_PASSWORD || 'test_pwd',
       environment: process.env.VITE_CCIAA_ENVIRONMENT || 'sandbox', // Obbligatorio per i test [cite: 74, 115]
