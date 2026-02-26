@@ -27,6 +27,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["**/*", "src/types/company.types.ts"],
+  "include": ["**/*"],
   "exclude": ["node_modules", "build"]
 }
