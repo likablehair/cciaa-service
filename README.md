@@ -28,8 +28,6 @@ Install the package along with its required peer dependencies:
 npm install @likable-hair/cciaa-service
 ```
 
-> Puppeteer is listed as a peer dependency because it downloads a Chromium binary (~300MB) on install. This gives you full control over the version and avoids duplicate binaries if you already use Puppeteer in your project.
-
 ## Requirements
 
 <ul>
