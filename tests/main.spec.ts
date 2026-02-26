@@ -16,7 +16,7 @@ describe('CCIAA Integration - Dati Aziendali', () => {
     const piva = '13619250965';
     const info = await service.imprese.ricercaPerPartitaIva(piva);
 
-    console.log(info)
+    console.log(info);
     expect(info.companyName).toBe('TRENDAFIL S.R.L.');
     expect(info.companyStatusCode).toBe('R');
 
@@ -24,12 +24,11 @@ describe('CCIAA Integration - Dati Aziendali', () => {
     expect(info.companyReaNumber).toBeDefined();
   });
 
-
-    test('Recupero Ragione Sociale per P.IVA 02650200203', async () => {
+  test('Recupero Ragione Sociale per P.IVA 02650200203', async () => {
     const piva = '02650200203';
     const info = await service.imprese.ricercaPerPartitaIva(piva);
 
-    console.log(info)
+    console.log(info);
     expect(info.companyName).toBe('LH S.R.L.');
     expect(info.companyStatusCode).toBe('R');
 

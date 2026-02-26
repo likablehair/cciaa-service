@@ -1,9 +1,13 @@
 import { AxiosInstance } from 'axios';
 import { XMLParser } from 'fast-xml-parser';
-import { AnagraficaImpresa, CompanySummary, ParsedAIWSResponse } from 'src/types/aiws.types';
+import {
+  AnagraficaImpresa,
+  CompanySummary,
+  ParsedAIWSResponse,
+} from 'src/types/aiws.types';
 
 export function mapAnagraficaImpresaToCompanySummary(
-  impresa: AnagraficaImpresa
+  impresa: AnagraficaImpresa,
 ): CompanySummary {
   return {
     /* === Identità === */
@@ -54,8 +58,8 @@ export function mapAnagraficaImpresaToCompanySummary(
     companyRevenue: null,
 
     /* === Societari === */
-    companyIncorporationDate: null
-  }
+    companyIncorporationDate: null,
+  };
 }
 
 export class ImpresaService {
@@ -114,6 +118,4 @@ export class ImpresaService {
       throw new Error(`[${msg.CodiceErrore}] ${msg.DescrizioneErrore}`);
     }
   }
-
-  
 }
