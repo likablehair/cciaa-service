@@ -1,8 +1,8 @@
 import { AxiosInstance } from 'axios';
 import { XMLParser } from 'fast-xml-parser';
+import { CompanySummary } from 'src/main';
 import {
   AnagraficaImpresa,
-  CompanySummary,
   ParsedAIWSResponse,
 } from 'src/types/aiws.types';
 
@@ -62,7 +62,7 @@ export function mapAnagraficaImpresaToCompanySummary(
   };
 }
 
-export class ImpresaService {
+export class CompanyService {
   private parser = new XMLParser({
     ignoreAttributes: false,
     attributeNamePrefix: '',
@@ -74,12 +74,12 @@ export class ImpresaService {
    * Ragione Sociale e Stato Azienda
    * Endpoint: /registroimprese/imprese/ricerca/partitaiva [cite: 985]
    */
-  public async ricercaPerPartitaIva(piva: string): Promise<CompanySummary> {
+  public async getCompanySummaryByVatNumber(vatNumber: string): Promise<CompanySummary> {
     try {
       const response = await this.client.get(
         '/registroimprese/imprese/ricerca/partitaiva',
         {
-          params: { partitaIva: piva, fSoloSedi: 'S' },
+          params: { partitaIva: vatNumber, fSoloSedi: 'S' },
         },
       );
 

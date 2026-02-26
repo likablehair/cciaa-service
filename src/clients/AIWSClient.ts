@@ -1,11 +1,11 @@
 // src/clients/CCIAAService.ts
 import { AIWSConfig } from '../types/aiws.types';
-import { ImpresaService } from '../services/ImpresaService';
+import { CompanyService as CompanyService } from '../services/company.service';
 import axios, { AxiosInstance } from 'axios';
 
-export default class AIWSService {
+export default class AIWSClient {
   private axiosInstance: AxiosInstance;
-  public imprese: ImpresaService;
+  public companies: CompanyService;
 
   constructor(config: AIWSConfig) {
     const baseURL =
@@ -22,6 +22,6 @@ export default class AIWSService {
       validateStatus: () => true,
     });
 
-    this.imprese = new ImpresaService(this.axiosInstance);
+    this.companies = new CompanyService(this.axiosInstance);
   }
 }

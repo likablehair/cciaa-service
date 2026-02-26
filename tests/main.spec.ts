@@ -14,7 +14,7 @@ describe('CCIAA Integration - Dati Aziendali', () => {
 
   test('Recupero Ragione Sociale per P.IVA 13619250965', async () => {
     const piva = '13619250965';
-    const info = await service.imprese.ricercaPerPartitaIva(piva);
+    const info = await service.companies.getCompanySummaryByVatNumber(piva);
 
     console.log(info);
     expect(info.companyName).toBe('TRENDAFIL S.R.L.');
@@ -26,7 +26,7 @@ describe('CCIAA Integration - Dati Aziendali', () => {
 
   test('Recupero Ragione Sociale per P.IVA 02650200203', async () => {
     const piva = '02650200203';
-    const info = await service.imprese.ricercaPerPartitaIva(piva);
+    const info = await service.companies.getCompanySummaryByVatNumber(piva);
 
     console.log(info);
     expect(info.companyName).toBe('LH S.R.L.');
