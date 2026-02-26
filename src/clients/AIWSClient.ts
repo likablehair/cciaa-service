@@ -5,7 +5,7 @@ import axios, { AxiosInstance } from 'axios';
 
 export default class AIWSClient {
   private axiosInstance: AxiosInstance;
-  public companies: CompanyService;
+  public companyService: CompanyService;
 
   constructor(config: AIWSConfig) {
     const baseURL =
@@ -22,6 +22,6 @@ export default class AIWSClient {
       validateStatus: () => true,
     });
 
-    this.companies = new CompanyService(this.axiosInstance);
+    this.companyService = new CompanyService(this.axiosInstance);
   }
 }
