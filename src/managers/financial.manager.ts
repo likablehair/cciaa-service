@@ -47,7 +47,6 @@ export class RevenueManager {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private findByContext(xbrl: any, tagName: string, contextRef: string) {
-    console.log(typeof xbrl);
     const node = xbrl[tagName];
     if (!node) return null;
 
