@@ -25,6 +25,7 @@ export interface ParsedAIWSResponse {
       };
     };
     ListaImpreseRI: ImpresaResponse;
+    dati?: any
   };
 }
 
@@ -76,3 +77,4 @@ export interface IndirizzoSede {
   NCivicoSede: number;
   CapSede: number;
 }
+

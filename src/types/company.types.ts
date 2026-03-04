@@ -41,10 +41,56 @@ export type CompanySummary = {
   companyPec: string;
 
   /* === Dati economici (non presenti → null) === */
-  companyShares: number | null;
   companyProfit: number | null;
   companyRevenue: number | null;
 
   /* === Dati societari futuri === */
   companyIncorporationDate: string | null;
+
+  companyShares: CompanyShare[] | null,
+
+  aiwsError: AIWSError
+
 };
+
+
+export type AIWSError = string[]
+
+
+export type CompanyFinancials = {
+  companyProfit: number | null;
+  companyRevenue: number | null;
+}
+export interface Shareholder {
+  type: 'PERSONA' | 'IMPRESA' | string
+  fiscalCode: string;
+  firstName: string;
+  lastName?: string;
+  shareValue: number;
+  sharePercentage: number;
+  isRepresentative: boolean;
+  address?: {
+    street: string;
+    number: string;
+    city: string;
+    province: string;
+    cap: string;
+  };
+}
+
+export interface CompanyShare {
+  type: 'PERSONA' | 'IMPRESA' | string
+  fiscalCode: string;
+  firstName: string;
+  lastName?: string;
+  shareValue: number;
+  sharePercentage: number;
+  isRepresentative: boolean;
+  address?: {
+    street: string;
+    number: string;
+    city: string;
+    province: string;
+    cap: string;
+  };
+}
