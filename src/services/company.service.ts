@@ -113,7 +113,9 @@ export class CompanyService {
 
       const totalCapital = manager.parseCapital(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        json.Risposta.dati['blocchi-impresa']['sintesi-cifre-impresa']['capitale-sociale']['sottoscritto']['ammontare'],
+        json.Risposta.dati['blocchi-impresa']['sintesi-cifre-impresa'][
+          'capitale-sociale'
+        ]['sottoscritto']['ammontare'],
       );
       const companyStructures =
         json.Risposta.dati['blocchi-impresa']['elenco-soci']['riquadri'][
