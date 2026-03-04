@@ -111,11 +111,9 @@ export class CompanyService {
       const json = this.parseXml<ParsedAIWSResponse>(response.data);
       const manager = new ShareholderManager();
 
-      //@typescript-eslint/no-explicit-any
       const totalCapital = manager.parseCapital(
-        json.Risposta.dati['blocchi-impresa']['sintesi-cifre-impresa'][
-          'capitale-sociale'
-        ]['sottoscritto']['ammontare'],
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        json.Risposta.dati['blocchi-impresa']['sintesi-cifre-impresa']['capitale-sociale']['sottoscritto']['ammontare'],
       );
       const companyStructures =
         json.Risposta.dati['blocchi-impresa']['elenco-soci']['riquadri'][

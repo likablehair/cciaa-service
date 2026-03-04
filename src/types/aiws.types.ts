@@ -25,8 +25,8 @@ export interface ParsedAIWSResponse {
       };
     };
     ListaImpreseRI: ImpresaResponse;
-    //@typescript-eslint/no-explicit-any
-    dati?: unknown;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    dati?: any;
   };
 }
 
