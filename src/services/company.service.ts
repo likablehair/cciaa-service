@@ -5,7 +5,11 @@ import { CompnayManager } from 'src/managers/company.manager';
 import { RevenueManager } from 'src/managers/financial.manager';
 import { ShareholderManager } from 'src/managers/shares.manager';
 import { ParsedAIWSResponse } from 'src/types/aiws.types';
-import { AIWSError, CompanyFinancials, CompanyShare } from 'src/types/company.types';
+import {
+  AIWSError,
+  CompanyFinancials,
+  CompanyShare,
+} from 'src/types/company.types';
 
 export class CompanyService {
   private parser = new XMLParser({
@@ -15,7 +19,7 @@ export class CompanyService {
 
   constructor(private client: AxiosInstance) {}
 
-  private checkResponseStatus(status: number, data: any, entity = 'CCIAA') {
+  private checkResponseStatus(status: number, data: unknown, entity = 'CCIAA') {
     switch (status) {
       case 200:
         return;
@@ -107,6 +111,7 @@ export class CompanyService {
       const json = this.parseXml<ParsedAIWSResponse>(response.data);
       const manager = new ShareholderManager();
 
+      //@typescript-eslint/no-explicit-any
       const totalCapital = manager.parseCapital(
         json.Risposta.dati['blocchi-impresa']['sintesi-cifre-impresa'][
           'capitale-sociale'
@@ -149,14 +154,14 @@ export class CompanyService {
     let companySummaryData: CompanySummary | null = null;
     let companyFinancials: CompanyFinancials | null = null;
     let companyShares: CompanyShare[] = [];
-    let aiwsError: AIWSError = [];
+    const aiwsError: AIWSError = [];
 
     // 1️⃣ Recupero Ragione Sociale
     try {
       companySummaryData = await this.getCompanySummaryByVatNumber(vatNumber);
     } catch (err) {
       const errorMessage = `Errore recupero dati CompanySummary: ${err}`;
-      aiwsError.push(errorMessage)
+      aiwsError.push(errorMessage);
     }
 
     // 2️⃣ Recupero dati finanziari
@@ -169,7 +174,7 @@ export class CompanyService {
         companyProfit: 0,
       } as CompanyFinancials;
 
-      aiwsError.push(errorMessage)
+      aiwsError.push(errorMessage);
     }
 
     if (companySummaryData) {
@@ -183,22 +188,21 @@ export class CompanyService {
             companySummaryData.companyReaNumber,
           );
         } else {
-          const errorMessage = `Impossibile recuperare soci: CCIAA o REA mancanti`
+          const errorMessage = `Impossibile recuperare soci: CCIAA o REA mancanti`;
           companyShares = [];
-          aiwsError.push(errorMessage)
+          aiwsError.push(errorMessage);
         }
       } catch (err) {
-        const errorMessage = `Errore recupero delle shares: ${err}`
+        const errorMessage = `Errore recupero delle shares: ${err}`;
         companyShares = [];
-        aiwsError.push(errorMessage)
-
+        aiwsError.push(errorMessage);
       }
 
       const fullCompanySummary: CompanySummary = {
         ...companySummaryData,
         ...companyFinancials,
         companyShares,
-        aiwsError
+        aiwsError,
       };
 
       return fullCompanySummary;

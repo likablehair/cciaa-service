@@ -47,22 +47,19 @@ export type CompanySummary = {
   /* === Dati societari futuri === */
   companyIncorporationDate: string | null;
 
-  companyShares: CompanyShare[] | null,
+  companyShares: CompanyShare[] | null;
 
-  aiwsError: AIWSError
-
+  aiwsError: AIWSError;
 };
 
-
-export type AIWSError = string[]
-
+export type AIWSError = string[];
 
 export type CompanyFinancials = {
   companyProfit: number | null;
   companyRevenue: number | null;
-}
+};
 export interface Shareholder {
-  type: 'PERSONA' | 'IMPRESA' | string
+  type: 'PERSONA' | 'IMPRESA' | string;
   fiscalCode: string;
   firstName: string;
   lastName?: string;
@@ -79,7 +76,7 @@ export interface Shareholder {
 }
 
 export interface CompanyShare {
-  type: 'PERSONA' | 'IMPRESA' | string
+  type: 'PERSONA' | 'IMPRESA' | string;
   fiscalCode: string;
   firstName: string;
   lastName?: string;

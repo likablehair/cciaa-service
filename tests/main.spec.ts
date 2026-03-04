@@ -1,5 +1,9 @@
 import { AIWSClient } from 'src/main';
-import {  CompanyFinancials, CompanyShare, CompanySummary } from 'src/types/company.types';
+import {
+  CompanyFinancials,
+  CompanyShare,
+  CompanySummary,
+} from 'src/types/company.types';
 import { expect, test, describe, beforeAll } from 'vitest';
 
 describe('CCIAA Integration - Dati Aziendali', () => {
@@ -38,7 +42,8 @@ describe('CCIAA Integration - Dati Aziendali', () => {
   test('Recupero dati finanziari per la società con P.IVA 02650200203', async () => {
     const vat = '02650200203';
 
-    const financialData: CompanyFinancials = await client.companyService.getFinancialsByVatNumber(vat);
+    const financialData: CompanyFinancials =
+      await client.companyService.getFinancialsByVatNumber(vat);
 
     expect(financialData).toBeDefined();
     expect(typeof financialData).toBe('object');
@@ -74,7 +79,8 @@ describe('CCIAA Integration - Dati Aziendali', () => {
   test('Recupero completo dati aziendali per P.IVA 02650200203', async () => {
     const vat = '02650200203';
 
-    const companySummaryData = await client.companyService.getCompanySummaryByVatNumber(vat);
+    const companySummaryData =
+      await client.companyService.getCompanySummaryByVatNumber(vat);
     expect(companySummaryData).toBeDefined();
     expect(companySummaryData.companyName).toBe('LH S.R.L.');
     expect(companySummaryData.companyStatusCode).toBe('R');
@@ -85,7 +91,11 @@ describe('CCIAA Integration - Dati Aziendali', () => {
     expect(companyFinancials.companyRevenue).toBeGreaterThan(0);
     expect(companyFinancials.companyProfit).toBeGreaterThan(0);
 
-    const companyShares: CompanyShare[] = await client.companyService.getSharesByRea(companySummaryData.companyCciaaCode, companySummaryData.companyReaNumber);
+    const companyShares: CompanyShare[] =
+      await client.companyService.getSharesByRea(
+        companySummaryData.companyCciaaCode,
+        companySummaryData.companyReaNumber,
+      );
     expect(companyShares).toBeDefined();
     expect(Array.isArray(companyShares)).toBe(true);
     expect(companyShares.length).toBeGreaterThan(0);
@@ -101,18 +111,18 @@ describe('CCIAA Integration - Dati Aziendali', () => {
     expect(fullCompanySummary.companyShares?.length).toBeGreaterThan(0);
   });
 
-    test('Recupero completo dati aziendali per P.IVA 13619250965', async () => {
+  test('Recupero completo dati aziendali per P.IVA 13619250965', async () => {
     const vat = '13619250965';
 
     const company = await client.companyService.getCompany(vat);
-    if(company) {
+    if (company) {
       expect(company).toBeDefined();
       expect(company.companyName).toBe('TRENDAFIL S.R.L.');
       expect(company.companyStatusCode).toBe('R');
       expect(company).toBeDefined();
-      if(company.companyRevenue)
+      if (company.companyRevenue)
         expect(company.companyRevenue).toBeGreaterThan(0);
-      if(company.companyProfit)
+      if (company.companyProfit)
         expect(company.companyProfit).toBeGreaterThan(0);
 
       expect(company.companyShares).toBeDefined();

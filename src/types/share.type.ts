@@ -32,7 +32,9 @@ export interface DatiIdentificativi {
     cap: string;
   };
   'indirizzo-posta-certificata': string;
-  'persone-rappresentanti': { 'persona-rappresentante': PersonaRappresentante[] };
+  'persone-rappresentanti': {
+    'persona-rappresentante': PersonaRappresentante[];
+  };
   'f-sede-intercamerale': 'S' | 'N';
   'c-fonte': string;
   fonte: string;
@@ -134,7 +136,13 @@ export interface TabellaElencoSoci {
 
 export interface TrasferimentoQuote {
   'trasferimento-quote': Array<{
-    'estremi-pratica': { cciaa: string; anno: string; n: string; 'dt-protocollo': string; 'dt-deposito': string };
+    'estremi-pratica': {
+      cciaa: string;
+      anno: string;
+      n: string;
+      'dt-protocollo': string;
+      'dt-deposito': string;
+    };
     'f-contestuale'?: 'S' | 'N';
   }>;
   'f-successivi-ultimo-es': 'S' | 'N';

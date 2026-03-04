@@ -2,9 +2,10 @@ import { CompanyShare, Shareholder } from 'src/types/company.types';
 import { Indirizzo, Riquadro } from 'src/types/share.type';
 
 export class ShareholderManager {
-
   /** Converte l'indirizzo XML in oggetto tipizzato */
-  private parseAddress(domicilio?: Indirizzo): Shareholder['address'] | undefined {
+  private parseAddress(
+    domicilio?: Indirizzo,
+  ): Shareholder['address'] | undefined {
     if (!domicilio) return undefined;
     return {
       street: domicilio.via,
@@ -31,7 +32,9 @@ export class ShareholderManager {
     const normalizedRiquadri = Array.isArray(riquadri) ? riquadri : [riquadri];
 
     for (const riquadro of normalizedRiquadri) {
-      const quota = this.parseCapital(riquadro['composizione-quote']['valore-nominale']);
+      const quota = this.parseCapital(
+        riquadro['composizione-quote']['valore-nominale'],
+      );
       const titolariList = Array.isArray(riquadro.titolari.titolare)
         ? riquadro.titolari.titolare
         : [riquadro.titolari.titolare];
@@ -40,7 +43,9 @@ export class ShareholderManager {
         const share: CompanyShare = {
           type: t['anagrafica-titolare'].tipo,
           fiscalCode: t['anagrafica-titolare']['c-fiscale'],
-          firstName: t['anagrafica-titolare'].nome || t['anagrafica-titolare'].denominazione,
+          firstName:
+            t['anagrafica-titolare'].nome ||
+            t['anagrafica-titolare'].denominazione,
           lastName: t['anagrafica-titolare'].cognome,
           shareValue: quota,
           sharePercentage: (quota / totalCapital) * 100,
@@ -51,6 +56,6 @@ export class ShareholderManager {
       }
     }
 
-    return shares
+    return shares;
   }
 }

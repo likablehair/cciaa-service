@@ -2,8 +2,10 @@ import { XMLParser } from 'fast-xml-parser';
 import { CompanyFinancials as FinancialValue } from 'src/types/company.types';
 
 export class RevenueManager {
-
-  public async getFinancialValues(xmlBaseResponse: any): Promise<FinancialValue> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async getFinancialValues(
+    xmlBaseResponse: any,
+  ): Promise<FinancialValue> {
     const base64Xbrl = xmlBaseResponse.Risposta.dati;
 
     if (!base64Xbrl) {
@@ -38,12 +40,14 @@ export class RevenueManager {
     );
 
     return {
-      companyProfit: profitNode ? Number(profitNode['#text']) : 0.00,
-      companyRevenue: revenueNode ? Number(revenueNode['#text']) : 0.00,
+      companyProfit: profitNode ? Number(profitNode['#text']) : 0.0,
+      companyRevenue: revenueNode ? Number(revenueNode['#text']) : 0.0,
     };
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private findByContext(xbrl: any, tagName: string, contextRef: string) {
+    console.log(typeof xbrl);
     const node = xbrl[tagName];
     if (!node) return null;
 
