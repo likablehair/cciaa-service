@@ -2,8 +2,8 @@ import { XMLParser } from 'fast-xml-parser';
 import { CompanyFinancials as FinancialValue } from 'src/types/company.types';
 
 export class RevenueManager {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public async getFinancialValues(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     xmlBaseResponse: any,
   ): Promise<FinancialValue> {
     const base64Xbrl = xmlBaseResponse.Risposta.dati;
