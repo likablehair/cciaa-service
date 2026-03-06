@@ -3,6 +3,7 @@ import { CompanySummary } from 'src/types/company.types';
 import {
   AIWSError,
   AIWS_ERROR_CODE,
+  AIWS_ERROR_MESSAGES,
   pushAIWSError,
 } from 'src/types/aiwsError.type';
 
@@ -16,7 +17,7 @@ export class CompnayManager {
         errors,
         AIWS_ERROR_CODE.COMPANY_SUMMARY_FETCH_FAILED,
         { impresa },
-        AIWS_ERROR_CODE['COMPANY_SUMMARY_FETCH_FAILED'],
+        AIWS_ERROR_MESSAGES.COMPANY_SUMMARY_FETCH_FAILED,
       );
       return {
         companyName: '',
@@ -62,7 +63,7 @@ export class CompnayManager {
         errors,
         AIWS_ERROR_CODE.COMPANY_SUMMARY_FETCH_FAILED,
         { field: 'Denominazione' },
-        AIWS_ERROR_CODE['COMPANY_SUMMARY_FETCH_FAILED'],
+        AIWS_ERROR_MESSAGES.COMPANY_SUMMARY_FETCH_FAILED,
       );
     }
     if (!impresa.PIva) {
@@ -70,7 +71,7 @@ export class CompnayManager {
         errors,
         AIWS_ERROR_CODE.COMPANY_SUMMARY_FETCH_FAILED,
         { field: 'PIva' },
-        AIWS_ERROR_CODE['COMPANY_SUMMARY_FETCH_FAILED'],
+        AIWS_ERROR_MESSAGES.COMPANY_SUMMARY_FETCH_FAILED,
       );
     }
     if (!impresa.Cciaa) {
@@ -78,7 +79,7 @@ export class CompnayManager {
         errors,
         AIWS_ERROR_CODE.COMPANY_SUMMARY_FETCH_FAILED,
         { field: 'Cciaa' },
-        AIWS_ERROR_CODE['COMPANY_SUMMARY_FETCH_FAILED'],
+        AIWS_ERROR_MESSAGES.COMPANY_SUMMARY_FETCH_FAILED,
       );
     }
 

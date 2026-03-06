@@ -3,6 +3,7 @@ import { CompanyFinancials } from 'src/types/company.types';
 import {
   AIWSError,
   AIWS_ERROR_CODE,
+  AIWS_ERROR_MESSAGES,
   pushAIWSError,
 } from 'src/types/aiwsError.type';
 
@@ -19,7 +20,7 @@ export class FinancialManager {
         errors,
         AIWS_ERROR_CODE.XBRL_EMPTY,
         {},
-        AIWS_ERROR_CODE['XBRL_EMPTY'],
+        AIWS_ERROR_MESSAGES.XBRL_EMPTY,
       );
       return null;
     }
@@ -35,7 +36,7 @@ export class FinancialManager {
         {
           error: String(err),
         },
-        AIWS_ERROR_CODE['XBRL_DECODE_ERROR'],
+        AIWS_ERROR_MESSAGES.XBRL_DECODE_ERROR,
       );
       return null;
     }
@@ -57,7 +58,7 @@ export class FinancialManager {
         {
           error: String(err),
         },
-        AIWS_ERROR_CODE['XML_PARSE_ERROR'],
+        AIWS_ERROR_MESSAGES.XML_PARSE_ERROR,
       );
       return null;
     }
@@ -67,7 +68,7 @@ export class FinancialManager {
         errors,
         AIWS_ERROR_CODE.XBRL_MAPPING_ERROR,
         {},
-        AIWS_ERROR_CODE['XBRL_MAPPING_ERROR'],
+        AIWS_ERROR_MESSAGES.XBRL_MAPPING_ERROR,
       );
       return null;
     }
