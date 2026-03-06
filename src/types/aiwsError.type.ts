@@ -18,7 +18,7 @@ export type AIWSErrorItem = {
   code: AIWS_ERROR_CODE;
   message?: string;
   fields?: string[];
-}
+};
 
 export const AIWS_ERROR_MESSAGES: Record<AIWS_ERROR_CODE, string> = {
   COMPANY_SUMMARY_FETCH_FAILED: 'Errore nel recupero anagrafica impresa',

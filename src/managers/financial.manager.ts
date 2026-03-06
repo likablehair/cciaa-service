@@ -30,7 +30,7 @@ export class FinancialManager {
     try {
       xbrlXml = Buffer.from(base64Xbrl, 'base64').toString('utf-8');
     } catch (err) {
-      console.log(err)
+      console.log(err);
       pushAIWSError(
         errors,
         AIWS_ERROR_CODE.XBRL_DECODE_ERROR,
@@ -51,7 +51,7 @@ export class FinancialManager {
     try {
       xbrlJson = xbrlParser.parse(xbrlXml);
     } catch (err) {
-      console.log(err)
+      console.log(err);
       pushAIWSError(
         errors,
         AIWS_ERROR_CODE.XML_PARSE_ERROR,

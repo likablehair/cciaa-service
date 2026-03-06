@@ -80,7 +80,7 @@ export class CompanyService {
     try {
       return this.parser.parse(xmlData) as T;
     } catch (err) {
-      console.log(err)
+      console.log(err);
       pushAIWSError(
         errors,
         AIWS_ERROR_CODE.XML_PARSE_ERROR,
@@ -124,7 +124,7 @@ export class CompanyService {
       const manager = new CompnayManager();
       return manager.mapAnagraficaImpresaToCompanySummary(anagrafica);
     } catch (err) {
-      console.log(err)
+      console.log(err);
       pushAIWSError(
         errors,
         AIWS_ERROR_CODE.COMPANY_SUMMARY_FETCH_FAILED,
@@ -154,10 +154,10 @@ export class CompanyService {
       const manager = new FinancialManager();
       return await manager.getFinancialValues(json, errors);
     } catch (err) {
-      console.log(err)
+      console.log(err);
       pushAIWSError(
         errors,
-        AIWS_ERROR_CODE.FINANCIALS_FETCH_FAILED, 
+        AIWS_ERROR_CODE.FINANCIALS_FETCH_FAILED,
         ['vatNumber'],
         AIWS_ERROR_MESSAGES.FINANCIALS_FETCH_FAILED,
       );
@@ -198,7 +198,7 @@ export class CompanyService {
 
       return manager.getShares(structures, totalCapital);
     } catch (err) {
-      console.log(err)
+      console.log(err);
       pushAIWSError(
         errors,
         AIWS_ERROR_CODE.SHARES_FETCH_FAILED,

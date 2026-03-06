@@ -62,7 +62,7 @@ export class CompnayManager {
       pushAIWSError(
         errors,
         AIWS_ERROR_CODE.COMPANY_SUMMARY_FETCH_FAILED,
-      ['companyName'],
+        ['companyName'],
         AIWS_ERROR_MESSAGES.COMPANY_SUMMARY_FETCH_FAILED,
       );
     }
