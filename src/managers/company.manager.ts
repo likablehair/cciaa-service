@@ -1,6 +1,10 @@
 import { AnagraficaImpresa } from 'src/types/aiws.types';
 import { CompanySummary } from 'src/types/company.types';
-import { AIWSError, AIWS_ERROR_CODE, pushAIWSError } from 'src/types/aiwsError.type';
+import {
+  AIWSError,
+  AIWS_ERROR_CODE,
+  pushAIWSError,
+} from 'src/types/aiwsError.type';
 
 export class CompnayManager {
   public async mapAnagraficaImpresaToCompanySummary(
@@ -8,7 +12,12 @@ export class CompnayManager {
     errors: AIWSError = [],
   ): Promise<CompanySummary> {
     if (!impresa) {
-      pushAIWSError(errors, AIWS_ERROR_CODE.COMPANY_SUMMARY_FETCH_FAILED, { impresa }, AIWS_ERROR_CODE['COMPANY_SUMMARY_FETCH_FAILED']);
+      pushAIWSError(
+        errors,
+        AIWS_ERROR_CODE.COMPANY_SUMMARY_FETCH_FAILED,
+        { impresa },
+        AIWS_ERROR_CODE['COMPANY_SUMMARY_FETCH_FAILED'],
+      );
       return {
         companyName: '',
         companyFiscalCode: '',
@@ -49,13 +58,28 @@ export class CompnayManager {
 
     // Validate required fields
     if (!impresa.Denominazione) {
-      pushAIWSError(errors, AIWS_ERROR_CODE.COMPANY_SUMMARY_FETCH_FAILED, { field: 'Denominazione' }, AIWS_ERROR_CODE['COMPANY_SUMMARY_FETCH_FAILED']);
+      pushAIWSError(
+        errors,
+        AIWS_ERROR_CODE.COMPANY_SUMMARY_FETCH_FAILED,
+        { field: 'Denominazione' },
+        AIWS_ERROR_CODE['COMPANY_SUMMARY_FETCH_FAILED'],
+      );
     }
     if (!impresa.PIva) {
-      pushAIWSError(errors, AIWS_ERROR_CODE.COMPANY_SUMMARY_FETCH_FAILED, { field: 'PIva' }, AIWS_ERROR_CODE['COMPANY_SUMMARY_FETCH_FAILED']);
+      pushAIWSError(
+        errors,
+        AIWS_ERROR_CODE.COMPANY_SUMMARY_FETCH_FAILED,
+        { field: 'PIva' },
+        AIWS_ERROR_CODE['COMPANY_SUMMARY_FETCH_FAILED'],
+      );
     }
     if (!impresa.Cciaa) {
-      pushAIWSError(errors, AIWS_ERROR_CODE.COMPANY_SUMMARY_FETCH_FAILED, { field: 'Cciaa' }, AIWS_ERROR_CODE['COMPANY_SUMMARY_FETCH_FAILED']);
+      pushAIWSError(
+        errors,
+        AIWS_ERROR_CODE.COMPANY_SUMMARY_FETCH_FAILED,
+        { field: 'Cciaa' },
+        AIWS_ERROR_CODE['COMPANY_SUMMARY_FETCH_FAILED'],
+      );
     }
 
     return {
@@ -83,8 +107,10 @@ export class CompnayManager {
       companyDeclaredActivity: impresa.AttivitaDichiarata || '',
       companyAtecoCode: impresa.ClassificazioneAteco?.CodAttivita || '',
       companyAtecoDescription: impresa.ClassificazioneAteco?.DescAttivita || '',
-      companyAtecoClassificationCode: impresa.ClassificazioneAteco?.CodCodifica || 0,
-      companyAtecoClassificationDescription: impresa.ClassificazioneAteco?.DescCodifica || '',
+      companyAtecoClassificationCode:
+        impresa.ClassificazioneAteco?.CodCodifica || 0,
+      companyAtecoClassificationDescription:
+        impresa.ClassificazioneAteco?.DescCodifica || '',
 
       /* === Sede === */
       companyProvinceCode: impresa.IndirizzoSede?.SglPrvSede || '',

@@ -27,11 +27,10 @@ export class CompanyService {
     errors: AIWSError,
   ) {
     switch (status) {
-      
       case 200:
         return true;
 
-    case 402:
+      case 402:
         pushAIWSError(
           errors,
           AIWS_ERROR_CODE.INSUFFICIENT_CREDIT,
@@ -185,10 +184,10 @@ export class CompanyService {
 
       if (!this.checkResponseStatus(response.status, response.data, errors))
         return [];
-      
+
       const json = this.parseXml<ParsedAIWSResponse>(response.data, errors);
       if (!json) return [];
-      
+
       const manager = new SharesManager();
 
       const totalCapital = manager.parseCapital(
@@ -219,7 +218,7 @@ export class CompanyService {
     const errors: AIWSError = [];
 
     const summary = await this.getCompanySummaryByVatNumber(vatNumber, errors);
-    if (!summary) return null
+    if (!summary) return null;
 
     const financials = (await this.getFinancialsByVatNumber(
       vatNumber,

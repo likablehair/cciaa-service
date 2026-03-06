@@ -1,4 +1,4 @@
-import { AIWSError } from "./aiwsError.type";
+import { AIWSError } from './aiwsError.type';
 
 export type CompanySummary = {
   /* === Identità azienda === */
@@ -53,7 +53,6 @@ export type CompanySummary = {
 
   aiwsError: AIWSError | null;
 };
-
 
 export type CompanyFinancials = {
   companyProfit: number | null;

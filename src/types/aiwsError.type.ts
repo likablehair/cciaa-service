@@ -15,9 +15,9 @@ export enum AIWS_ERROR_CODE {
 }
 
 export interface AIWSErrorItem {
-  code: AIWS_ERROR_CODE
-  message?: string
-  context?: Record<string, unknown>
+  code: AIWS_ERROR_CODE;
+  message?: string;
+  context?: Record<string, unknown>;
 }
 
 export const AIWS_ERROR_MESSAGES: Record<AIWS_ERROR_CODE, string> = {
@@ -29,11 +29,11 @@ export const AIWS_ERROR_MESSAGES: Record<AIWS_ERROR_CODE, string> = {
   SERVICE_UNAVAILABLE: 'Servizio temporaneamente non disponibile',
   HTTP_ERROR: 'Errore HTTP del servizio',
   XML_PARSE_ERROR: 'Errore nel parsing XML',
-  XBRL_EMPTY : 'Errore nel recupero del file XBRL',
-  XBRL_DECODE_ERROR : 'Errore nella decodifica del file XBRL',
-  XBRL_MAPPING_ERROR : 'Errore nella mappaggio del file XBRL', 
-  INSUFFICIENT_CREDIT: 'Credito insufficiente per procedere'
-}
+  XBRL_EMPTY: 'Errore nel recupero del file XBRL',
+  XBRL_DECODE_ERROR: 'Errore nella decodifica del file XBRL',
+  XBRL_MAPPING_ERROR: 'Errore nella mappaggio del file XBRL',
+  INSUFFICIENT_CREDIT: 'Credito insufficiente per procedere',
+};
 
 export function pushAIWSError(
   errors: AIWSError,
@@ -41,7 +41,7 @@ export function pushAIWSError(
   context?: Record<string, unknown>,
   message?: string,
 ) {
-  errors.push({ code, context, message })
+  errors.push({ code, context, message });
 }
 
-export type AIWSError = AIWSErrorItem[]
+export type AIWSError = AIWSErrorItem[];
