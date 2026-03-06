@@ -23,7 +23,6 @@ export class CompanyService {
 
   private checkResponseStatus(
     status: number,
-    data: unknown,
     errors: AIWSError,
   ) {
     switch (status) {
@@ -102,7 +101,7 @@ export class CompanyService {
         { params: { partitaIva: vatNumber, fSoloSedi: 'S' } },
       );
 
-      if (!this.checkResponseStatus(response.status, response.data, errors))
+      if (!this.checkResponseStatus(response.status, errors))
         return null;
 
       const json = this.parseXml<ParsedAIWSResponse>(response.data, errors);
@@ -145,7 +144,7 @@ export class CompanyService {
         { params: { codiceFiscale: vatNumber, allXbrl: 'S' } },
       );
 
-      if (!this.checkResponseStatus(response.status, response.data, errors))
+      if (!this.checkResponseStatus(response.status, errors))
         return null;
 
       const json = this.parseXml<ParsedAIWSResponse>(response.data, errors);
@@ -177,7 +176,7 @@ export class CompanyService {
         { params: { cciaa, nRea } },
       );
 
-      if (!this.checkResponseStatus(response.status, response.data, errors))
+      if (!this.checkResponseStatus(response.status, errors))
         return [];
 
       const json = this.parseXml<ParsedAIWSResponse>(response.data, errors);
