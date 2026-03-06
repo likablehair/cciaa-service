@@ -16,7 +16,7 @@ export class CompnayManager {
       pushAIWSError(
         errors,
         AIWS_ERROR_CODE.COMPANY_SUMMARY_FETCH_FAILED,
-        { impresa },
+        [],
         AIWS_ERROR_MESSAGES.COMPANY_SUMMARY_FETCH_FAILED,
       );
       return {
@@ -62,7 +62,7 @@ export class CompnayManager {
       pushAIWSError(
         errors,
         AIWS_ERROR_CODE.COMPANY_SUMMARY_FETCH_FAILED,
-        { field: 'Denominazione' },
+      ['companyName'],
         AIWS_ERROR_MESSAGES.COMPANY_SUMMARY_FETCH_FAILED,
       );
     }
@@ -70,7 +70,7 @@ export class CompnayManager {
       pushAIWSError(
         errors,
         AIWS_ERROR_CODE.COMPANY_SUMMARY_FETCH_FAILED,
-        { field: 'PIva' },
+        ['vatNumber'],
         AIWS_ERROR_MESSAGES.COMPANY_SUMMARY_FETCH_FAILED,
       );
     }
@@ -78,7 +78,7 @@ export class CompnayManager {
       pushAIWSError(
         errors,
         AIWS_ERROR_CODE.COMPANY_SUMMARY_FETCH_FAILED,
-        { field: 'Cciaa' },
+        [],
         AIWS_ERROR_MESSAGES.COMPANY_SUMMARY_FETCH_FAILED,
       );
     }

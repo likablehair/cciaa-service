@@ -34,7 +34,7 @@ export class CompanyService {
         pushAIWSError(
           errors,
           AIWS_ERROR_CODE.INSUFFICIENT_CREDIT,
-          {},
+          [],
           AIWS_ERROR_MESSAGES.INSUFFICIENT_CREDIT,
         );
         return false;
@@ -42,7 +42,7 @@ export class CompanyService {
         pushAIWSError(
           errors,
           AIWS_ERROR_CODE.COMPANY_NOT_FOUND,
-          {},
+          [],
           AIWS_ERROR_MESSAGES.COMPANY_NOT_FOUND,
         );
         return false;
@@ -51,7 +51,7 @@ export class CompanyService {
         pushAIWSError(
           errors,
           AIWS_ERROR_CODE.SERVICE_UNAVAILABLE,
-          {},
+          [],
           AIWS_ERROR_MESSAGES.SERVICE_UNAVAILABLE,
         );
         return false;
@@ -60,7 +60,7 @@ export class CompanyService {
         pushAIWSError(
           errors,
           AIWS_ERROR_CODE.HTTP_ERROR,
-          { data },
+          [],
           AIWS_ERROR_MESSAGES.HTTP_ERROR,
         );
         return false;
@@ -69,7 +69,7 @@ export class CompanyService {
         pushAIWSError(
           errors,
           AIWS_ERROR_CODE.HTTP_ERROR,
-          { status },
+          [],
           AIWS_ERROR_MESSAGES.HTTP_ERROR,
         );
         return false;
@@ -80,12 +80,11 @@ export class CompanyService {
     try {
       return this.parser.parse(xmlData) as T;
     } catch (err) {
+      console.log(err)
       pushAIWSError(
         errors,
         AIWS_ERROR_CODE.XML_PARSE_ERROR,
-        {
-          error: String(err),
-        },
+        [],
         AIWS_ERROR_MESSAGES.XML_PARSE_ERROR,
       );
       return null;
@@ -116,7 +115,7 @@ export class CompanyService {
         pushAIWSError(
           errors,
           AIWS_ERROR_CODE.COMPANY_NOT_FOUND,
-          { vatNumber },
+          ['vatNumber'],
           AIWS_ERROR_MESSAGES.COMPANY_NOT_FOUND,
         );
         return null;
@@ -125,13 +124,11 @@ export class CompanyService {
       const manager = new CompnayManager();
       return manager.mapAnagraficaImpresaToCompanySummary(anagrafica);
     } catch (err) {
+      console.log(err)
       pushAIWSError(
         errors,
         AIWS_ERROR_CODE.COMPANY_SUMMARY_FETCH_FAILED,
-        {
-          vatNumber,
-          error: String(err),
-        },
+        ['vatNumber'],
         AIWS_ERROR_MESSAGES.COMPANY_SUMMARY_FETCH_FAILED,
       );
       return null;
@@ -157,13 +154,11 @@ export class CompanyService {
       const manager = new FinancialManager();
       return await manager.getFinancialValues(json, errors);
     } catch (err) {
+      console.log(err)
       pushAIWSError(
         errors,
-        AIWS_ERROR_CODE.FINANCIALS_FETCH_FAILED,
-        {
-          vatNumber,
-          error: String(err),
-        },
+        AIWS_ERROR_CODE.FINANCIALS_FETCH_FAILED, 
+        ['vatNumber'],
         AIWS_ERROR_MESSAGES.FINANCIALS_FETCH_FAILED,
       );
       return null;
@@ -203,13 +198,11 @@ export class CompanyService {
 
       return manager.getShares(structures, totalCapital);
     } catch (err) {
+      console.log(err)
       pushAIWSError(
         errors,
         AIWS_ERROR_CODE.SHARES_FETCH_FAILED,
-        {
-          error: String(err),
-          fields: ['companyShares'],
-        },
+        ['companyShares'],
         AIWS_ERROR_MESSAGES.SHARES_FETCH_FAILED,
       );
       return [];
@@ -241,7 +234,7 @@ export class CompanyService {
       pushAIWSError(
         errors,
         AIWS_ERROR_CODE.MISSING_CCIAA_OR_REA,
-        {},
+        [],
         AIWS_ERROR_MESSAGES.MISSING_CCIAA_OR_REA,
       );
     }

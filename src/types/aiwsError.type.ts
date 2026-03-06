@@ -14,10 +14,10 @@ export enum AIWS_ERROR_CODE {
   XBRL_MAPPING_ERROR = 'XBRL_MAPPING_ERROR',
 }
 
-export interface AIWSErrorItem {
+export type AIWSErrorItem = {
   code: AIWS_ERROR_CODE;
   message?: string;
-  context?: Record<string, unknown>;
+  fields?: string[];
 }
 
 export const AIWS_ERROR_MESSAGES: Record<AIWS_ERROR_CODE, string> = {
@@ -42,10 +42,10 @@ export const AIWS_ERROR_MESSAGES: Record<AIWS_ERROR_CODE, string> = {
 export function pushAIWSError(
   errors: AIWSError,
   code: AIWS_ERROR_CODE,
-  context?: Record<string, unknown>,
+  fields?: string[],
   message?: string,
 ) {
-  errors.push({ code, context, message });
+  errors.push({ code, fields, message });
 }
 
 export type AIWSError = AIWSErrorItem[];
