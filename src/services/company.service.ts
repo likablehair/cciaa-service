@@ -21,10 +21,7 @@ export class CompanyService {
 
   constructor(private client: AxiosInstance) {}
 
-  private checkResponseStatus(
-    status: number,
-    errors: AIWSError,
-  ) {
+  private checkResponseStatus(status: number, errors: AIWSError) {
     switch (status) {
       case 200:
         return true;
@@ -101,8 +98,7 @@ export class CompanyService {
         { params: { partitaIva: vatNumber, fSoloSedi: 'S' } },
       );
 
-      if (!this.checkResponseStatus(response.status, errors))
-        return null;
+      if (!this.checkResponseStatus(response.status, errors)) return null;
 
       const json = this.parseXml<ParsedAIWSResponse>(response.data, errors);
       if (!json) return null;
@@ -144,8 +140,7 @@ export class CompanyService {
         { params: { codiceFiscale: vatNumber, allXbrl: 'S' } },
       );
 
-      if (!this.checkResponseStatus(response.status, errors))
-        return null;
+      if (!this.checkResponseStatus(response.status, errors)) return null;
 
       const json = this.parseXml<ParsedAIWSResponse>(response.data, errors);
       if (!json) return null;
@@ -176,8 +171,7 @@ export class CompanyService {
         { params: { cciaa, nRea } },
       );
 
-      if (!this.checkResponseStatus(response.status, errors))
-        return [];
+      if (!this.checkResponseStatus(response.status, errors)) return [];
 
       const json = this.parseXml<ParsedAIWSResponse>(response.data, errors);
       if (!json) return [];
