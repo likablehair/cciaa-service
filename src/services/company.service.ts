@@ -208,6 +208,7 @@ export class CompanyService {
         AIWS_ERROR_CODE.SHARES_FETCH_FAILED,
         {
           error: String(err),
+          fields: ['companyShares'],
         },
         AIWS_ERROR_MESSAGES.SHARES_FETCH_FAILED,
       );

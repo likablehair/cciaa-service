@@ -19,7 +19,7 @@ export class FinancialManager {
       pushAIWSError(
         errors,
         AIWS_ERROR_CODE.XBRL_EMPTY,
-        {},
+        { fields: ['companyProfit', 'companyRevenue']},
         AIWS_ERROR_MESSAGES.XBRL_EMPTY,
       );
       return null;
@@ -34,6 +34,7 @@ export class FinancialManager {
         errors,
         AIWS_ERROR_CODE.XBRL_DECODE_ERROR,
         {
+          fields: ['companyProfit', 'companyRevenue'],
           error: String(err),
         },
         AIWS_ERROR_MESSAGES.XBRL_DECODE_ERROR,
@@ -67,7 +68,7 @@ export class FinancialManager {
       pushAIWSError(
         errors,
         AIWS_ERROR_CODE.XBRL_MAPPING_ERROR,
-        {},
+        { fields: ['companyProfit', 'companyRevenue']},
         AIWS_ERROR_MESSAGES.XBRL_MAPPING_ERROR,
       );
       return null;
