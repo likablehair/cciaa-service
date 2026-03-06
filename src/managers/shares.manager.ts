@@ -1,11 +1,11 @@
-import { CompanyShare, Shareholder } from 'src/types/company.types';
+import { CompanyShare } from 'src/types/company.types';
 import { Indirizzo, Riquadro } from 'src/types/share.type';
 
-export class ShareholderManager {
+export class SharesManager {
   /** Converte l'indirizzo XML in oggetto tipizzato */
   private parseAddress(
     domicilio?: Indirizzo,
-  ): Shareholder['address'] | undefined {
+  ): CompanyShare['address'] | undefined {
     if (!domicilio) return undefined;
     return {
       street: domicilio.via,

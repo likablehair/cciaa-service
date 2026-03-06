@@ -2,14 +2,16 @@ import { AxiosInstance } from 'axios';
 import { XMLParser } from 'fast-xml-parser';
 import { CompanySummary } from 'src/main';
 import { CompnayManager } from 'src/managers/company.manager';
-import { RevenueManager } from 'src/managers/financial.manager';
-import { ShareholderManager } from 'src/managers/shares.manager';
+import { FinancialManager } from 'src/managers/financial.manager';
+import { SharesManager } from 'src/managers/shares.manager';
 import { ParsedAIWSResponse } from 'src/types/aiws.types';
+import { CompanyFinancials, CompanyShare } from 'src/types/company.types';
 import {
+  AIWS_ERROR_MESSAGES,
   AIWSError,
-  CompanyFinancials,
-  CompanyShare,
-} from 'src/types/company.types';
+  AIWS_ERROR_CODE,
+  pushAIWSError,
+} from 'src/types/aiwsError.type';
 
 export class CompanyService {
   private parser = new XMLParser({
@@ -19,79 +21,153 @@ export class CompanyService {
 
   constructor(private client: AxiosInstance) {}
 
-  private checkResponseStatus(status: number, data: unknown, entity = 'CCIAA') {
+  private checkResponseStatus(
+    status: number,
+    data: unknown,
+    errors: AIWSError,
+  ) {
     switch (status) {
+      
       case 200:
-        return;
+        return true;
+
+    case 402:
+        pushAIWSError(
+          errors,
+          AIWS_ERROR_CODE.INSUFFICIENT_CREDIT,
+          {},
+          AIWS_ERROR_MESSAGES.INSUFFICIENT_CREDIT,
+        );
+        return false;
       case 404:
-        throw new Error(`${entity} non trovata`);
+        pushAIWSError(
+          errors,
+          AIWS_ERROR_CODE.COMPANY_NOT_FOUND,
+          {},
+          AIWS_ERROR_MESSAGES.COMPANY_NOT_FOUND,
+        );
+        return false;
+
       case 503:
-        throw new Error(`${entity} temporaneamente non disponibile`);
+        pushAIWSError(
+          errors,
+          AIWS_ERROR_CODE.SERVICE_UNAVAILABLE,
+          {},
+          AIWS_ERROR_MESSAGES.SERVICE_UNAVAILABLE,
+        );
+        return false;
+
       case 500:
-        throw new Error(`Errore HTTP ${entity}: ${data}`);
+        pushAIWSError(
+          errors,
+          AIWS_ERROR_CODE.HTTP_ERROR,
+          { data },
+          AIWS_ERROR_MESSAGES.HTTP_ERROR,
+        );
+        return false;
+
       default:
-        throw new Error(`Errore HTTP ${entity}: ${status}`);
+        pushAIWSError(
+          errors,
+          AIWS_ERROR_CODE.HTTP_ERROR,
+          { status },
+          AIWS_ERROR_MESSAGES.HTTP_ERROR,
+        );
+        return false;
     }
   }
 
-  private parseXml<T>(xmlData: string): T {
+  private parseXml<T>(xmlData: string, errors: AIWSError): T | null {
     try {
       return this.parser.parse(xmlData) as T;
     } catch (err) {
-      throw new Error(`Errore nel parsing XML: ${err}`);
+      pushAIWSError(
+        errors,
+        AIWS_ERROR_CODE.XML_PARSE_ERROR,
+        {
+          error: String(err),
+        },
+        AIWS_ERROR_MESSAGES.XML_PARSE_ERROR,
+      );
+      return null;
     }
   }
 
   /** Estrae il riepilogo anagrafico di una società tramite P.IVA */
   public async getCompanySummaryByVatNumber(
     vatNumber: string,
-  ): Promise<CompanySummary> {
+    errors: AIWSError,
+  ): Promise<CompanySummary | null> {
     try {
       const response = await this.client.get(
         '/registroimprese/imprese/ricerca/partitaiva',
         { params: { partitaIva: vatNumber, fSoloSedi: 'S' } },
       );
 
-      this.checkResponseStatus(response.status, response.data);
+      if (!this.checkResponseStatus(response.status, response.data, errors))
+        return null;
 
-      const json = this.parseXml<ParsedAIWSResponse>(response.data);
-      const anangraficaImpresa =
-        json.Risposta.ListaImpreseRI.Impresa.AnagraficaImpresa;
+      const json = this.parseXml<ParsedAIWSResponse>(response.data, errors);
+      if (!json) return null;
 
-      if (!anangraficaImpresa) {
-        throw new Error(
-          `Impresa non trovata. Risposta: ${JSON.stringify(
-            json.Risposta.Testata.Riepilogo,
-          )}`,
+      const anagrafica =
+        json.Risposta?.ListaImpreseRI?.Impresa?.AnagraficaImpresa;
+
+      if (!anagrafica) {
+        pushAIWSError(
+          errors,
+          AIWS_ERROR_CODE.COMPANY_NOT_FOUND,
+          { vatNumber },
+          AIWS_ERROR_MESSAGES.COMPANY_NOT_FOUND,
         );
+        return null;
       }
 
       const manager = new CompnayManager();
-      return await manager.mapAnagraficaImpresaToCompanySummary(
-        anangraficaImpresa,
-      );
+      return manager.mapAnagraficaImpresaToCompanySummary(anagrafica);
     } catch (err) {
-      throw new Error(`Errore getCompanySummaryByVatNumber: ${err}`);
+      pushAIWSError(
+        errors,
+        AIWS_ERROR_CODE.COMPANY_SUMMARY_FETCH_FAILED,
+        {
+          vatNumber,
+          error: String(err),
+        },
+        AIWS_ERROR_MESSAGES.COMPANY_SUMMARY_FETCH_FAILED,
+      );
+      return null;
     }
   }
 
-  /** Estrae valori finanziari tramite P.IVA */
   public async getFinancialsByVatNumber(
     vatNumber: string,
-  ): Promise<CompanyFinancials> {
+    errors: AIWSError,
+  ): Promise<CompanyFinancials | null> {
     try {
       const response = await this.client.get(
         '/registroimprese/bilanci/xbrl/codicefiscale',
         { params: { codiceFiscale: vatNumber, allXbrl: 'S' } },
       );
 
-      this.checkResponseStatus(response.status, response.data);
+      if (!this.checkResponseStatus(response.status, response.data, errors))
+        return null;
 
-      const json = this.parseXml<ParsedAIWSResponse>(response.data);
-      const manager = new RevenueManager();
-      return await manager.getFinancialValues(json);
+      const json = this.parseXml<ParsedAIWSResponse>(response.data, errors);
+      if (!json) return null;
+
+      const manager = new FinancialManager();
+      return await manager.getFinancialValues(json, errors);
     } catch (err) {
-      throw new Error(`Errore getFinancialValueByVatNumber: ${err}`);
+      pushAIWSError(
+        errors,
+        AIWS_ERROR_CODE.FINANCIALS_FETCH_FAILED,
+        {
+          vatNumber,
+          error: String(err),
+        },
+        AIWS_ERROR_MESSAGES.FINANCIALS_FETCH_FAILED,
+      );
+      return null;
     }
   }
 
@@ -99,6 +175,7 @@ export class CompanyService {
   public async getSharesByRea(
     cciaa: string,
     nRea: number,
+    errors: AIWSError,
   ): Promise<CompanyShare[]> {
     try {
       const response = await this.client.get(
@@ -106,106 +183,74 @@ export class CompanyService {
         { params: { cciaa, nRea } },
       );
 
-      this.checkResponseStatus(response.status, response.data);
-
-      const json = this.parseXml<ParsedAIWSResponse>(response.data);
-      const manager = new ShareholderManager();
+      if (!this.checkResponseStatus(response.status, response.data, errors))
+        return [];
+      
+      const json = this.parseXml<ParsedAIWSResponse>(response.data, errors);
+      if (!json) return [];
+      
+      const manager = new SharesManager();
 
       const totalCapital = manager.parseCapital(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         json.Risposta.dati['blocchi-impresa']['sintesi-cifre-impresa'][
           'capitale-sociale'
         ]['sottoscritto']['ammontare'],
       );
-      const companyStructures =
+
+      const structures =
         json.Risposta.dati['blocchi-impresa']['elenco-soci']['riquadri'][
           'riquadro'
         ];
 
-      return await manager.getShares(companyStructures, totalCapital);
+      return manager.getShares(structures, totalCapital);
     } catch (err) {
-      throw new Error(`Errore getSharesByRea: ${err}`);
+      pushAIWSError(
+        errors,
+        AIWS_ERROR_CODE.SHARES_FETCH_FAILED,
+        {
+          error: String(err),
+        },
+        AIWS_ERROR_MESSAGES.SHARES_FETCH_FAILED,
+      );
+      return [];
     }
   }
+  public async getCompany(vatNumber: string): Promise<CompanySummary | null> {
+    const errors: AIWSError = [];
 
-  // public async getCompany(vatNumber: string): Promise<CompanySummary> {
-  //   const companySummaryData =
-  //     await this.getCompanySummaryByVatNumber(vatNumber);
-  //   const companyFinancials: CompanyFinancials =
-  //     await this.getFinancialsByVatNumber(vatNumber);
-  //   const companyShares: CompanyShare[] = await this.getSharesByRea(
-  //     companySummaryData.companyCciaaCode,
-  //     companySummaryData.companyReaNumber,
-  //   );
+    const summary = await this.getCompanySummaryByVatNumber(vatNumber, errors);
+    if (!summary) return null
 
-  //   const fullCompanySummary: CompanySummary = {
-  //     ...companySummaryData,
-  //     ...companyFinancials,
-  //     companyShares,
-  //   };
+    const financials = (await this.getFinancialsByVatNumber(
+      vatNumber,
+      errors,
+    )) ?? {
+      companyRevenue: 0,
+      companyProfit: 0,
+    };
 
-  //   return fullCompanySummary;
-  // }
+    let shares: CompanyShare[] = [];
 
-  public async getCompany(
-    vatNumber: string,
-  ): Promise<CompanySummary | undefined> {
-    // Oggetto finale parziale con valori iniziali null o vuoti
-    let companySummaryData: CompanySummary | null = null;
-    let companyFinancials: CompanyFinancials | null = null;
-    let companyShares: CompanyShare[] = [];
-    const aiwsError: AIWSError = [];
-
-    // 1️⃣ Recupero Ragione Sociale
-    try {
-      companySummaryData = await this.getCompanySummaryByVatNumber(vatNumber);
-    } catch (err) {
-      const errorMessage = `Errore recupero dati CompanySummary: ${err}`;
-      aiwsError.push(errorMessage);
+    if (summary.companyCciaaCode && summary.companyReaNumber) {
+      shares = await this.getSharesByRea(
+        summary.companyCciaaCode,
+        summary.companyReaNumber,
+        errors,
+      );
+    } else {
+      pushAIWSError(
+        errors,
+        AIWS_ERROR_CODE.MISSING_CCIAA_OR_REA,
+        {},
+        AIWS_ERROR_MESSAGES.MISSING_CCIAA_OR_REA,
+      );
     }
 
-    // 2️⃣ Recupero dati finanziari
-    try {
-      companyFinancials = await this.getFinancialsByVatNumber(vatNumber);
-    } catch (err) {
-      const errorMessage = `Errore recupero dei dati Financials: ${err}`;
-      companyFinancials = {
-        companyRevenue: 0,
-        companyProfit: 0,
-      } as CompanyFinancials;
-
-      aiwsError.push(errorMessage);
-    }
-
-    if (companySummaryData) {
-      try {
-        if (
-          companySummaryData.companyCciaaCode &&
-          companySummaryData.companyReaNumber
-        ) {
-          companyShares = await this.getSharesByRea(
-            companySummaryData.companyCciaaCode,
-            companySummaryData.companyReaNumber,
-          );
-        } else {
-          const errorMessage = `Impossibile recuperare soci: CCIAA o REA mancanti`;
-          companyShares = [];
-          aiwsError.push(errorMessage);
-        }
-      } catch (err) {
-        const errorMessage = `Errore recupero delle shares: ${err}`;
-        companyShares = [];
-        aiwsError.push(errorMessage);
-      }
-
-      const fullCompanySummary: CompanySummary = {
-        ...companySummaryData,
-        ...companyFinancials,
-        companyShares,
-        aiwsError,
-      };
-
-      return fullCompanySummary;
-    }
+    return {
+      ...summary,
+      ...financials,
+      companyShares: shares,
+      aiwsError: errors,
+    };
   }
 }

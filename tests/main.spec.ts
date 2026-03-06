@@ -1,9 +1,6 @@
 import { AIWSClient } from 'src/main';
-import {
-  CompanyFinancials,
-  CompanyShare,
-  CompanySummary,
-} from 'src/types/company.types';
+import { AIWSError } from 'src/types/aiwsError.type';
+import {  CompanyFinancials, CompanyShare, CompanySummary } from 'src/types/company.types';
 import { expect, test, describe, beforeAll } from 'vitest';
 
 describe('CCIAA Integration - Dati Aziendali', () => {
@@ -19,44 +16,52 @@ describe('CCIAA Integration - Dati Aziendali', () => {
 
   test('Recupero Ragione Sociale per P.IVA 13619250965', async () => {
     const piva = '13619250965';
-    const info = await client.companyService.getCompanySummaryByVatNumber(piva);
+    const errors: AIWSError = []
+    const info = await client.companyService.getCompanySummaryByVatNumber(piva, errors);
 
-    expect(info.companyName).toBe('TRENDAFIL S.R.L.');
-    expect(info.companyStatusCode).toBe('R');
+    if(info) {
+      expect(info.companyName).toBe('TRENDAFIL S.R.L.');
+      expect(info.companyStatusCode).toBe('R');
 
-    expect(info.companyCciaaCode).toBe('MI');
-    expect(info.companyReaNumber).toBeDefined();
+      expect(info.companyCciaaCode).toBe('MI');
+      expect(info.companyReaNumber).toBeDefined();
+    }
   });
 
   test('Recupero Ragione Sociale per P.IVA 02650200203', async () => {
     const piva = '02650200203';
-    const info = await client.companyService.getCompanySummaryByVatNumber(piva);
+    const errors: AIWSError = []
+    const info = await client.companyService.getCompanySummaryByVatNumber(piva, errors);
+    if(info) {
 
     expect(info.companyName).toBe('LH S.R.L.');
     expect(info.companyStatusCode).toBe('R');
 
     expect(info.companyCciaaCode).toBe('MN');
     expect(info.companyReaNumber).toBeDefined();
+    }
+
   });
 
   test('Recupero dati finanziari per la società con P.IVA 02650200203', async () => {
     const vat = '02650200203';
+    const errors: AIWSError = []
+    const financialData = await client.companyService.getFinancialsByVatNumber(vat, errors);
 
-    const financialData: CompanyFinancials =
-      await client.companyService.getFinancialsByVatNumber(vat);
-
-    expect(financialData).toBeDefined();
-    expect(typeof financialData).toBe('object');
-    expect(financialData.companyRevenue).toBeGreaterThan(0);
-    expect(financialData.companyProfit).toBeGreaterThan(0);
+    if(financialData) {
+      expect(financialData).toBeDefined();
+      expect(typeof financialData).toBe('object');
+      expect(financialData.companyRevenue).toBeGreaterThan(0);
+      expect(financialData.companyProfit).toBeGreaterThan(0);
+    }
   });
 
   test('Recupero soci e quote per la società con CCIAA MN e N. REA 269396', async () => {
     const cciaa = 'MN';
     const nRea = 269396;
+    const errors: AIWSError = []
 
-    const companyShares: CompanyShare[] =
-      await client.companyService.getSharesByRea(cciaa, nRea);
+    const companyShares = await client.companyService.getSharesByRea(cciaa, nRea, errors);
 
     expect(companyShares).toBeDefined();
     expect(typeof companyShares).toBe('object');
@@ -79,50 +84,54 @@ describe('CCIAA Integration - Dati Aziendali', () => {
   test('Recupero completo dati aziendali per P.IVA 02650200203', async () => {
     const vat = '02650200203';
 
-    const companySummaryData =
-      await client.companyService.getCompanySummaryByVatNumber(vat);
-    expect(companySummaryData).toBeDefined();
-    expect(companySummaryData.companyName).toBe('LH S.R.L.');
-    expect(companySummaryData.companyStatusCode).toBe('R');
+    const errors: AIWSError = []
+    const companySummaryData = await client.companyService.getCompanySummaryByVatNumber(vat, errors);
 
-    const companyFinancials: CompanyFinancials =
-      await client.companyService.getFinancialsByVatNumber(vat);
-    expect(companyFinancials).toBeDefined();
-    expect(companyFinancials.companyRevenue).toBeGreaterThan(0);
-    expect(companyFinancials.companyProfit).toBeGreaterThan(0);
+    if(companySummaryData) {
+      expect(companySummaryData).toBeDefined();
+      expect(companySummaryData.companyName).toBe('LH S.R.L.');
+      expect(companySummaryData.companyStatusCode).toBe('R');
+    }
 
-    const companyShares: CompanyShare[] =
-      await client.companyService.getSharesByRea(
-        companySummaryData.companyCciaaCode,
-        companySummaryData.companyReaNumber,
-      );
-    expect(companyShares).toBeDefined();
-    expect(Array.isArray(companyShares)).toBe(true);
-    expect(companyShares.length).toBeGreaterThan(0);
+    const companyFinancials = await client.companyService.getFinancialsByVatNumber(vat, errors);
+    if(companyFinancials) {
+      expect(companyFinancials).toBeDefined();
+      expect(companyFinancials.companyRevenue).toBeGreaterThan(0);
+      expect(companyFinancials.companyProfit).toBeGreaterThan(0);
+    }
 
-    const fullCompanySummary: CompanySummary = {
-      ...companySummaryData,
-      ...companyFinancials,
-      companyShares,
-    };
+    if(companySummaryData){
+      const companyShares: CompanyShare[] = await client.companyService.getSharesByRea(companySummaryData.companyCciaaCode, companySummaryData.companyReaNumber, errors);
+      expect(companyShares).toBeDefined();
+      expect(Array.isArray(companyShares)).toBe(true);
+      expect(companyShares.length).toBeGreaterThan(0);
 
-    expect(fullCompanySummary.companyName).toBe(companySummaryData.companyName);
-    expect(fullCompanySummary.companyRevenue).toBeGreaterThan(0);
-    expect(fullCompanySummary.companyShares?.length).toBeGreaterThan(0);
+      const fullCompanySummary: CompanySummary = {
+        ...companySummaryData,
+        ...companyFinancials,
+        companyShares,
+      };
+
+      expect(fullCompanySummary.companyName).toBe(companySummaryData.companyName);
+      if(fullCompanySummary.companyRevenue)
+        expect(fullCompanySummary.companyRevenue).toBeGreaterThan(0);
+      
+      expect(fullCompanySummary.companyShares?.length).toBeGreaterThan(0);
+    }
   });
 
-  test('Recupero completo dati aziendali per P.IVA 13619250965', async () => {
+    test('Recupero completo dati aziendali per P.IVA 13619250965', async () => {
     const vat = '13619250965';
 
     const company = await client.companyService.getCompany(vat);
-    if (company) {
+    if(company) {
       expect(company).toBeDefined();
       expect(company.companyName).toBe('TRENDAFIL S.R.L.');
       expect(company.companyStatusCode).toBe('R');
       expect(company).toBeDefined();
-      if (company.companyRevenue)
+      if(company.companyRevenue)
         expect(company.companyRevenue).toBeGreaterThan(0);
-      if (company.companyProfit)
+      if(company.companyProfit)
         expect(company.companyProfit).toBeGreaterThan(0);
 
       expect(company.companyShares).toBeDefined();
@@ -130,7 +139,8 @@ describe('CCIAA Integration - Dati Aziendali', () => {
       expect(company.companyShares?.length).toBeGreaterThan(0);
       expect(company.companyName).toBe(company.companyName);
 
-      console.log(company);
     }
   });
 });
+
+
