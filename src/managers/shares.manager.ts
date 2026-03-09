@@ -1,13 +1,11 @@
 import { CompanyShare } from 'src/types/company.types';
 import { Indirizzo, Riquadro } from 'src/types/share.type';
 
-
 export const mapperType: Record<string, CompanyShare['type']> = {
   PERSONA: 'person',
   AZIENDA: 'company',
-  ALTRO: 'other'
-}
-
+  ALTRO: 'other',
+};
 
 export class SharesManager {
   /** Converte l'indirizzo XML in oggetto tipizzato */
