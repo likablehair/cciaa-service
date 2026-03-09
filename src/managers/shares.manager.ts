@@ -1,6 +1,14 @@
 import { CompanyShare } from 'src/types/company.types';
 import { Indirizzo, Riquadro } from 'src/types/share.type';
 
+
+export const mapperType: Record<string, CompanyShare['type']> = {
+  PERSONA: 'person',
+  AZIENDA: 'company',
+  ALTRO: 'other'
+}
+
+
 export class SharesManager {
   /** Converte l'indirizzo XML in oggetto tipizzato */
   private parseAddress(
@@ -41,7 +49,7 @@ export class SharesManager {
 
       for (const t of titolariList) {
         const share: CompanyShare = {
-          type: t['anagrafica-titolare'].tipo,
+          type: mapperType[t['anagrafica-titolare'].tipo],
           fiscalCode: t['anagrafica-titolare']['c-fiscale'],
           firstName:
             t['anagrafica-titolare'].nome ||
