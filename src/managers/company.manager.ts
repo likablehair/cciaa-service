@@ -254,11 +254,17 @@ export class CompanyManager {
           activityCode:
             data['blocchi-impresa']['sintesi-attivita'][
               'classificazione-ateco'
-            ]['c-attivita'],
+            ] ? data['blocchi-impresa']['sintesi-attivita'][
+              'classificazione-ateco'
+            ]['c-attivita']
+            : '',
           naceCode:
             data['blocchi-impresa']['sintesi-attivita'][
               'classificazione-ateco'
-            ]['c-nace'],
+            ] ? data['blocchi-impresa']['sintesi-attivita'][
+              'classificazione-ateco'
+            ]['c-nace']
+            : '',
         },
         startDate: data['blocchi-impresa']['sintesi-attivita']['dt-inizio'],
       },
