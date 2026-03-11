@@ -59,8 +59,10 @@ export type CompanyFinancials = {
   companyRevenue: number | null;
 };
 
+export type CompanyShareType = 'person' |'company'| 'other'
+
 export interface CompanyShare {
-  type: 'PERSONA' | 'IMPRESA' | string;
+  type: CompanyShareType
   fiscalCode: string;
   firstName: string;
   lastName?: string;
