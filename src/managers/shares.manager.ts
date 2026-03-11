@@ -3,7 +3,7 @@ import { Indirizzo, Riquadro } from 'src/types/share.type';
 
 export const mapperType: Record<string, CompanyShareType> = {
   PERSONA: 'person',
-  AZIENDA: 'company',
+  IMPRESA: 'company',
   ALTRO: 'other',
 };
 
