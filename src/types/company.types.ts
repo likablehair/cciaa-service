@@ -1,4 +1,5 @@
 import { AIWSError } from './aiwsError.type';
+import { DateTime } from 'luxon'
 
 export type CompanySummary = {
   /* === Identità azienda === */
@@ -47,7 +48,7 @@ export type CompanySummary = {
   companyRevenue: number | null;
 
   /* === Dati societari futuri === */
-  companyIncorporationDate: string | null;
+  companyIncorporationDate: DateTime | null;
 
   companyShares: CompanyShare[] | null;
 

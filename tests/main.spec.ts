@@ -3,6 +3,7 @@ import { AIWSError } from 'src/types/aiwsError.type';
 import { CompanyShare, CompanySummary } from 'src/types/company.types';
 import { CompanyAdministrativeDataSummary } from 'src/types/administrativeDataCompany.types';
 import { expect, test, describe, beforeAll } from 'vitest';
+import { DateTime } from 'luxon';
 
 describe('CCIAA Integration - Dati Aziendali', () => {
   let client: AIWSClient;
@@ -135,7 +136,7 @@ describe('CCIAA Integration - Dati Aziendali', () => {
       expect(companyShares.length).toBeGreaterThan(0);
 
       if (companySummaryData) {
-        const administrativeSumary:
+        const administrativeSummary:
           | CompanyAdministrativeDataSummary
           | undefined = await client.companyService.getCompanyByRea(
           companySummaryData.companyCciaaCode,
@@ -143,13 +144,17 @@ describe('CCIAA Integration - Dati Aziendali', () => {
           'AMM',
           errors,
         );
+
+        const constitutionDate = administrativeSummary?.identification.constitutionDate;
         const fullCompanySummary: CompanySummary = {
           ...companySummaryData,
           ...companyFinancials,
-          companyShares,
-          companyIncorporationDate:
-            administrativeSumary?.identification.constitutionDate ?? '',
-        };
+          companyShares, 
+          companyIncorporationDate: constitutionDate
+            ? DateTime.fromFormat(constitutionDate, 'dd/MM/yyyy')
+            : null
+        }
+                  
 
         expect(fullCompanySummary.companyName).toBe(
           companySummaryData.companyName,
@@ -158,7 +163,7 @@ describe('CCIAA Integration - Dati Aziendali', () => {
           expect(fullCompanySummary.companyRevenue).toBeGreaterThan(0);
 
         expect(fullCompanySummary.companyShares?.length).toBeGreaterThan(0);
-        expect(fullCompanySummary.companyIncorporationDate).toBe('13/07/2021');
+        expect(fullCompanySummary.companyIncorporationDate?.toISODate()).toBe('2021-07-13');
       }
     }
   });
@@ -181,7 +186,7 @@ describe('CCIAA Integration - Dati Aziendali', () => {
       expect(Array.isArray(company.companyShares)).toBe(true);
       expect(company.companyShares?.length).toBeGreaterThan(0);
       expect(company.companyName).toBe(company.companyName);
-      expect(company.companyIncorporationDate).toBe('13/07/2021');
+      expect(company.companyIncorporationDate?.toISODate()).toBe('2021-07-13');
     }
   });
 

@@ -13,6 +13,7 @@ import {
   pushAIWSError,
 } from 'src/types/aiwsError.type';
 import { CompanyAdministrativeDataSummary } from 'src/types/administrativeDataCompany.types';
+import { DateTime } from 'luxon';
 
 export class CompanyService {
   private parser = new XMLParser({
@@ -286,12 +287,15 @@ export class CompanyService {
       );
     }
 
+    const constitutionDate =
+      administrativeSummary?.identification.constitutionDate;
     return {
       ...summary,
       ...financials,
       companyShares: shares,
-      companyIncorporationDate:
-        administrativeSummary?.identification.constitutionDate ?? '',
+      companyIncorporationDate: constitutionDate
+        ? DateTime.fromFormat(constitutionDate, 'dd/MM/yyyy')
+        : null,
       aiwsError: errors,
     };
   }
