@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { XMLParser } from 'fast-xml-parser';
 import { CompanySummary } from 'src/main';
-import { CompnayManager } from 'src/managers/company.manager';
+import { CompanyManager as CompanyManager } from 'src/managers/company.manager';
 import { FinancialManager } from 'src/managers/financial.manager';
 import { SharesManager } from 'src/managers/shares.manager';
 import { ParsedAIWSResponse } from 'src/types/aiws.types';
@@ -12,6 +12,7 @@ import {
   AIWS_ERROR_CODE,
   pushAIWSError,
 } from 'src/types/aiwsError.type';
+import {  CompanyAdministrativeDataSummary } from 'src/types/administrativeDataCompany.types';
 
 export class CompanyService {
   private parser = new XMLParser({
@@ -116,7 +117,7 @@ export class CompanyService {
         return null;
       }
 
-      const manager = new CompnayManager();
+      const manager = new CompanyManager();
       return manager.mapAnagraficaImpresaToCompanySummary(anagrafica);
     } catch (err) {
       console.log(err);
@@ -201,6 +202,42 @@ export class CompanyService {
       return [];
     }
   }
+  
+  /** Extracts the AMM block via CCIAA and REA number */
+  public async getCompanyByRea(
+    cciaa: string,
+    nRea: number,
+    blocco: string,
+    errors: AIWSError,
+  ): Promise< CompanyAdministrativeDataSummary | undefined> {
+    try {
+      const response = await this.client.get(
+        '/registroimprese/output/impresa/blocchi/nrea/xml',
+        { params: { cciaa, nRea, blocco } },
+      );
+
+      if (!this.checkResponseStatus(response.status, errors)) return;
+
+      const rawJson = this.parseXml<ParsedAIWSResponse>(response.data, errors);
+      if (!rawJson) return;
+
+
+
+      const manager = new CompanyManager()
+      if(blocco === 'AMM')
+        return await manager.mapRegistroImpresaToCompanyAdministrativeSummary(rawJson);
+
+    } catch (err) {
+      console.log(err);
+      pushAIWSError(
+        errors,
+        AIWS_ERROR_CODE.SHARES_FETCH_FAILED,
+        ['companyShares'],
+        AIWS_ERROR_MESSAGES.SHARES_FETCH_FAILED,
+      );
+    }
+  }
+
   public async getCompany(vatNumber: string): Promise<CompanySummary | null> {
     const errors: AIWSError = [];
 
@@ -232,11 +269,31 @@ export class CompanyService {
       );
     }
 
+    let administrativeSummary: CompanyAdministrativeDataSummary | undefined
+
+    if (summary.companyCciaaCode && summary.companyReaNumber) {
+      administrativeSummary = await this.getCompanyByRea(
+        summary.companyCciaaCode,
+        summary.companyReaNumber,
+        'AMM',
+        errors,
+      );
+    } else {
+      pushAIWSError(
+        errors,
+        AIWS_ERROR_CODE.MISSING_CCIAA_OR_REA,
+        [],
+        AIWS_ERROR_MESSAGES.MISSING_CCIAA_OR_REA,
+      );
+    }
+
     return {
       ...summary,
       ...financials,
       companyShares: shares,
+      companyIncorporationDate: administrativeSummary?.identification.constitutionDate ?? '',
       aiwsError: errors,
     };
   }
 }
+
