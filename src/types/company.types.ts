@@ -1,5 +1,5 @@
 import { AIWSError } from './aiwsError.type';
-import { DateTime } from 'luxon'
+import { DateTime } from 'luxon';
 
 export type CompanySummary = {
   /* === Identità azienda === */

@@ -145,16 +145,16 @@ describe('CCIAA Integration - Dati Aziendali', () => {
           errors,
         );
 
-        const constitutionDate = administrativeSummary?.identification.constitutionDate;
+        const constitutionDate =
+          administrativeSummary?.identification.constitutionDate;
         const fullCompanySummary: CompanySummary = {
           ...companySummaryData,
           ...companyFinancials,
-          companyShares, 
+          companyShares,
           companyIncorporationDate: constitutionDate
             ? DateTime.fromFormat(constitutionDate, 'dd/MM/yyyy')
-            : null
-        }
-                  
+            : null,
+        };
 
         expect(fullCompanySummary.companyName).toBe(
           companySummaryData.companyName,
@@ -163,7 +163,9 @@ describe('CCIAA Integration - Dati Aziendali', () => {
           expect(fullCompanySummary.companyRevenue).toBeGreaterThan(0);
 
         expect(fullCompanySummary.companyShares?.length).toBeGreaterThan(0);
-        expect(fullCompanySummary.companyIncorporationDate?.toISODate()).toBe('2021-07-13');
+        expect(fullCompanySummary.companyIncorporationDate?.toISODate()).toBe(
+          '2021-07-13',
+        );
       }
     }
   });
