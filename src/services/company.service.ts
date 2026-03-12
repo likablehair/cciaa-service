@@ -12,7 +12,7 @@ import {
   AIWS_ERROR_CODE,
   pushAIWSError,
 } from 'src/types/aiwsError.type';
-import {  CompanyAdministrativeDataSummary } from 'src/types/administrativeDataCompany.types';
+import { CompanyAdministrativeDataSummary } from 'src/types/administrativeDataCompany.types';
 
 export class CompanyService {
   private parser = new XMLParser({
@@ -202,14 +202,14 @@ export class CompanyService {
       return [];
     }
   }
-  
+
   /** Extracts the AMM block via CCIAA and REA number */
   public async getCompanyByRea(
     cciaa: string,
     nRea: number,
     blocco: string,
     errors: AIWSError,
-  ): Promise< CompanyAdministrativeDataSummary | undefined> {
+  ): Promise<CompanyAdministrativeDataSummary | undefined> {
     try {
       const response = await this.client.get(
         '/registroimprese/output/impresa/blocchi/nrea/xml',
@@ -221,12 +221,11 @@ export class CompanyService {
       const rawJson = this.parseXml<ParsedAIWSResponse>(response.data, errors);
       if (!rawJson) return;
 
-
-
-      const manager = new CompanyManager()
-      if(blocco === 'AMM')
-        return await manager.mapRegistroImpresaToCompanyAdministrativeSummary(rawJson);
-
+      const manager = new CompanyManager();
+      if (blocco === 'AMM')
+        return await manager.mapRegistroImpresaToCompanyAdministrativeSummary(
+          rawJson,
+        );
     } catch (err) {
       console.log(err);
       pushAIWSError(
@@ -269,7 +268,7 @@ export class CompanyService {
       );
     }
 
-    let administrativeSummary: CompanyAdministrativeDataSummary | undefined
+    let administrativeSummary: CompanyAdministrativeDataSummary | undefined;
 
     if (summary.companyCciaaCode && summary.companyReaNumber) {
       administrativeSummary = await this.getCompanyByRea(
@@ -291,9 +290,9 @@ export class CompanyService {
       ...summary,
       ...financials,
       companyShares: shares,
-      companyIncorporationDate: administrativeSummary?.identification.constitutionDate ?? '',
+      companyIncorporationDate:
+        administrativeSummary?.identification.constitutionDate ?? '',
       aiwsError: errors,
     };
   }
 }
-

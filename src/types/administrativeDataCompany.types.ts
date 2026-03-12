@@ -1,23 +1,3 @@
-export interface RegistroImpreseResponse {
-  '?xml'?: {
-    version: string | null;
-    encoding: string | null;
-    standalone: string | null;
-  };
-  Risposta: {
-    Testata: {
-      Riepilogo: any;
-      RecordAccount: string | null;
-    };
-    dati: {
-      Riconoscimento: Riconoscimento;
-      'blocchi-impresa': BloccoImpresa;
-    };
-    'xmlns:xsi'?: string | null;
-    'xsi:noNamespaceSchemaLocation'?: string | null;
-  };
-}
-
 export interface Riconoscimento {
   IdentificativoPosizione: string | null;
   OutputRestituiti: string | null;
@@ -97,6 +77,7 @@ export interface Carica {
   'descrizione-durata': string | null;
   'dt-riferimento-bilancio': string | null;
   'dt-presentazione'?: string | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
 
@@ -226,6 +207,7 @@ export interface RoleAssignment {
   durationDescription: string | null;
   referenceBalanceDate: string | null;
   presentationDate?: string | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
 
@@ -251,6 +233,3 @@ export interface AdministrationControl {
     governanceForm: { code: string | null; activeAdministratorsCount: string };
   };
 }
-
-// ----------------------- Company block -----------------------
-export interface CompanyBlock {}

@@ -99,13 +99,7 @@ describe('CCIAA Integration - Dati Aziendali', () => {
     const blocco = 'AMM';
     const errors: AIWSError = [];
 
-    await client.companyService.getCompanyByRea(
-      cciaa,
-      nRea,
-      blocco,
-      errors,
-    );
-
+    await client.companyService.getCompanyByRea(cciaa, nRea, blocco, errors);
   });
 
   test('Recupero completo dati aziendali per P.IVA 02650200203', async () => {
@@ -141,18 +135,20 @@ describe('CCIAA Integration - Dati Aziendali', () => {
       expect(companyShares.length).toBeGreaterThan(0);
 
       if (companySummaryData) {
-        const administrativeSumary: CompanyAdministrativeDataSummary| undefined =
-          await client.companyService.getCompanyByRea(
-            companySummaryData.companyCciaaCode,
-            companySummaryData.companyReaNumber,
-            'AMM',
-            errors,
-          );
+        const administrativeSumary:
+          | CompanyAdministrativeDataSummary
+          | undefined = await client.companyService.getCompanyByRea(
+          companySummaryData.companyCciaaCode,
+          companySummaryData.companyReaNumber,
+          'AMM',
+          errors,
+        );
         const fullCompanySummary: CompanySummary = {
           ...companySummaryData,
           ...companyFinancials,
           companyShares,
-          companyIncorporationDate: administrativeSumary?.identification.constitutionDate ?? '',
+          companyIncorporationDate:
+            administrativeSumary?.identification.constitutionDate ?? '',
         };
 
         expect(fullCompanySummary.companyName).toBe(
@@ -186,11 +182,10 @@ describe('CCIAA Integration - Dati Aziendali', () => {
       expect(company.companyShares?.length).toBeGreaterThan(0);
       expect(company.companyName).toBe(company.companyName);
       expect(company.companyIncorporationDate).toBe('13/07/2021');
-
     }
   });
 
-    test('Recupero completo dati aziendali per P.IVA 13619250965', async () => {
+  test('Recupero completo dati aziendali per P.IVA 13619250965', async () => {
     const vat = '13619250965';
 
     const company = await client.companyService.getCompany(vat);
