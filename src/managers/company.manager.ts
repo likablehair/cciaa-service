@@ -251,19 +251,19 @@ export class CompanyManager {
         mainActivityDescription:
           data['blocchi-impresa']['sintesi-attivita']['attivita-prevalente-r'],
         atecoClassification: {
-          activityCode:
-            data['blocchi-impresa']['sintesi-attivita'][
-              'classificazione-ateco'
-            ] ? data['blocchi-impresa']['sintesi-attivita'][
-              'classificazione-ateco'
-            ]['c-attivita']
+          activityCode: data['blocchi-impresa']['sintesi-attivita'][
+            'classificazione-ateco'
+          ]
+            ? data['blocchi-impresa']['sintesi-attivita'][
+                'classificazione-ateco'
+              ]['c-attivita']
             : '',
-          naceCode:
-            data['blocchi-impresa']['sintesi-attivita'][
-              'classificazione-ateco'
-            ] ? data['blocchi-impresa']['sintesi-attivita'][
-              'classificazione-ateco'
-            ]['c-nace']
+          naceCode: data['blocchi-impresa']['sintesi-attivita'][
+            'classificazione-ateco'
+          ]
+            ? data['blocchi-impresa']['sintesi-attivita'][
+                'classificazione-ateco'
+              ]['c-nace']
             : '',
         },
         startDate: data['blocchi-impresa']['sintesi-attivita']['dt-inizio'],
