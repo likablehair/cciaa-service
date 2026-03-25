@@ -13,6 +13,7 @@ export interface RicercaImpresaMetadata {
   OraEstrazione: string; // HH:mm:ss
 }
 // Struttura generica per la risposta XML parsata
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface ParsedAIWSResponse<DataType = any> {
   Risposta: {
     Testata: {
@@ -25,7 +26,6 @@ export interface ParsedAIWSResponse<DataType = any> {
       };
     };
     ListaImpreseRI?: ImpresaResponse;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     dati?: DataType;
   };
 }

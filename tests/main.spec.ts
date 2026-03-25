@@ -224,5 +224,5 @@ describe('CCIAA Integration - Dati Aziendali', () => {
     expect(roles).toBeDefined();
     expect(Array.isArray(roles)).toBe(true);
     expect(roles?.length).toBeGreaterThan(0);
-  })
+  });
 });

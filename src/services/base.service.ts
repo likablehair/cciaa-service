@@ -1,5 +1,10 @@
 import { XMLParser } from 'fast-xml-parser';
-import { AIWS_ERROR_CODE, AIWS_ERROR_MESSAGES, AIWSError, pushAIWSError } from 'src/types/aiwsError.type';
+import {
+  AIWS_ERROR_CODE,
+  AIWS_ERROR_MESSAGES,
+  AIWSError,
+  pushAIWSError,
+} from 'src/types/aiwsError.type';
 
 export abstract class BaseService {
   protected parser = new XMLParser({

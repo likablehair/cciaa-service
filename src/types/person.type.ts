@@ -1,6 +1,6 @@
-import { DateTime } from "luxon";
-import { AIWSError } from "./aiwsError.type";
-import { CompanySummary } from "./company.types";
+import { DateTime } from 'luxon';
+import { AIWSError } from './aiwsError.type';
+import { CompanySummary } from './company.types';
 
 export type PersonSummary = {
   firstname: string | null;
@@ -14,7 +14,7 @@ export type PersonSummary = {
   cap: string | null;
   pec: string | null;
   aiwsError: AIWSError | null;
-}
+};
 
 export type PersonCorporateRole = {
   corporateRole: string;
@@ -26,4 +26,4 @@ export type PersonCorporateRole = {
   companySummary: CompanySummary;
   personSummary: PersonSummary;
   aiwsError: AIWSError | null;
-}
+};
