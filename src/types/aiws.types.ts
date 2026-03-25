@@ -13,7 +13,7 @@ export interface RicercaImpresaMetadata {
   OraEstrazione: string; // HH:mm:ss
 }
 // Struttura generica per la risposta XML parsata
-export interface ParsedAIWSResponse {
+export interface ParsedAIWSResponse<DataType = any> {
   Risposta: {
     Testata: {
       Riepilogo: RicercaImpresaMetadata;
@@ -24,9 +24,9 @@ export interface ParsedAIWSResponse {
         GravitaErrore: string;
       };
     };
-    ListaImpreseRI: ImpresaResponse;
+    ListaImpreseRI?: ImpresaResponse;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    dati?: any;
+    dati?: DataType;
   };
 }
 
@@ -77,4 +77,117 @@ export interface IndirizzoSede {
   ViaSede: string;
   NCivicoSede: number;
   CapSede: number;
+}
+
+export interface Riconoscimento {
+  IdentificativoPosizione: string | number;
+  OutputRestituiti: string;
+}
+
+export interface PersonaData {
+  Riconoscimento: Riconoscimento;
+  'blocchi-persona': BlocchiPersona;
+}
+
+export interface BlocchiPersona {
+  'imprese-persona': {
+    'impresa-persona': ImpresaPersona | ImpresaPersona[];
+  };
+  'info-blocco-attuale'?: {
+    'n-imprese': string;
+  };
+  'dati-identificativi-persona'?: DatiIdentificativiPersona;
+}
+
+export interface ImpresaPersona {
+  'chiave-impresa': string;
+  'dati-identificativi-impresa': DatiIdentificativiImpresa;
+  'info-attivita'?: InfoAttivitaImpresa;
+  persona?: PersonaImpresa;
+}
+
+export interface DatiIdentificativiImpresa {
+  'c-fonte'?: string;
+  fonte?: string;
+  denominazione: string;
+  'c-fiscale': string;
+  cciaa: string;
+  'n-rea': string;
+  'forma-giuridica'?: FormaGiuridica;
+  'indirizzo-localizzazione'?: IndirizzoXml;
+  'indirizzo-posta-certificata'?: string;
+}
+
+export interface FormaGiuridica {
+  c: string;
+  '#text'?: string;
+}
+
+export interface InfoAttivitaImpresa {
+  'dt-inizio-attivita-impresa'?: string;
+  'classificazioni-ateco'?: ClassificazioniAteco;
+}
+
+export interface ClassificazioniAteco {
+  'c-codifica': string;
+  codifica: string;
+  'classificazione-ateco': ClassificazioneAteco | ClassificazioneAteco[];
+}
+
+export interface ClassificazioneAteco {
+  'c-attivita': string;
+  attivita: string;
+}
+
+export interface PersonaImpresa {
+  'indirizzo-posta-certificata'?: string;
+  indirizzo?: IndirizzoXml;
+  cariche?: {
+    carica: CaricaPersona | CaricaPersona[];
+  };
+}
+
+export interface CaricaPersona {
+  'p-carica'?: string;
+  'c-carica'?: string;
+  'dt-atto-nomina'?: string;
+  'c-durata'?: string;
+  'descrizione-durata'?: string;
+  'dt-riferimento-bilancio'?: string;
+  '#text'?: string;
+}
+
+export interface DatiIdentificativiPersona {
+  cognome: string;
+  nome: string;
+  sesso: string;
+  'c-fiscale': string;
+  'estremi-nascita'?: EstremiNascita;
+  indirizzo?: IndirizzoXml;
+  'estremi-impresa-dati-persona'?:
+    | EstremiImpresaDatiPersona
+    | EstremiImpresaDatiPersona[];
+}
+
+export interface EstremiNascita {
+  dt: string;
+  comune: string;
+  provincia: string;
+}
+
+export interface EstremiImpresaDatiPersona {
+  cciaa: string;
+  'n-rea': string;
+  denominazione: string;
+}
+
+export interface IndirizzoXml {
+  'c-comune'?: string;
+  comune: string;
+  provincia: string;
+  'c-toponimo'?: string;
+  toponimo: string;
+  via: string;
+  'n-civico': string;
+  cap: string;
 }

@@ -2,10 +2,12 @@
 import { AIWSConfig } from '../types/aiws.types';
 import { CompanyService as CompanyService } from '../services/company.service';
 import axios, { AxiosInstance } from 'axios';
+import { PersonService } from 'src/services/person.service';
 
 export default class AIWSClient {
   private axiosInstance: AxiosInstance;
   public companyService: CompanyService;
+  public personService: PersonService;
 
   constructor(config: AIWSConfig) {
     const baseURL =
@@ -23,5 +25,6 @@ export default class AIWSClient {
     });
 
     this.companyService = new CompanyService(this.axiosInstance);
+    this.personService = new PersonService(this.axiosInstance);
   }
 }

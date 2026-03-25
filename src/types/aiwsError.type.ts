@@ -2,8 +2,10 @@ export enum AIWS_ERROR_CODE {
   COMPANY_SUMMARY_FETCH_FAILED = 'COMPANY_SUMMARY_FETCH_FAILED',
   FINANCIALS_FETCH_FAILED = 'FINANCIALS_FETCH_FAILED',
   SHARES_FETCH_FAILED = 'SHARES_FETCH_FAILED',
+  PERSONA_DATA_FETCH_FAILED = 'PERSONA_DATA_FETCH_FAILED',
   MISSING_CCIAA_OR_REA = 'MISSING_CCIAA_OR_REA',
   COMPANY_NOT_FOUND = 'COMPANY_NOT_FOUND',
+  PERSONA_DATA_NOT_FOUND = 'PERSONA_DATA_NOT_FOUND',
   INSUFFICIENT_CREDIT = 'INSUFFICIENT_CREDIT',
   SERVICE_UNAVAILABLE = 'SERVICE_UNAVAILABLE',
   HTTP_ERROR = 'HTTP_ERROR',
@@ -23,6 +25,7 @@ export type AIWSErrorItem = {
 export const AIWS_ERROR_MESSAGES: Record<AIWS_ERROR_CODE, string> = {
   COMPANY_SUMMARY_FETCH_FAILED: 'Errore nel recupero anagrafica impresa',
   FINANCIALS_FETCH_FAILED: 'Errore nel recupero dati finanziari',
+  PERSONA_DATA_FETCH_FAILED: 'Errore nel recupero dati persona',
   SHARES_FETCH_FAILED: 'Errore nel recupero quote societarie',
   MISSING_CCIAA_OR_REA:
     'Impossibile recuperare quote societarie: CCIAA o REA mancanti',
@@ -37,6 +40,7 @@ export const AIWS_ERROR_MESSAGES: Record<AIWS_ERROR_CODE, string> = {
   XBRL_MAPPING_ERROR:
     'Impossibile recuperare i dati finanziari. Errore nella mappaggio del file XBRL.',
   INSUFFICIENT_CREDIT: 'Credito insufficiente per procedere',
+  PERSONA_DATA_NOT_FOUND: 'Dati persona non trovati',
 };
 
 export function pushAIWSError(

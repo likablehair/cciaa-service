@@ -212,4 +212,17 @@ describe('CCIAA Integration - Dati Aziendali', () => {
       expect(company.companyName).toBe(company.companyName);
     }
   });
+
+  test('Recupero ruoli aziendali di una persona', async () => {
+    const fiscalCode = import.meta.env.VITE_PERSON_WITH_ROLES_FISCAL_CODE;
+    const errors: AIWSError = [];
+    const roles = await client.personService.getPersonCorporateRoles({
+      fiscalCode,
+      errors,
+    });
+
+    expect(roles).toBeDefined();
+    expect(Array.isArray(roles)).toBe(true);
+    expect(roles?.length).toBeGreaterThan(0);
+  })
 });

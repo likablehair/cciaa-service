@@ -1,11 +1,13 @@
 import { AxiosInstance } from 'axios';
-import { XMLParser } from 'fast-xml-parser';
-import { CompanySummary } from 'src/main';
-import { CompanyManager as CompanyManager } from 'src/managers/company.manager';
+import { CompanyManager } from 'src/managers/company.manager';
 import { FinancialManager } from 'src/managers/financial.manager';
 import { SharesManager } from 'src/managers/shares.manager';
 import { ParsedAIWSResponse } from 'src/types/aiws.types';
-import { CompanyFinancials, CompanyShare } from 'src/types/company.types';
+import type {
+  CompanyFinancials,
+  CompanyShare,
+  CompanySummary,
+} from 'src/types/company.types';
 import {
   AIWS_ERROR_MESSAGES,
   AIWSError,
@@ -13,80 +15,12 @@ import {
   pushAIWSError,
 } from 'src/types/aiwsError.type';
 import { CompanyAdministrativeDataSummary } from 'src/types/administrativeDataCompany.types';
-import { DateTime } from 'luxon';
+import { parseUnknownDate } from 'src/helpers/date.helper';
+import { BaseService } from './base.service';
 
-export class CompanyService {
-  private parser = new XMLParser({
-    ignoreAttributes: false,
-    attributeNamePrefix: '',
-  });
-
-  constructor(private client: AxiosInstance) {}
-
-  private checkResponseStatus(status: number, errors: AIWSError) {
-    switch (status) {
-      case 200:
-        return true;
-
-      case 402:
-        pushAIWSError(
-          errors,
-          AIWS_ERROR_CODE.INSUFFICIENT_CREDIT,
-          [],
-          AIWS_ERROR_MESSAGES.INSUFFICIENT_CREDIT,
-        );
-        return false;
-      case 404:
-        pushAIWSError(
-          errors,
-          AIWS_ERROR_CODE.COMPANY_NOT_FOUND,
-          [],
-          AIWS_ERROR_MESSAGES.COMPANY_NOT_FOUND,
-        );
-        return false;
-
-      case 503:
-        pushAIWSError(
-          errors,
-          AIWS_ERROR_CODE.SERVICE_UNAVAILABLE,
-          [],
-          AIWS_ERROR_MESSAGES.SERVICE_UNAVAILABLE,
-        );
-        return false;
-
-      case 500:
-        pushAIWSError(
-          errors,
-          AIWS_ERROR_CODE.HTTP_ERROR,
-          [],
-          AIWS_ERROR_MESSAGES.HTTP_ERROR,
-        );
-        return false;
-
-      default:
-        pushAIWSError(
-          errors,
-          AIWS_ERROR_CODE.HTTP_ERROR,
-          [],
-          AIWS_ERROR_MESSAGES.HTTP_ERROR,
-        );
-        return false;
-    }
-  }
-
-  private parseXml<T>(xmlData: string, errors: AIWSError): T | null {
-    try {
-      return this.parser.parse(xmlData) as T;
-    } catch (err) {
-      console.log(err);
-      pushAIWSError(
-        errors,
-        AIWS_ERROR_CODE.XML_PARSE_ERROR,
-        [],
-        AIWS_ERROR_MESSAGES.XML_PARSE_ERROR,
-      );
-      return null;
-    }
+export class CompanyService extends BaseService {
+  constructor(private client: AxiosInstance) {
+    super();
   }
 
   /** Estrae il riepilogo anagrafico di una società tramite P.IVA */
@@ -231,9 +165,9 @@ export class CompanyService {
       console.log(err);
       pushAIWSError(
         errors,
-        AIWS_ERROR_CODE.SHARES_FETCH_FAILED,
-        ['companyShares'],
-        AIWS_ERROR_MESSAGES.SHARES_FETCH_FAILED,
+        AIWS_ERROR_CODE.HTTP_ERROR,
+        ['companyIncorporationDate'],
+        AIWS_ERROR_MESSAGES.HTTP_ERROR,
       );
     }
   }
@@ -293,9 +227,7 @@ export class CompanyService {
       ...summary,
       ...financials,
       companyShares: shares,
-      companyIncorporationDate: constitutionDate
-        ? DateTime.fromFormat(constitutionDate, 'dd/MM/yyyy')
-        : null,
+      companyIncorporationDate: parseUnknownDate(constitutionDate),
       aiwsError: errors,
     };
   }
