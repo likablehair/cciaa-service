@@ -26,8 +26,62 @@ export interface ParsedAIWSResponse<DataType = any> {
       };
     };
     ListaImpreseRI?: ImpresaResponse;
+    ListaAnagrafiche?: ListaAnagraficheResponse;
+    VisuraEffetto?: VisuraEffettoResponse;
     dati?: DataType;
   };
+}
+
+export interface ListaAnagraficheResponse {
+  AnagraficaNominativo: AnagraficaNominativo | AnagraficaNominativo[];
+}
+
+export interface AnagraficaNominativo {
+  ProgressivoAnagrafica?: number;
+  KAnagrafica: string;
+  Fonte: string;
+  Nominativo: string;
+  CodFisc: string;
+  SglPrvRes: string;
+  DescPrvRes: string;
+  CodComRes: string;
+  DescComRes: string;
+  IndirizzoRes: string;
+}
+
+export interface VisuraEffettoResponse {
+  AnagraficaNominativo: AnagraficaNominativo;
+  RegistroProtesti: RegistroProtesti | RegistroProtesti[];
+}
+
+export interface RegistroProtesti {
+  DatiRegistroProtesti: DatiRegistroProtesti;
+  InformazioniEffetto: InformazioniEffetto;
+}
+
+export interface DatiRegistroProtesti {
+  CciaaPubblicazione: string;
+  DtIscrRegistro: string;
+}
+
+export interface InformazioniEffetto {
+  DtLevata: string;
+  SglPrvLevata: string;
+  DescPrvLevata: string;
+  CodComLevata: string;
+  DescComLevata: string;
+  DtEmissioneEffetto: string;
+  DtScadenzaEffetto: string;
+  CodTipoEffetto: string;
+  DescTipoEffetto: string;
+  ImportoValutaLevata: number;
+  CodValutaLevata: string;
+  DescValutaLevata: string;
+  CodMancatoPagRepr: string;
+  DescMancatoPagRepr: string;
+  CodStatoEffetto: string;
+  DescStatoEffetto: string;
+  NRepertorio: number;
 }
 
 export interface ImpresaResponse {
@@ -191,3 +245,30 @@ export interface IndirizzoXml {
   'n-civico': string;
   cap: string;
 }
+
+type ParsedAIWSResponseBase = ParsedAIWSResponse<never>;
+type ParsedAIWSResponseBaseRisposta = ParsedAIWSResponseBase['Risposta'];
+
+export type ParsedListaAnagraficheResponse = Omit<
+  ParsedAIWSResponseBase,
+  'Risposta'
+> & {
+  Risposta: Omit<
+    ParsedAIWSResponseBaseRisposta,
+    'dati' | 'VisuraEffetto' | 'ListaAnagrafiche' | 'ListaImpreseRI'
+  > & {
+    ListaAnagrafiche: ListaAnagraficheResponse;
+  };
+};
+
+export type ParsedVisuraEffettoResponse = Omit<
+  ParsedAIWSResponseBase,
+  'Risposta'
+> & {
+  Risposta: Omit<
+    ParsedAIWSResponseBaseRisposta,
+    'dati' | 'ListaAnagrafiche' | 'VisuraEffetto' | 'ListaImpreseRI'
+  > & {
+    VisuraEffetto: VisuraEffettoResponse;
+  };
+};

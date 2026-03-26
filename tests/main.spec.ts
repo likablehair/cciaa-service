@@ -253,4 +253,32 @@ describe('CCIAA Integration - Dati Aziendali', () => {
     expect(Array.isArray(roles?.personCorporateRoles)).toBe(true);
     expect(roles?.personCorporateRoles?.length).toBe(0);
   });
+
+  test('Recupero protesti di una persona', async () => {
+    const fiscalCode = import.meta.env.VITE_PERSON_WITH_PROTESTS_FISCAL_CODE;
+    const errors: AIWSError = [];
+    const protests = await client.protestService.getPersonProtests({
+      fiscalCode,
+      errors,
+    });
+
+    expect(protests).toBeDefined();
+    expect(Array.isArray(protests)).toBe(true);
+    expect(protests!.length).toBeGreaterThan(0);
+    expect(protests?.every((p) => Array.isArray(p.protestData))).toBe(true);
+  });
+
+  test('Recupero protesti di una persona senza protesti', async () => {
+    const fiscalCode = import.meta.env.VITE_PERSON_WITHOUT_PROTESTS_FISCAL_CODE;
+    const errors: AIWSError = [];
+    const protests = await client.protestService.getPersonProtests({
+      fiscalCode,
+      errors,
+    });
+
+    expect(protests).toBeDefined();
+    expect(Array.isArray(protests)).toBe(true);
+    expect(protests!.length).toBe(1);
+    expect(protests?.[0].protestData.length).toBe(0);
+  });
 });

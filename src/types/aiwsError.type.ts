@@ -3,6 +3,7 @@ export enum AIWS_ERROR_CODE {
   FINANCIALS_FETCH_FAILED = 'FINANCIALS_FETCH_FAILED',
   SHARES_FETCH_FAILED = 'SHARES_FETCH_FAILED',
   PERSONA_DATA_FETCH_FAILED = 'PERSONA_DATA_FETCH_FAILED',
+  PROTESTS_FETCH_FAILED = 'PROTESTS_FETCH_FAILED',
   MISSING_CCIAA_OR_REA = 'MISSING_CCIAA_OR_REA',
   COMPANY_NOT_FOUND = 'COMPANY_NOT_FOUND',
   PERSONA_DATA_NOT_FOUND = 'PERSONA_DATA_NOT_FOUND',
@@ -28,6 +29,7 @@ export const AIWS_ERROR_MESSAGES: Record<AIWS_ERROR_CODE, string> = {
   FINANCIALS_FETCH_FAILED: 'Errore nel recupero dati finanziari',
   PERSONA_DATA_FETCH_FAILED: 'Errore nel recupero dati persona',
   SHARES_FETCH_FAILED: 'Errore nel recupero quote societarie',
+  PROTESTS_FETCH_FAILED: 'Errore nel recupero protesti',
   MISSING_CCIAA_OR_REA:
     'Impossibile recuperare quote societarie: CCIAA o REA mancanti',
   COMPANY_NOT_FOUND: 'Impresa non trovata',
