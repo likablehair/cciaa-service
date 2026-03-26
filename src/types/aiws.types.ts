@@ -246,6 +246,153 @@ export interface IndirizzoXml {
   cap: string;
 }
 
+export interface PartecipazioniData {
+  Riconoscimento: Riconoscimento;
+  'blocchi-persona': BlocchiPersonaPartecipazioni;
+}
+
+export interface BlocchiPersonaPartecipazioni {
+  'dati-identificativi': DatiIdentificativiPartecipazioni;
+  'partecipazioni-societa': PartecipazioniSocieta;
+  'tabella-partecipate-impresa'?:
+    | TabellaPartecipateImpresa
+    | TabellaPartecipateImpresa[];
+  'info-blocco-attuale'?: InfoBloccoAttualePartecipazioni;
+}
+
+export interface DatiIdentificativiPartecipazioni {
+  'c-fonte': string;
+  fonte: string;
+  'tipo-soggetto': string;
+  'descrizione-tipo-soggetto': string;
+  'tipo-impresa': string;
+  'descrizione-tipo-impresa': string;
+  'dt-iscrizione-ri': string;
+  'dt-atto-costituzione': string;
+  'dt-ultimo-protocollo': string;
+  denominazione: string;
+  'c-fiscale': string;
+  'partita-iva': string;
+  cciaa: string;
+  'n-rea': string;
+  'forma-giuridica': FormaGiuridica;
+  'indirizzo-localizzazione': IndirizzoXml;
+  'indirizzo-posta-certificata'?: string;
+  'persone-rappresentanti'?: PersoneRappresentanti;
+}
+
+export interface PersoneRappresentanti {
+  'persona-rappresentante':
+    | PersonaRappresentante
+    | PersonaRappresentante[];
+}
+
+export interface PersonaRappresentante {
+  cognome: string;
+  nome: string;
+  carica: string;
+  'f-rappresentante-ri': string;
+}
+
+export interface PartecipazioniSocieta {
+  'anagrafica-titolare': AnagraficaTitolare;
+  partecipazioni: {
+    partecipazione: PartecipazioneSocieta | PartecipazioneSocieta[];
+  };
+}
+
+export interface AnagraficaTitolare {
+  'c-tipo': string;
+  tipo: string;
+  'c-fiscale': string;
+  denominazione: string;
+}
+
+export interface PartecipazioneSocieta {
+  'f-paragrafo-attuale': string;
+  'estremi-pratica': EstremiPraticaPartecipazione;
+  'f-ultimo-elenco-soci'?: string;
+  'estremi-impresa': EstremiImpresaPartecipata;
+  'capitale-sociale': CapitaleSocialePartecipazione;
+  riquadri: RiquadriPartecipazione;
+}
+
+export interface EstremiPraticaPartecipazione {
+  'c-pratica': string;
+  'c-tipo-adempimento': string;
+  'tipo-adempimento': string;
+  'dt-atto'?: string;
+  cciaa: string;
+  anno: string;
+  n: string;
+  'dt-protocollo': string;
+  'dt-deposito': string;
+}
+
+export interface EstremiImpresaPartecipata {
+  'c-fiscale': string;
+  denominazione: string;
+  'forma-giuridica': FormaGiuridica;
+}
+
+export interface CapitaleSocialePartecipazione {
+  'c-valuta': string;
+  valuta: string;
+  ammontare: string;
+}
+
+export interface RiquadriPartecipazione {
+  riquadro: RiquadroPartecipazione | RiquadroPartecipazione[];
+}
+
+export interface RiquadroPartecipazione {
+  'composizione-quote': ComposizioneQuotePartecipazione;
+  'diritti-partecipazione'?: DirittiPartecipazione;
+}
+
+export interface ComposizioneQuotePartecipazione {
+  'c-valuta': string;
+  valuta: string;
+  'valore-nominale': string;
+}
+
+export interface DirittiPartecipazione {
+  'diritto-partecipazione': DirittoPartecipazione | DirittoPartecipazione[];
+}
+
+export interface DirittoPartecipazione {
+  'c-tipo': string;
+  tipo: string;
+}
+
+export interface TabellaPartecipateImpresa {
+  'c-tipo-partecipate': string;
+  'tipo-partecipate': string;
+  partecipata: PartecipataImpresa | PartecipataImpresa[];
+}
+
+export interface PartecipataImpresa {
+  'c-fiscale': string;
+  denominazione: string;
+  'dt-inizio-partecipazione': string;
+  'quote-diritti-impresa': QuoteDirittiImpresa;
+}
+
+export interface QuoteDirittiImpresa {
+  'quota-diritto-impresa': QuotaDirittoImpresa | QuotaDirittoImpresa[];
+}
+
+export interface QuotaDirittoImpresa {
+  'c-tipo-diritto': string;
+  'tipo-diritto': string;
+  'valore-nominale': string;
+  'percentuale-capitale': string;
+}
+
+export interface InfoBloccoAttualePartecipazioni {
+  'n-partecipazioni': string;
+}
+
 type ParsedAIWSResponseBase = ParsedAIWSResponse<never>;
 type ParsedAIWSResponseBaseRisposta = ParsedAIWSResponseBase['Risposta'];
 
@@ -270,5 +417,17 @@ export type ParsedVisuraEffettoResponse = Omit<
     'dati' | 'ListaAnagrafiche' | 'VisuraEffetto' | 'ListaImpreseRI'
   > & {
     VisuraEffetto: VisuraEffettoResponse;
+  };
+};
+
+export type ParsedPartecipazioniResponse = Omit<
+  ParsedAIWSResponseBase,
+  'Risposta'
+> & {
+  Risposta: Omit<
+    ParsedAIWSResponseBaseRisposta,
+    'dati' | 'ListaAnagrafiche' | 'VisuraEffetto' | 'ListaImpreseRI'
+  > & {
+    dati: PartecipazioniData;
   };
 };
