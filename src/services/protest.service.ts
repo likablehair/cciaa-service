@@ -1,9 +1,17 @@
-import { AxiosInstance } from "axios";
-import { BaseService } from "./base.service";
-import { AIWS_ERROR_CODE, AIWS_ERROR_MESSAGES, AIWSError, pushAIWSError } from "src/types/aiwsError.type";
-import { ParsedListaAnagraficheResponse, ParsedVisuraEffettoResponse } from "src/types/aiws.types";
-import { ProtestData } from "src/types/protest.type";
-import { ProtestManager } from "src/managers/protest.manager";
+import { AxiosInstance } from 'axios';
+import { BaseService } from './base.service';
+import {
+  AIWS_ERROR_CODE,
+  AIWS_ERROR_MESSAGES,
+  AIWSError,
+  pushAIWSError,
+} from 'src/types/aiwsError.type';
+import {
+  ParsedListaAnagraficheResponse,
+  ParsedVisuraEffettoResponse,
+} from 'src/types/aiws.types';
+import { ProtestData } from 'src/types/protest.type';
+import { ProtestManager } from 'src/managers/protest.manager';
 
 export class ProtestService extends BaseService {
   constructor(private client: AxiosInstance) {
@@ -14,10 +22,13 @@ export class ProtestService extends BaseService {
   public async getPersonProtests(params: {
     fiscalCode: string;
     errors: AIWSError;
-  }): Promise<{
-    protestData: ProtestData[]
-    htmlBuffer?: Buffer;
-  }[] | null> {
+  }): Promise<
+    | {
+        protestData: ProtestData[];
+        htmlBuffer?: Buffer;
+      }[]
+    | null
+  > {
     const { fiscalCode, errors } = params;
     try {
       const responseSearch = await this.client.get(
@@ -38,7 +49,7 @@ export class ProtestService extends BaseService {
       const jsonSearch = this.parseXml<ParsedListaAnagraficheResponse>(
         responseSearch.data,
         errors,
-      )
+      );
 
       if (!jsonSearch) return null;
 
@@ -47,25 +58,31 @@ export class ProtestService extends BaseService {
         return [{ protestData: [], htmlBuffer: undefined }];
       }
 
-      const personalDataList = jsonSearch.Risposta.ListaAnagrafiche?.AnagraficaNominativo
-        ? Array.isArray(jsonSearch.Risposta.ListaAnagrafiche.AnagraficaNominativo)
+      const personalDataList = jsonSearch.Risposta.ListaAnagrafiche
+        ?.AnagraficaNominativo
+        ? Array.isArray(
+            jsonSearch.Risposta.ListaAnagrafiche.AnagraficaNominativo,
+          )
           ? jsonSearch.Risposta.ListaAnagrafiche.AnagraficaNominativo
           : [jsonSearch.Risposta.ListaAnagrafiche.AnagraficaNominativo]
-          : [];
-          
-      const protestManager = new ProtestManager()
-      const protestDataList: { protestData: ProtestData[]; htmlBuffer?: Buffer }[] = [];
+        : [];
+
+      const protestManager = new ProtestManager();
+      const protestDataList: {
+        protestData: ProtestData[];
+        htmlBuffer?: Buffer;
+      }[] = [];
       for (const personalData of personalDataList) {
         const kAnagrafica = personalData.KAnagrafica;
         const protestReportResponse = await this.client.get(
           '/registroprotesti/protesti/visura/effetto/anagrafica/xml',
           { params: { KAnagrafica: kAnagrafica, responseType: 'text' } },
-        )
+        );
 
         const protestReportFileResponse = await this.client.get(
           '/registroprotesti/protesti/visura/effetto/anagrafica/html',
           { params: { KAnagrafica: kAnagrafica, responseType: 'text' } },
-        )
+        );
 
         if (
           !this.checkResponseStatus({
@@ -95,23 +112,27 @@ export class ProtestService extends BaseService {
 
         if (!jsonProtestReport) continue;
 
-        const protestData = jsonProtestReport.Risposta.VisuraEffetto?.RegistroProtesti
-          ? Array.isArray(jsonProtestReport.Risposta.VisuraEffetto.RegistroProtesti)
+        const protestData = jsonProtestReport.Risposta.VisuraEffetto
+          ?.RegistroProtesti
+          ? Array.isArray(
+              jsonProtestReport.Risposta.VisuraEffetto.RegistroProtesti,
+            )
             ? jsonProtestReport.Risposta.VisuraEffetto.RegistroProtesti
             : [jsonProtestReport.Risposta.VisuraEffetto.RegistroProtesti]
           : [];
 
-        const mappedProtestData = await protestManager.mapRegistroProtestiToProtestData({
-          kAnagrafica,
-          fiscalCode,
-          registroProtestiData: protestData,
-          errors
-        });
+        const mappedProtestData =
+          await protestManager.mapRegistroProtestiToProtestData({
+            kAnagrafica,
+            fiscalCode,
+            registroProtestiData: protestData,
+            errors,
+          });
 
         protestDataList.push({
           protestData: mappedProtestData,
-          htmlBuffer
-        })
+          htmlBuffer,
+        });
       }
 
       return protestDataList;

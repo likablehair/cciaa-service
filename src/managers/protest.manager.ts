@@ -1,14 +1,14 @@
-import { parseUnknownDate } from "src/helpers/date.helper";
-import { RegistroProtesti } from "src/types/aiws.types";
-import { AIWSError } from "src/types/aiwsError.type";
-import { ProtestData } from "src/types/protest.type";
+import { parseUnknownDate } from 'src/helpers/date.helper';
+import { RegistroProtesti } from 'src/types/aiws.types';
+import { AIWSError } from 'src/types/aiwsError.type';
+import { ProtestData } from 'src/types/protest.type';
 
 export class ProtestManager {
   public async mapRegistroProtestiToProtestData(params: {
     kAnagrafica: string;
     fiscalCode: string;
     registroProtestiData: RegistroProtesti[];
-    errors: AIWSError
+    errors: AIWSError;
   }): Promise<ProtestData[]> {
     const { registroProtestiData, errors, kAnagrafica, fiscalCode } = params;
     if (!registroProtestiData || registroProtestiData.length === 0) {
@@ -26,7 +26,9 @@ export class ProtestManager {
         fiscalCode,
         protestRegisterData: {
           cciaaPublication: DatiRegistroProtesti.CciaaPubblicazione,
-          registrationRegisterDate: parseUnknownDate(DatiRegistroProtesti.DtIscrRegistro)
+          registrationRegisterDate: parseUnknownDate(
+            DatiRegistroProtesti.DtIscrRegistro,
+          ),
         },
         protestInformation: {
           protestDate: parseUnknownDate(InformazioniEffetto.DtLevata),
@@ -34,7 +36,9 @@ export class ProtestManager {
           protestProvinceDescription: InformazioniEffetto.DescPrvLevata,
           protestMunicipalityCode: InformazioniEffetto.CodComLevata,
           protestMunicipalityDescription: InformazioniEffetto.DescComLevata,
-          billIssueDate: parseUnknownDate(InformazioniEffetto.DtEmissioneEffetto),
+          billIssueDate: parseUnknownDate(
+            InformazioniEffetto.DtEmissioneEffetto,
+          ),
           billDueDate: parseUnknownDate(InformazioniEffetto.DtScadenzaEffetto),
           billTypeCode: InformazioniEffetto.CodTipoEffetto,
           billTypeDescription: InformazioniEffetto.DescTipoEffetto,
@@ -45,10 +49,10 @@ export class ProtestManager {
           nonPaymentReasonDescription: InformazioniEffetto.DescMancatoPagRepr,
           billStatusCode: InformazioniEffetto.CodStatoEffetto,
           billStatusDescription: InformazioniEffetto.DescStatoEffetto,
-          repertoryNumber: InformazioniEffetto.NRepertorio
+          repertoryNumber: InformazioniEffetto.NRepertorio,
         },
-        aiwsError: errors
-      }
+        aiwsError: errors,
+      };
 
       protestDataList.push(protestData);
     }

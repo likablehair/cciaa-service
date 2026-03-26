@@ -1,5 +1,5 @@
-import { DateTime } from "luxon";
-import { AIWSError } from "./aiwsError.type";
+import { DateTime } from 'luxon';
+import { AIWSError } from './aiwsError.type';
 
 export type ProtestData = {
   kAnagrafica: string;
@@ -7,7 +7,7 @@ export type ProtestData = {
   protestRegisterData: {
     cciaaPublication: string;
     registrationRegisterDate: DateTime | null;
-  }
+  };
   protestInformation: {
     protestDate: DateTime | null;
     protestProvinceCode: string;
@@ -26,6 +26,6 @@ export type ProtestData = {
     billStatusCode: string;
     billStatusDescription: string;
     repertoryNumber: number;
-  }
+  };
   aiwsError?: AIWSError;
-}
+};
