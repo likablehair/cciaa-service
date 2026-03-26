@@ -9,6 +9,7 @@ export enum AIWS_ERROR_CODE {
   INSUFFICIENT_CREDIT = 'INSUFFICIENT_CREDIT',
   SERVICE_UNAVAILABLE = 'SERVICE_UNAVAILABLE',
   HTTP_ERROR = 'HTTP_ERROR',
+  BAD_REQUEST = 'BAD_REQUEST',
   XML_PARSE_ERROR = 'XML_PARSE_ERROR',
 
   XBRL_EMPTY = 'XBRL_EMPTY',
@@ -32,6 +33,7 @@ export const AIWS_ERROR_MESSAGES: Record<AIWS_ERROR_CODE, string> = {
   COMPANY_NOT_FOUND: 'Impresa non trovata',
   SERVICE_UNAVAILABLE: 'Servizio temporaneamente non disponibile',
   HTTP_ERROR: 'Errore HTTP del servizio',
+  BAD_REQUEST: 'Richiesta non valida',
   XML_PARSE_ERROR: 'Errore nel parsing XML',
   XBRL_EMPTY:
     'Impossibile recuperare i dati finanziari. Errore nel recupero del file XBRL.',

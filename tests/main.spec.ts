@@ -1,5 +1,5 @@
 import { AIWSClient } from 'src/main';
-import { AIWSError } from 'src/types/aiwsError.type';
+import { AIWS_ERROR_CODE, AIWSError } from 'src/types/aiwsError.type';
 import { CompanyShare, CompanySummary } from 'src/types/company.types';
 import { CompanyAdministrativeDataSummary } from 'src/types/administrativeDataCompany.types';
 import { expect, test, describe, beforeAll } from 'vitest';
@@ -222,7 +222,35 @@ describe('CCIAA Integration - Dati Aziendali', () => {
     });
 
     expect(roles).toBeDefined();
-    expect(Array.isArray(roles)).toBe(true);
-    expect(roles?.length).toBeGreaterThan(0);
+    expect(roles?.personCorporateRoles).toBeDefined();
+    expect(Array.isArray(roles?.personCorporateRoles)).toBe(true);
+    expect(roles?.personCorporateRoles?.length).toBeGreaterThan(0);
   });
+
+  test('Recupero ruoli aziendali di una persona con codice fiscale non esistente', async () => {
+    const fiscalCode = 'AAAAAA00A00A000A';
+    const errors: AIWSError = [];
+    const roles = await client.personService.getPersonCorporateRoles({
+      fiscalCode,
+      errors,
+    });
+
+    expect(roles).toBeNull();
+    expect(errors.length).toBeGreaterThan(0);
+    expect(errors[0].code).toBe(AIWS_ERROR_CODE.BAD_REQUEST);
+  })
+
+  test('Recupero ruoli aziendali di una persona senza ruoli', async () => {
+    const fiscalCode = import.meta.env.VITE_PERSON_WITHOUT_ROLES_FISCAL_CODE;
+    const errors: AIWSError = [];
+    const roles = await client.personService.getPersonCorporateRoles({
+      fiscalCode,
+      errors,
+    });
+
+    expect(roles).toBeDefined();
+    expect(roles?.personCorporateRoles).toBeDefined();
+    expect(Array.isArray(roles?.personCorporateRoles)).toBe(true);
+    expect(roles?.personCorporateRoles?.length).toBe(0);
+  })
 });

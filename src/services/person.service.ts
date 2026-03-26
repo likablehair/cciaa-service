@@ -19,26 +19,52 @@ export class PersonService extends BaseService {
   public async getPersonCorporateRoles(params: {
     fiscalCode: string;
     errors: AIWSError;
-  }): Promise<PersonCorporateRole[] | null> {
+  }): Promise<
+     {
+      personCorporateRoles: PersonCorporateRole[],
+      htmlBuffer?: Buffer
+    } | null
+  > {
+    const { fiscalCode, errors } = params;
     try {
+
       const response = await this.client.get(
         'registroimprese/persone/scheda/codicefiscale/xml',
-        { params: { codiceFiscale: params.fiscalCode } },
+        { params: { codiceFiscale: fiscalCode, responseType: 'text' } },
       );
 
-      if (!this.checkResponseStatus(response.status, params.errors))
+      const fileResponse = await this.client.get(
+        'registroimprese/persone/scheda/codicefiscale/html',
+        { params: { codiceFiscale: fiscalCode, responseType: 'text' } },
+      );
+
+      if (!this.checkResponseStatus({ status: response.status, data: response.data, errors })) {
         return null;
+      }
+
+      let htmlBuffer: Buffer | undefined = undefined
+      if (this.checkResponseStatus({ status: fileResponse.status, data: fileResponse.data, errors })) {
+        htmlBuffer = Buffer.from(fileResponse.data, 'utf8');
+      }
 
       const json = this.parseXml<ParsedAIWSResponse<PersonaData>>(
         response.data,
-        params.errors,
+        errors,
       );
       if (!json) return null;
+      
+      const numRoles = json.Risposta.Testata.Riepilogo.NumeroPosizioni;
+      if (numRoles === 0) {
+        return {
+          personCorporateRoles: [],
+          htmlBuffer: undefined
+        }
+      }
 
       const personaData = json.Risposta?.dati;
       if (!personaData) {
         pushAIWSError(
-          params.errors,
+          errors,
           AIWS_ERROR_CODE.PERSONA_DATA_NOT_FOUND,
           ['fiscalCode'],
           AIWS_ERROR_MESSAGES.PERSONA_DATA_NOT_FOUND,
@@ -47,14 +73,19 @@ export class PersonService extends BaseService {
       }
 
       const manager = new PersonManager();
-      return manager.mapPersonaDataToCorporateRoles({
+      const corporateRoles = await manager.mapPersonaDataToCorporateRoles({
         personaData,
-        errors: params.errors,
+        errors: errors,
       });
+
+      return {
+        personCorporateRoles: corporateRoles,
+        htmlBuffer
+      }
     } catch (err) {
       console.log(err);
       pushAIWSError(
-        params.errors,
+        errors,
         AIWS_ERROR_CODE.PERSONA_DATA_FETCH_FAILED,
         ['fiscalCode'],
         AIWS_ERROR_MESSAGES.PERSONA_DATA_FETCH_FAILED,

@@ -31,10 +31,12 @@ export class CompanyService extends BaseService {
     try {
       const response = await this.client.get(
         '/registroimprese/imprese/ricerca/partitaiva',
-        { params: { partitaIva: vatNumber, fSoloSedi: 'S' } },
+        { params: { partitaIva: vatNumber, fSoloSedi: 'S', responseType: 'text' } },
       );
 
-      if (!this.checkResponseStatus(response.status, errors)) return null;
+      if (!this.checkResponseStatus({ status: response.status, data: response.data, errors })) {
+        return null;
+      }
 
       const json = this.parseXml<ParsedAIWSResponse>(response.data, errors);
       if (!json) return null;
@@ -73,10 +75,12 @@ export class CompanyService extends BaseService {
     try {
       const response = await this.client.get(
         '/registroimprese/bilanci/xbrl/codicefiscale',
-        { params: { codiceFiscale: vatNumber, allXbrl: 'S' } },
+        { params: { codiceFiscale: vatNumber, allXbrl: 'S', responseType: 'text' } },
       );
 
-      if (!this.checkResponseStatus(response.status, errors)) return null;
+      if (!this.checkResponseStatus({ status: response.status, data: response.data, errors })) {
+        return null;
+      }
 
       const json = this.parseXml<ParsedAIWSResponse>(response.data, errors);
       if (!json) return null;
@@ -104,10 +108,12 @@ export class CompanyService extends BaseService {
     try {
       const response = await this.client.get(
         '/registroimprese/output/impresa/soci/nrea/xml',
-        { params: { cciaa, nRea } },
+        { params: { cciaa, nRea }, responseType: 'text' },
       );
 
-      if (!this.checkResponseStatus(response.status, errors)) return [];
+      if (!this.checkResponseStatus({ status: response.status, data: response.data, errors })) {
+        return [];
+      }
 
       const json = this.parseXml<ParsedAIWSResponse>(response.data, errors);
       if (!json) return [];
@@ -148,10 +154,12 @@ export class CompanyService extends BaseService {
     try {
       const response = await this.client.get(
         '/registroimprese/output/impresa/blocchi/nrea/xml',
-        { params: { cciaa, nRea, blocco } },
+        { params: { cciaa, nRea, blocco }, responseType: 'text' },
       );
 
-      if (!this.checkResponseStatus(response.status, errors)) return;
+      if (!this.checkResponseStatus({ status: response.status, data: response.data, errors })) {
+        return
+      }
 
       const rawJson = this.parseXml<ParsedAIWSResponse>(response.data, errors);
       if (!rawJson) return;

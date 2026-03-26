@@ -1,4 +1,5 @@
 import { XMLParser } from 'fast-xml-parser';
+import { ParsedAIWSResponse } from 'src/types/aiws.types';
 import {
   AIWS_ERROR_CODE,
   AIWS_ERROR_MESSAGES,
@@ -14,12 +15,37 @@ export abstract class BaseService {
 
   constructor() {}
 
-  protected checkResponseStatus(status: number, errors: AIWSError) {
+  protected checkResponseStatus(params: {
+    status: number;
+    data?: unknown;
+    errors: AIWSError;
+  }): boolean {
+    const { status, data, errors } = params;
     if (status >= 200 && status < 300) {
       return true;
     }
 
+    let jsonData: ParsedAIWSResponse<null> | undefined = undefined;
+    const xmlData = this.extractXmlData(data);
+    if (xmlData) {
+      try {
+        jsonData = this.parseXml<ParsedAIWSResponse<null>>(xmlData, errors) || undefined;
+      } catch (err) {
+        console.log('Error parsing error response XML:', err);
+      }
+    }
+
+    const errorDescription = jsonData?.Risposta?.Testata?.Messaggio?.DescrizioneErrore;
+
     switch (status) {
+      case 400:
+        pushAIWSError(
+          errors,
+          AIWS_ERROR_CODE.BAD_REQUEST,
+          [],
+          AIWS_ERROR_MESSAGES.BAD_REQUEST + (errorDescription ? `: ${errorDescription}` : ''),
+        );
+        return false;
       case 402:
         pushAIWSError(
           errors,
@@ -51,7 +77,7 @@ export abstract class BaseService {
           errors,
           AIWS_ERROR_CODE.HTTP_ERROR,
           [],
-          AIWS_ERROR_MESSAGES.HTTP_ERROR,
+          AIWS_ERROR_MESSAGES.HTTP_ERROR + (errorDescription ? `: ${errorDescription}` : ''),
         );
         return false;
 
@@ -60,7 +86,7 @@ export abstract class BaseService {
           errors,
           AIWS_ERROR_CODE.HTTP_ERROR,
           [],
-          AIWS_ERROR_MESSAGES.HTTP_ERROR,
+          AIWS_ERROR_MESSAGES.HTTP_ERROR + (errorDescription ? `: ${errorDescription}` : ''),
         );
         return false;
     }
@@ -79,5 +105,21 @@ export abstract class BaseService {
       );
       return null;
     }
+  }
+
+  private extractXmlData(data: unknown): string | null {
+    if (typeof data === 'string') {
+      return data;
+    }
+
+    if (data instanceof ArrayBuffer) {
+      return new TextDecoder().decode(new Uint8Array(data));
+    }
+
+    if (ArrayBuffer.isView(data)) {
+      return new TextDecoder().decode(data);
+    }
+
+    return null;
   }
 }
