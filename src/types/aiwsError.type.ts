@@ -32,7 +32,8 @@ export const AIWS_ERROR_MESSAGES: Record<AIWS_ERROR_CODE, string> = {
   PERSONA_DATA_FETCH_FAILED: 'Errore nel recupero dati persona',
   SHARES_FETCH_FAILED: 'Errore nel recupero quote societarie',
   PROTESTS_FETCH_FAILED: 'Errore nel recupero protesti',
-  PERSON_CORPORATE_HOLDINGS_FETCH_FAILED: 'Errore nel recupero partecipazioni societarie',
+  PERSON_CORPORATE_HOLDINGS_FETCH_FAILED:
+    'Errore nel recupero partecipazioni societarie',
   CORPORATE_HOLDINGS_NOT_FOUND: 'Partecipazioni societarie non trovate',
   MISSING_CCIAA_OR_REA:
     'Impossibile recuperare quote societarie: CCIAA o REA mancanti',

@@ -285,17 +285,17 @@ describe('CCIAA Integration - Dati Aziendali', () => {
   test('Recupero partecipazioni societarie di una persona giuridica', async () => {
     const fiscalCode = import.meta.env.VITE_PERSON_WITH_HOLDINGS_FISCAL_CODE;
     const errors: AIWSError = [];
-    const holdings = await client.ownershipStructureService.getPersonCorporateHoldings({
-      fiscalCode,
-      errors,
-    });
+    const holdings =
+      await client.ownershipStructureService.getPersonCorporateHoldings({
+        fiscalCode,
+        errors,
+      });
 
     expect(holdings).toBeDefined();
     expect(holdings?.personCorporateHoldings).toBeDefined();
-    expect(Array.isArray(holdings?.personCorporateHoldings.holderIdentity)).toBe(
-      false,
-    );
+    expect(
+      Array.isArray(holdings?.personCorporateHoldings.holderIdentity),
+    ).toBe(false);
     expect(holdings?.personCorporateHoldings.holderIdentity).toBeDefined();
-    
-  })
+  });
 });

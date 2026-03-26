@@ -1,10 +1,14 @@
-import { AxiosInstance } from "axios";
-import { BaseService } from "./base.service";
-import { AIWSError } from "src/main";
-import { CorporateHoldingStructure } from "src/types/ownershipStructure.types";
-import { AIWS_ERROR_CODE, AIWS_ERROR_MESSAGES, pushAIWSError } from "src/types/aiwsError.type";
-import { ParsedPartecipazioniResponse } from "src/types/aiws.types";
-import { OwnershipStructureManager } from "src/managers/ownershipStructure.manager";
+import { AxiosInstance } from 'axios';
+import { BaseService } from './base.service';
+import { AIWSError } from 'src/main';
+import { CorporateHoldingStructure } from 'src/types/ownershipStructure.types';
+import {
+  AIWS_ERROR_CODE,
+  AIWS_ERROR_MESSAGES,
+  pushAIWSError,
+} from 'src/types/aiwsError.type';
+import { ParsedPartecipazioniResponse } from 'src/types/aiws.types';
+import { OwnershipStructureManager } from 'src/managers/ownershipStructure.manager';
 
 export class OwnershipStructureService extends BaseService {
   constructor(private client: AxiosInstance) {
@@ -14,9 +18,9 @@ export class OwnershipStructureService extends BaseService {
   /** Recupera la struttura proprietaria di una società */
   public async getPersonCorporateHoldings(params: {
     fiscalCode: string;
-    errors: AIWSError
+    errors: AIWSError;
   }): Promise<{
-    personCorporateHoldings: CorporateHoldingStructure,
+    personCorporateHoldings: CorporateHoldingStructure;
     htmlBuffer?: Buffer;
   } | null> {
     const { fiscalCode, errors } = params;
@@ -61,7 +65,7 @@ export class OwnershipStructureService extends BaseService {
 
       const numHoldings = json.Risposta.Testata.Riepilogo.NumeroPosizioni;
       if (numHoldings === 0) {
-        return null
+        return null;
       }
 
       const partecipazioniData = json.Risposta?.dati;
@@ -76,10 +80,13 @@ export class OwnershipStructureService extends BaseService {
       }
 
       const ownershipStructureManager = new OwnershipStructureManager();
-      const corporateHoldings = await ownershipStructureManager.mapPartecipazioniDataToCorporateHoldingStructure({
-        partecipazioniData: partecipazioniData,
-        errors,
-      });
+      const corporateHoldings =
+        await ownershipStructureManager.mapPartecipazioniDataToCorporateHoldingStructure(
+          {
+            partecipazioniData: partecipazioniData,
+            errors,
+          },
+        );
 
       if (!corporateHoldings) {
         pushAIWSError(
@@ -95,7 +102,6 @@ export class OwnershipStructureService extends BaseService {
         personCorporateHoldings: corporateHoldings,
         htmlBuffer,
       };
-
     } catch (err) {
       console.log(err);
       pushAIWSError(
@@ -104,7 +110,7 @@ export class OwnershipStructureService extends BaseService {
         ['fiscalCode'],
         AIWS_ERROR_MESSAGES.PERSON_CORPORATE_HOLDINGS_FETCH_FAILED,
       );
-      return null; 
+      return null;
     }
   }
 }

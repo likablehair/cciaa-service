@@ -31,6 +31,8 @@ export default class AIWSClient {
     this.companyService = new CompanyService(this.axiosInstance);
     this.personService = new PersonService(this.axiosInstance);
     this.protestService = new ProtestService(this.axiosInstance);
-    this.ownershipStructureService = new OwnershipStructureService(this.axiosInstance);
+    this.ownershipStructureService = new OwnershipStructureService(
+      this.axiosInstance,
+    );
   }
 }

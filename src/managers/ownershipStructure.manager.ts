@@ -52,8 +52,7 @@ export class OwnershipStructureManager {
             riquadro['composizione-quote']?.['valore-nominale'],
           ),
           currencyCode: riquadro['composizione-quote']?.['c-valuta'] || null,
-          currencyDescription:
-            riquadro['composizione-quote']?.valuta || null,
+          currencyDescription: riquadro['composizione-quote']?.valuta || null,
           rights: toArray(
             riquadro['diritti-partecipazione']?.['diritto-partecipazione'],
           ).map((right) => ({
@@ -76,8 +75,7 @@ export class OwnershipStructureManager {
           protocolDate: parseUnknownDate(practice?.['dt-protocollo']),
           depositDate: parseUnknownDate(practice?.['dt-deposito']),
         },
-        isLatestShareholdersList:
-          participation['f-ultimo-elenco-soci'] === 'S',
+        isLatestShareholdersList: participation['f-ultimo-elenco-soci'] === 'S',
         targetCompany: {
           fiscalCode: targetCompany?.['c-fiscale'] || null,
           companyName: targetCompany?.denominazione || null,
@@ -116,72 +114,71 @@ export class OwnershipStructureManager {
 
     return {
       companyIdentity: {
-          sourceCode: datiIdentificativi['c-fonte'] || null,
-          sourceDescription: datiIdentificativi.fonte || null,
-          subjectTypeCode: datiIdentificativi['tipo-soggetto'] || null,
-          subjectTypeDescription:
-            datiIdentificativi['descrizione-tipo-soggetto'] || null,
-          companyTypeCode: datiIdentificativi['tipo-impresa'] || null,
-          companyTypeDescription:
-            datiIdentificativi['descrizione-tipo-impresa'] || null,
-          registrationDate: parseUnknownDate(
-            datiIdentificativi['dt-iscrizione-ri'],
-          ),
-          incorporationDate: parseUnknownDate(
-            datiIdentificativi['dt-atto-costituzione'],
-          ),
-          lastFilingDate: parseUnknownDate(
-            datiIdentificativi['dt-ultimo-protocollo'],
-          ),
-          companyName: datiIdentificativi.denominazione || null,
-          fiscalCode: datiIdentificativi['c-fiscale'] || null,
-          vatNumber: datiIdentificativi['partita-iva'] || null,
-          cciaaCode: datiIdentificativi.cciaa || null,
-          reaNumber: datiIdentificativi['n-rea'] || null,
-          legalFormCode: datiIdentificativi['forma-giuridica']?.c || null,
-          legalFormDescription:
-            datiIdentificativi['forma-giuridica']?.['#text'] || null,
-          locationAddress: datiIdentificativi['indirizzo-localizzazione']
-            ? {
-                municipalityCode:
-                  datiIdentificativi['indirizzo-localizzazione']['c-comune'] ||
-                  null,
-                municipality:
-                  datiIdentificativi['indirizzo-localizzazione'].comune || null,
-                province:
-                  datiIdentificativi['indirizzo-localizzazione'].provincia ||
-                  null,
-                toponymCode:
-                  datiIdentificativi['indirizzo-localizzazione']['c-toponimo'] ||
-                  null,
-                toponym:
-                  datiIdentificativi['indirizzo-localizzazione'].toponimo ||
-                  null,
-                street:
-                  datiIdentificativi['indirizzo-localizzazione'].via || null,
-                streetNumber:
-                  datiIdentificativi['indirizzo-localizzazione']['n-civico'] ||
-                  null,
-                postalCode:
-                  datiIdentificativi['indirizzo-localizzazione'].cap || null,
-              }
-            : null,
-          pec: datiIdentificativi['indirizzo-posta-certificata'] || null,
-          representatives,
-        },
-        holderIdentity: {
-          holderTypeCode: anagraficaTitolare?.['c-tipo'] || null,
-          holderTypeDescription: anagraficaTitolare?.tipo || null,
-          fiscalCode: anagraficaTitolare?.['c-fiscale'] || null,
-          companyName: anagraficaTitolare?.denominazione || null,
-        },
-        participations,
-        currentParticipatedCompanies,
-        totalCurrentParticipations:
-          parseLocaleNumber(
-            blocchiPersona['info-blocco-attuale']?.['n-partecipazioni'],
-          ) ?? null,
-        aiwsError: errors,
-      };
+        sourceCode: datiIdentificativi['c-fonte'] || null,
+        sourceDescription: datiIdentificativi.fonte || null,
+        subjectTypeCode: datiIdentificativi['tipo-soggetto'] || null,
+        subjectTypeDescription:
+          datiIdentificativi['descrizione-tipo-soggetto'] || null,
+        companyTypeCode: datiIdentificativi['tipo-impresa'] || null,
+        companyTypeDescription:
+          datiIdentificativi['descrizione-tipo-impresa'] || null,
+        registrationDate: parseUnknownDate(
+          datiIdentificativi['dt-iscrizione-ri'],
+        ),
+        incorporationDate: parseUnknownDate(
+          datiIdentificativi['dt-atto-costituzione'],
+        ),
+        lastFilingDate: parseUnknownDate(
+          datiIdentificativi['dt-ultimo-protocollo'],
+        ),
+        companyName: datiIdentificativi.denominazione || null,
+        fiscalCode: datiIdentificativi['c-fiscale'] || null,
+        vatNumber: datiIdentificativi['partita-iva'] || null,
+        cciaaCode: datiIdentificativi.cciaa || null,
+        reaNumber: datiIdentificativi['n-rea'] || null,
+        legalFormCode: datiIdentificativi['forma-giuridica']?.c || null,
+        legalFormDescription:
+          datiIdentificativi['forma-giuridica']?.['#text'] || null,
+        locationAddress: datiIdentificativi['indirizzo-localizzazione']
+          ? {
+              municipalityCode:
+                datiIdentificativi['indirizzo-localizzazione']['c-comune'] ||
+                null,
+              municipality:
+                datiIdentificativi['indirizzo-localizzazione'].comune || null,
+              province:
+                datiIdentificativi['indirizzo-localizzazione'].provincia ||
+                null,
+              toponymCode:
+                datiIdentificativi['indirizzo-localizzazione']['c-toponimo'] ||
+                null,
+              toponym:
+                datiIdentificativi['indirizzo-localizzazione'].toponimo || null,
+              street:
+                datiIdentificativi['indirizzo-localizzazione'].via || null,
+              streetNumber:
+                datiIdentificativi['indirizzo-localizzazione']['n-civico'] ||
+                null,
+              postalCode:
+                datiIdentificativi['indirizzo-localizzazione'].cap || null,
+            }
+          : null,
+        pec: datiIdentificativi['indirizzo-posta-certificata'] || null,
+        representatives,
+      },
+      holderIdentity: {
+        holderTypeCode: anagraficaTitolare?.['c-tipo'] || null,
+        holderTypeDescription: anagraficaTitolare?.tipo || null,
+        fiscalCode: anagraficaTitolare?.['c-fiscale'] || null,
+        companyName: anagraficaTitolare?.denominazione || null,
+      },
+      participations,
+      currentParticipatedCompanies,
+      totalCurrentParticipations:
+        parseLocaleNumber(
+          blocchiPersona['info-blocco-attuale']?.['n-partecipazioni'],
+        ) ?? null,
+      aiwsError: errors,
+    };
   }
 }

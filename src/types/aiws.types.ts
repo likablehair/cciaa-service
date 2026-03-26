@@ -282,9 +282,7 @@ export interface DatiIdentificativiPartecipazioni {
 }
 
 export interface PersoneRappresentanti {
-  'persona-rappresentante':
-    | PersonaRappresentante
-    | PersonaRappresentante[];
+  'persona-rappresentante': PersonaRappresentante | PersonaRappresentante[];
 }
 
 export interface PersonaRappresentante {
