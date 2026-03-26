@@ -238,7 +238,7 @@ describe('CCIAA Integration - Dati Aziendali', () => {
     expect(roles).toBeNull();
     expect(errors.length).toBeGreaterThan(0);
     expect(errors[0].code).toBe(AIWS_ERROR_CODE.BAD_REQUEST);
-  })
+  });
 
   test('Recupero ruoli aziendali di una persona senza ruoli', async () => {
     const fiscalCode = import.meta.env.VITE_PERSON_WITHOUT_ROLES_FISCAL_CODE;
@@ -252,5 +252,5 @@ describe('CCIAA Integration - Dati Aziendali', () => {
     expect(roles?.personCorporateRoles).toBeDefined();
     expect(Array.isArray(roles?.personCorporateRoles)).toBe(true);
     expect(roles?.personCorporateRoles?.length).toBe(0);
-  })
+  });
 });

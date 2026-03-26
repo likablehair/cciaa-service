@@ -19,15 +19,12 @@ export class PersonService extends BaseService {
   public async getPersonCorporateRoles(params: {
     fiscalCode: string;
     errors: AIWSError;
-  }): Promise<
-     {
-      personCorporateRoles: PersonCorporateRole[],
-      htmlBuffer?: Buffer
-    } | null
-  > {
+  }): Promise<{
+    personCorporateRoles: PersonCorporateRole[];
+    htmlBuffer?: Buffer;
+  } | null> {
     const { fiscalCode, errors } = params;
     try {
-
       const response = await this.client.get(
         'registroimprese/persone/scheda/codicefiscale/xml',
         { params: { codiceFiscale: fiscalCode, responseType: 'text' } },
@@ -38,12 +35,24 @@ export class PersonService extends BaseService {
         { params: { codiceFiscale: fiscalCode, responseType: 'text' } },
       );
 
-      if (!this.checkResponseStatus({ status: response.status, data: response.data, errors })) {
+      if (
+        !this.checkResponseStatus({
+          status: response.status,
+          data: response.data,
+          errors,
+        })
+      ) {
         return null;
       }
 
-      let htmlBuffer: Buffer | undefined = undefined
-      if (this.checkResponseStatus({ status: fileResponse.status, data: fileResponse.data, errors })) {
+      let htmlBuffer: Buffer | undefined = undefined;
+      if (
+        this.checkResponseStatus({
+          status: fileResponse.status,
+          data: fileResponse.data,
+          errors,
+        })
+      ) {
         htmlBuffer = Buffer.from(fileResponse.data, 'utf8');
       }
 
@@ -52,13 +61,13 @@ export class PersonService extends BaseService {
         errors,
       );
       if (!json) return null;
-      
+
       const numRoles = json.Risposta.Testata.Riepilogo.NumeroPosizioni;
       if (numRoles === 0) {
         return {
           personCorporateRoles: [],
-          htmlBuffer: undefined
-        }
+          htmlBuffer: undefined,
+        };
       }
 
       const personaData = json.Risposta?.dati;
@@ -80,8 +89,8 @@ export class PersonService extends BaseService {
 
       return {
         personCorporateRoles: corporateRoles,
-        htmlBuffer
-      }
+        htmlBuffer,
+      };
     } catch (err) {
       console.log(err);
       pushAIWSError(

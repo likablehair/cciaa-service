@@ -31,10 +31,22 @@ export class CompanyService extends BaseService {
     try {
       const response = await this.client.get(
         '/registroimprese/imprese/ricerca/partitaiva',
-        { params: { partitaIva: vatNumber, fSoloSedi: 'S', responseType: 'text' } },
+        {
+          params: {
+            partitaIva: vatNumber,
+            fSoloSedi: 'S',
+            responseType: 'text',
+          },
+        },
       );
 
-      if (!this.checkResponseStatus({ status: response.status, data: response.data, errors })) {
+      if (
+        !this.checkResponseStatus({
+          status: response.status,
+          data: response.data,
+          errors,
+        })
+      ) {
         return null;
       }
 
@@ -75,10 +87,22 @@ export class CompanyService extends BaseService {
     try {
       const response = await this.client.get(
         '/registroimprese/bilanci/xbrl/codicefiscale',
-        { params: { codiceFiscale: vatNumber, allXbrl: 'S', responseType: 'text' } },
+        {
+          params: {
+            codiceFiscale: vatNumber,
+            allXbrl: 'S',
+            responseType: 'text',
+          },
+        },
       );
 
-      if (!this.checkResponseStatus({ status: response.status, data: response.data, errors })) {
+      if (
+        !this.checkResponseStatus({
+          status: response.status,
+          data: response.data,
+          errors,
+        })
+      ) {
         return null;
       }
 
@@ -111,7 +135,13 @@ export class CompanyService extends BaseService {
         { params: { cciaa, nRea }, responseType: 'text' },
       );
 
-      if (!this.checkResponseStatus({ status: response.status, data: response.data, errors })) {
+      if (
+        !this.checkResponseStatus({
+          status: response.status,
+          data: response.data,
+          errors,
+        })
+      ) {
         return [];
       }
 
@@ -157,8 +187,14 @@ export class CompanyService extends BaseService {
         { params: { cciaa, nRea, blocco }, responseType: 'text' },
       );
 
-      if (!this.checkResponseStatus({ status: response.status, data: response.data, errors })) {
-        return
+      if (
+        !this.checkResponseStatus({
+          status: response.status,
+          data: response.data,
+          errors,
+        })
+      ) {
+        return;
       }
 
       const rawJson = this.parseXml<ParsedAIWSResponse>(response.data, errors);

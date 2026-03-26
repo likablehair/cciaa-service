@@ -29,13 +29,15 @@ export abstract class BaseService {
     const xmlData = this.extractXmlData(data);
     if (xmlData) {
       try {
-        jsonData = this.parseXml<ParsedAIWSResponse<null>>(xmlData, errors) || undefined;
+        jsonData =
+          this.parseXml<ParsedAIWSResponse<null>>(xmlData, errors) || undefined;
       } catch (err) {
         console.log('Error parsing error response XML:', err);
       }
     }
 
-    const errorDescription = jsonData?.Risposta?.Testata?.Messaggio?.DescrizioneErrore;
+    const errorDescription =
+      jsonData?.Risposta?.Testata?.Messaggio?.DescrizioneErrore;
 
     switch (status) {
       case 400:
@@ -43,7 +45,8 @@ export abstract class BaseService {
           errors,
           AIWS_ERROR_CODE.BAD_REQUEST,
           [],
-          AIWS_ERROR_MESSAGES.BAD_REQUEST + (errorDescription ? `: ${errorDescription}` : ''),
+          AIWS_ERROR_MESSAGES.BAD_REQUEST +
+            (errorDescription ? `: ${errorDescription}` : ''),
         );
         return false;
       case 402:
@@ -77,7 +80,8 @@ export abstract class BaseService {
           errors,
           AIWS_ERROR_CODE.HTTP_ERROR,
           [],
-          AIWS_ERROR_MESSAGES.HTTP_ERROR + (errorDescription ? `: ${errorDescription}` : ''),
+          AIWS_ERROR_MESSAGES.HTTP_ERROR +
+            (errorDescription ? `: ${errorDescription}` : ''),
         );
         return false;
 
@@ -86,7 +90,8 @@ export abstract class BaseService {
           errors,
           AIWS_ERROR_CODE.HTTP_ERROR,
           [],
-          AIWS_ERROR_MESSAGES.HTTP_ERROR + (errorDescription ? `: ${errorDescription}` : ''),
+          AIWS_ERROR_MESSAGES.HTTP_ERROR +
+            (errorDescription ? `: ${errorDescription}` : ''),
         );
         return false;
     }
