@@ -10,7 +10,7 @@ import {
   ParsedListaAnagraficheResponse,
   ParsedVisuraEffettoResponse,
 } from 'src/types/aiws.types';
-import { ProtestData } from 'src/types/protest.type';
+import { ProtestReport } from 'src/types/protest.type';
 import { ProtestManager } from 'src/managers/protest.manager';
 
 export class ProtestService extends BaseService {
@@ -24,7 +24,7 @@ export class ProtestService extends BaseService {
     errors: AIWSError;
   }): Promise<
     | {
-        protestData: ProtestData[];
+        protestReport: ProtestReport;
         htmlBuffer?: Buffer;
       }[]
     | null
@@ -55,7 +55,7 @@ export class ProtestService extends BaseService {
 
       const numProtests = jsonSearch.Risposta.Testata.Riepilogo.NumeroPosizioni;
       if (numProtests === 0) {
-        return [{ protestData: [], htmlBuffer: undefined }];
+        return [];
       }
 
       const personalDataList = jsonSearch.Risposta.ListaAnagrafiche
@@ -69,7 +69,7 @@ export class ProtestService extends BaseService {
 
       const protestManager = new ProtestManager();
       const protestDataList: {
-        protestData: ProtestData[];
+        protestReport: ProtestReport;
         htmlBuffer?: Buffer;
       }[] = [];
       for (const personalData of personalDataList) {
@@ -112,25 +112,19 @@ export class ProtestService extends BaseService {
 
         if (!jsonProtestReport) continue;
 
-        const protestData = jsonProtestReport.Risposta.VisuraEffetto
-          ?.RegistroProtesti
-          ? Array.isArray(
-              jsonProtestReport.Risposta.VisuraEffetto.RegistroProtesti,
-            )
-            ? jsonProtestReport.Risposta.VisuraEffetto.RegistroProtesti
-            : [jsonProtestReport.Risposta.VisuraEffetto.RegistroProtesti]
-          : [];
-
         const mappedProtestData =
-          await protestManager.mapRegistroProtestiToProtestData({
-            kAnagrafica,
+          await protestManager.mapVisuraEffettoResponseToProtestReport({
+            visuraEffettoResponse: jsonProtestReport.Risposta.VisuraEffetto,
             fiscalCode,
-            registroProtestiData: protestData,
             errors,
           });
 
+        if (!mappedProtestData) {
+          continue;
+        }
+
         protestDataList.push({
-          protestData: mappedProtestData,
+          protestReport: mappedProtestData,
           htmlBuffer,
         });
       }

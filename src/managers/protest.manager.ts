@@ -1,62 +1,80 @@
 import { parseUnknownDate } from 'src/helpers/date.helper';
-import { RegistroProtesti } from 'src/types/aiws.types';
+import { VisuraEffettoResponse } from 'src/types/aiws.types';
 import { AIWSError } from 'src/types/aiwsError.type';
-import { ProtestData } from 'src/types/protest.type';
+import { ProtestReport } from 'src/types/protest.type';
 
 export class ProtestManager {
-  public async mapRegistroProtestiToProtestData(params: {
-    kAnagrafica: string;
+  public async mapVisuraEffettoResponseToProtestReport(params: {
+    visuraEffettoResponse: VisuraEffettoResponse;
     fiscalCode: string;
-    registroProtestiData: RegistroProtesti[];
     errors: AIWSError;
-  }): Promise<ProtestData[]> {
-    const { registroProtestiData, errors, kAnagrafica, fiscalCode } = params;
-    if (!registroProtestiData || registroProtestiData.length === 0) {
-      return [];
+  }): Promise<ProtestReport | null> {
+    const { visuraEffettoResponse, fiscalCode, errors } = params;
+    if (!visuraEffettoResponse) {
+      return null;
     }
 
-    const protestDataList: ProtestData[] = [];
+    const toArray = <T>(value?: T | T[] | null): T[] => {
+      if (!value) return [];
+      return Array.isArray(value) ? value : [value];
+    };
 
-    for (const protesto of registroProtestiData) {
-      const DatiRegistroProtesti = protesto.DatiRegistroProtesti;
-      const InformazioniEffetto = protesto.InformazioniEffetto;
-
-      const protestData: ProtestData = {
-        kAnagrafica,
-        fiscalCode,
-        protestRegisterData: {
-          cciaaPublication: DatiRegistroProtesti.CciaaPubblicazione,
+    const anagrafica = visuraEffettoResponse.AnagraficaNominativo;
+    const protestEntries = toArray(visuraEffettoResponse.RegistroProtesti).map(
+      (protesto) => ({
+        registerData: {
+          cciaaPublication: protesto.DatiRegistroProtesti?.CciaaPubblicazione,
           registrationRegisterDate: parseUnknownDate(
-            DatiRegistroProtesti.DtIscrRegistro,
+            protesto.DatiRegistroProtesti?.DtIscrRegistro,
           ),
         },
-        protestInformation: {
-          protestDate: parseUnknownDate(InformazioniEffetto.DtLevata),
-          protestProvinceCode: InformazioniEffetto.SglPrvLevata,
-          protestProvinceDescription: InformazioniEffetto.DescPrvLevata,
-          protestMunicipalityCode: InformazioniEffetto.CodComLevata,
-          protestMunicipalityDescription: InformazioniEffetto.DescComLevata,
+        effectInformation: {
+          protestDate: parseUnknownDate(protesto.InformazioniEffetto?.DtLevata),
+          protestProvinceCode: protesto.InformazioniEffetto?.SglPrvLevata,
+          protestProvinceDescription:
+            protesto.InformazioniEffetto?.DescPrvLevata,
+          protestMunicipalityCode: protesto.InformazioniEffetto?.CodComLevata,
+          protestMunicipalityDescription:
+            protesto.InformazioniEffetto?.DescComLevata,
           billIssueDate: parseUnknownDate(
-            InformazioniEffetto.DtEmissioneEffetto,
+            protesto.InformazioniEffetto?.DtEmissioneEffetto,
           ),
-          billDueDate: parseUnknownDate(InformazioniEffetto.DtScadenzaEffetto),
-          billTypeCode: InformazioniEffetto.CodTipoEffetto,
-          billTypeDescription: InformazioniEffetto.DescTipoEffetto,
-          protestAmount: InformazioniEffetto.ImportoValutaLevata,
-          protestCurrencyCode: InformazioniEffetto.CodValutaLevata,
-          protestCurrencyDescription: InformazioniEffetto.DescValutaLevata,
-          nonPaymentReasonCode: InformazioniEffetto.CodMancatoPagRepr,
-          nonPaymentReasonDescription: InformazioniEffetto.DescMancatoPagRepr,
-          billStatusCode: InformazioniEffetto.CodStatoEffetto,
-          billStatusDescription: InformazioniEffetto.DescStatoEffetto,
-          repertoryNumber: InformazioniEffetto.NRepertorio,
+          billDueDate: parseUnknownDate(
+            protesto.InformazioniEffetto?.DtScadenzaEffetto,
+          ),
+          billTypeCode: protesto.InformazioniEffetto?.CodTipoEffetto,
+          billTypeDescription: protesto.InformazioniEffetto?.DescTipoEffetto,
+          protestAmount: protesto.InformazioniEffetto?.ImportoValutaLevata,
+          protestCurrencyCode: protesto.InformazioniEffetto?.CodValutaLevata,
+          protestCurrencyDescription:
+            protesto.InformazioniEffetto?.DescValutaLevata,
+          nonPaymentReasonCode:
+            protesto.InformazioniEffetto?.CodMancatoPagRepr,
+          nonPaymentReasonDescription:
+            protesto.InformazioniEffetto?.DescMancatoPagRepr,
+          billStatusCode: protesto.InformazioniEffetto?.CodStatoEffetto,
+          billStatusDescription: protesto.InformazioniEffetto?.DescStatoEffetto,
+          repertoryNumber: protesto.InformazioniEffetto?.NRepertorio,
         },
-        aiwsError: errors,
-      };
+      }),
+    );
 
-      protestDataList.push(protestData);
-    }
-
-    return protestDataList;
+    return {
+      anagraphicKey: anagrafica?.KAnagrafica || null,
+      fiscalCode: fiscalCode || anagrafica?.CodFisc || null,
+      holderIdentity: {
+        fullName: anagrafica?.Nominativo || null,
+        sourceCode: anagrafica?.Fonte || null,
+        fiscalCode: anagrafica?.CodFisc || null,
+        residenceProvinceCode: anagrafica?.SglPrvRes || null,
+        residenceProvinceDescription: anagrafica?.DescPrvRes || null,
+        residenceMunicipalityCode: anagrafica?.CodComRes || null,
+        residenceMunicipalityDescription: anagrafica?.DescComRes || null,
+        residenceAddress: anagrafica?.IndirizzoRes || null,
+      },
+      protestEffects: protestEntries,
+      totalProtests: protestEntries.length,
+      aiwsError: errors,
+    };
   }
 }
