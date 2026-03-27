@@ -267,7 +267,9 @@ describe('CCIAA Integration - Dati Aziendali', () => {
     expect(protests!.length).toBeGreaterThan(0);
     expect(protests?.[0].protestReport).toBeDefined();
     expect(protests?.[0].protestReport.fiscalCode).toBe(fiscalCode);
-    expect(protests?.[0].protestReport.protestEffects.length).toBeGreaterThan(0);
+    expect(protests?.[0].protestReport.protestEffects.length).toBeGreaterThan(
+      0,
+    );
   });
 
   test('Recupero protesti di una persona senza protesti', async () => {
@@ -277,7 +279,7 @@ describe('CCIAA Integration - Dati Aziendali', () => {
       fiscalCode,
       errors,
     });
-    
+
     expect(protests).toBeDefined();
     expect(Array.isArray(protests)).toBe(true);
     expect(protests!.length).toBe(0);

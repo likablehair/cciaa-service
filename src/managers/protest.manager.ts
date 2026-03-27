@@ -48,8 +48,7 @@ export class ProtestManager {
           protestCurrencyCode: protesto.InformazioniEffetto?.CodValutaLevata,
           protestCurrencyDescription:
             protesto.InformazioniEffetto?.DescValutaLevata,
-          nonPaymentReasonCode:
-            protesto.InformazioniEffetto?.CodMancatoPagRepr,
+          nonPaymentReasonCode: protesto.InformazioniEffetto?.CodMancatoPagRepr,
           nonPaymentReasonDescription:
             protesto.InformazioniEffetto?.DescMancatoPagRepr,
           billStatusCode: protesto.InformazioniEffetto?.CodStatoEffetto,
