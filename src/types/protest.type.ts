@@ -2,7 +2,7 @@ import { DateTime } from 'luxon';
 import { AIWSError } from './aiwsError.type';
 
 export type ProtestReport = {
-  anagraphicKey: string | null;
+  anagraphicKey: string;
   fiscalCode: string | null;
   holderIdentity: ProtestHolderIdentity;
   protestEffects: ProtestEffect[];
@@ -11,14 +11,14 @@ export type ProtestReport = {
 };
 
 export type ProtestHolderIdentity = {
-  fullName: string | null;
-  sourceCode: string | null;
-  fiscalCode: string | null;
-  residenceProvinceCode: string | null;
-  residenceProvinceDescription: string | null;
-  residenceMunicipalityCode: string | null;
-  residenceMunicipalityDescription: string | null;
-  residenceAddress: string | null;
+  fullName: string;
+  sourceCode: string;
+  fiscalCode: string;
+  residenceProvinceCode: string;
+  residenceProvinceDescription: string;
+  residenceMunicipalityCode: string;
+  residenceMunicipalityDescription: string;
+  residenceAddress: string;
 };
 
 export type ProtestEffect = {
@@ -27,26 +27,26 @@ export type ProtestEffect = {
 };
 
 export type ProtestRegisterData = {
-  cciaaPublication: string | null;
+  cciaaPublication: string;
   registrationRegisterDate: DateTime | null;
 };
 
 export type ProtestEffectInformation = {
   protestDate: DateTime | null;
-  protestProvinceCode: string | null;
-  protestProvinceDescription: string | null;
-  protestMunicipalityCode: string | null;
-  protestMunicipalityDescription: string | null;
+  protestProvinceCode: string;
+  protestProvinceDescription: string;
+  protestMunicipalityCode: string;
+  protestMunicipalityDescription: string;
   billIssueDate: DateTime | null;
   billDueDate: DateTime | null;
-  billTypeCode: string | null;
-  billTypeDescription: string | null;
-  protestAmount: number | null;
-  protestCurrencyCode: string | null;
-  protestCurrencyDescription: string | null;
-  nonPaymentReasonCode: string | null;
-  nonPaymentReasonDescription: string | null;
-  billStatusCode: string | null;
-  billStatusDescription: string | null;
-  repertoryNumber: number | null;
+  billTypeCode: string;
+  billTypeDescription: string;
+  protestAmount: number;
+  protestCurrencyCode: string;
+  protestCurrencyDescription: string;
+  nonPaymentReasonCode: string;
+  nonPaymentReasonDescription: string;
+  billStatusCode: string;
+  billStatusDescription: string;
+  repertoryNumber: number;
 };

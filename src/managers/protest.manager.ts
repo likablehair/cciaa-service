@@ -23,53 +23,53 @@ export class ProtestManager {
     const protestEntries = toArray(visuraEffettoResponse.RegistroProtesti).map(
       (protesto) => ({
         registerData: {
-          cciaaPublication: protesto.DatiRegistroProtesti?.CciaaPubblicazione,
+          cciaaPublication: protesto.DatiRegistroProtesti.CciaaPubblicazione,
           registrationRegisterDate: parseUnknownDate(
-            protesto.DatiRegistroProtesti?.DtIscrRegistro,
+            protesto.DatiRegistroProtesti.DtIscrRegistro,
           ),
         },
         effectInformation: {
-          protestDate: parseUnknownDate(protesto.InformazioniEffetto?.DtLevata),
-          protestProvinceCode: protesto.InformazioniEffetto?.SglPrvLevata,
+          protestDate: parseUnknownDate(protesto.InformazioniEffetto.DtLevata),
+          protestProvinceCode: protesto.InformazioniEffetto.SglPrvLevata,
           protestProvinceDescription:
-            protesto.InformazioniEffetto?.DescPrvLevata,
-          protestMunicipalityCode: protesto.InformazioniEffetto?.CodComLevata,
+            protesto.InformazioniEffetto.DescPrvLevata,
+          protestMunicipalityCode: protesto.InformazioniEffetto.CodComLevata,
           protestMunicipalityDescription:
-            protesto.InformazioniEffetto?.DescComLevata,
+            protesto.InformazioniEffetto.DescComLevata,
           billIssueDate: parseUnknownDate(
-            protesto.InformazioniEffetto?.DtEmissioneEffetto,
+            protesto.InformazioniEffetto.DtEmissioneEffetto,
           ),
           billDueDate: parseUnknownDate(
-            protesto.InformazioniEffetto?.DtScadenzaEffetto,
+            protesto.InformazioniEffetto.DtScadenzaEffetto,
           ),
-          billTypeCode: protesto.InformazioniEffetto?.CodTipoEffetto,
-          billTypeDescription: protesto.InformazioniEffetto?.DescTipoEffetto,
-          protestAmount: protesto.InformazioniEffetto?.ImportoValutaLevata,
-          protestCurrencyCode: protesto.InformazioniEffetto?.CodValutaLevata,
+          billTypeCode: protesto.InformazioniEffetto.CodTipoEffetto,
+          billTypeDescription: protesto.InformazioniEffetto.DescTipoEffetto,
+          protestAmount: protesto.InformazioniEffetto.ImportoValutaLevata,
+          protestCurrencyCode: protesto.InformazioniEffetto.CodValutaLevata,
           protestCurrencyDescription:
-            protesto.InformazioniEffetto?.DescValutaLevata,
-          nonPaymentReasonCode: protesto.InformazioniEffetto?.CodMancatoPagRepr,
+            protesto.InformazioniEffetto.DescValutaLevata,
+          nonPaymentReasonCode: protesto.InformazioniEffetto.CodMancatoPagRepr,
           nonPaymentReasonDescription:
-            protesto.InformazioniEffetto?.DescMancatoPagRepr,
-          billStatusCode: protesto.InformazioniEffetto?.CodStatoEffetto,
-          billStatusDescription: protesto.InformazioniEffetto?.DescStatoEffetto,
-          repertoryNumber: protesto.InformazioniEffetto?.NRepertorio,
+            protesto.InformazioniEffetto.DescMancatoPagRepr,
+          billStatusCode: protesto.InformazioniEffetto.CodStatoEffetto,
+          billStatusDescription: protesto.InformazioniEffetto.DescStatoEffetto,
+          repertoryNumber: protesto.InformazioniEffetto.NRepertorio,
         },
       }),
     );
 
     return {
-      anagraphicKey: anagrafica?.KAnagrafica || null,
-      fiscalCode: fiscalCode || anagrafica?.CodFisc || null,
+      anagraphicKey: anagrafica.KAnagrafica,
+      fiscalCode: fiscalCode || anagrafica.CodFisc,
       holderIdentity: {
-        fullName: anagrafica?.Nominativo || null,
-        sourceCode: anagrafica?.Fonte || null,
-        fiscalCode: anagrafica?.CodFisc || null,
-        residenceProvinceCode: anagrafica?.SglPrvRes || null,
-        residenceProvinceDescription: anagrafica?.DescPrvRes || null,
-        residenceMunicipalityCode: anagrafica?.CodComRes || null,
-        residenceMunicipalityDescription: anagrafica?.DescComRes || null,
-        residenceAddress: anagrafica?.IndirizzoRes || null,
+        fullName: anagrafica.Nominativo,
+        sourceCode: anagrafica.Fonte,
+        fiscalCode: anagrafica.CodFisc,
+        residenceProvinceCode: anagrafica.SglPrvRes,
+        residenceProvinceDescription: anagrafica.DescPrvRes,
+        residenceMunicipalityCode: anagrafica.CodComRes,
+        residenceMunicipalityDescription: anagrafica.DescComRes,
+        residenceAddress: anagrafica.IndirizzoRes,
       },
       protestEffects: protestEntries,
       totalProtests: protestEntries.length,
