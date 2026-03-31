@@ -117,11 +117,9 @@ export class OwnershipStructureManager {
         sourceCode: datiIdentificativi['c-fonte'],
         sourceDescription: datiIdentificativi.fonte,
         subjectTypeCode: datiIdentificativi['tipo-soggetto'],
-        subjectTypeDescription:
-          datiIdentificativi['descrizione-tipo-soggetto'],
+        subjectTypeDescription: datiIdentificativi['descrizione-tipo-soggetto'],
         companyTypeCode: datiIdentificativi['tipo-impresa'],
-        companyTypeDescription:
-          datiIdentificativi['descrizione-tipo-impresa'],
+        companyTypeDescription: datiIdentificativi['descrizione-tipo-impresa'],
         registrationDate: parseUnknownDate(
           datiIdentificativi['dt-iscrizione-ri'],
         ),
@@ -141,23 +139,17 @@ export class OwnershipStructureManager {
           datiIdentificativi['forma-giuridica']?.['#text'] || null,
         locationAddress: {
           municipalityCode:
-            datiIdentificativi['indirizzo-localizzazione']['c-comune'] ||
-            null,
-          municipality:
-            datiIdentificativi['indirizzo-localizzazione'].comune,
-          province:
-            datiIdentificativi['indirizzo-localizzazione'].provincia,
+            datiIdentificativi['indirizzo-localizzazione']['c-comune'] || null,
+          municipality: datiIdentificativi['indirizzo-localizzazione'].comune,
+          province: datiIdentificativi['indirizzo-localizzazione'].provincia,
           toponymCode:
             datiIdentificativi['indirizzo-localizzazione']['c-toponimo'] ||
             null,
-          toponym:
-            datiIdentificativi['indirizzo-localizzazione'].toponimo,
-          street:
-            datiIdentificativi['indirizzo-localizzazione'].via,
+          toponym: datiIdentificativi['indirizzo-localizzazione'].toponimo,
+          street: datiIdentificativi['indirizzo-localizzazione'].via,
           streetNumber:
             datiIdentificativi['indirizzo-localizzazione']['n-civico'],
-          postalCode:
-            datiIdentificativi['indirizzo-localizzazione'].cap,
+          postalCode: datiIdentificativi['indirizzo-localizzazione'].cap,
         },
         pec: datiIdentificativi['indirizzo-posta-certificata'] || null,
         representatives,

@@ -27,7 +27,7 @@ export type OwnershipCompanyIdentity = {
   reaNumber: string;
   legalFormCode: string;
   legalFormDescription: string | null;
-  locationAddress: OwnershipAddress ;
+  locationAddress: OwnershipAddress;
   pec: string | null;
   representatives: OwnershipRepresentative[];
 };
