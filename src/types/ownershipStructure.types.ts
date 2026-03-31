@@ -11,38 +11,38 @@ export type CorporateHoldingStructure = {
 };
 
 export type OwnershipCompanyIdentity = {
-  sourceCode: string | null;
-  sourceDescription: string | null;
-  subjectTypeCode: string | null;
-  subjectTypeDescription: string | null;
-  companyTypeCode: string | null;
-  companyTypeDescription: string | null;
+  sourceCode: string;
+  sourceDescription: string;
+  subjectTypeCode: string;
+  subjectTypeDescription: string;
+  companyTypeCode: string;
+  companyTypeDescription: string;
   registrationDate: DateTime | null;
   incorporationDate: DateTime | null;
   lastFilingDate: DateTime | null;
-  companyName: string | null;
-  fiscalCode: string | null;
-  vatNumber: string | null;
-  cciaaCode: string | null;
-  reaNumber: string | null;
-  legalFormCode: string | null;
+  companyName: string;
+  fiscalCode: string;
+  vatNumber: string;
+  cciaaCode: string;
+  reaNumber: string;
+  legalFormCode: string;
   legalFormDescription: string | null;
-  locationAddress: OwnershipAddress | null;
+  locationAddress: OwnershipAddress ;
   pec: string | null;
   representatives: OwnershipRepresentative[];
 };
 
 export type OwnershipHolderIdentity = {
-  holderTypeCode: string | null;
-  holderTypeDescription: string | null;
-  fiscalCode: string | null;
-  companyName: string | null;
+  holderTypeCode: string;
+  holderTypeDescription: string;
+  fiscalCode: string;
+  companyName: string;
 };
 
 export type OwnershipRepresentative = {
-  firstName: string | null;
-  lastName: string | null;
-  roleDescription: string | null;
+  firstName: string;
+  lastName: string;
+  roleDescription: string;
   isRegistryRepresentative: boolean;
 };
 
@@ -56,63 +56,63 @@ export type OwnershipParticipation = {
 };
 
 export type OwnershipPractice = {
-  practiceCode: string | null;
-  filingTypeCode: string | null;
-  filingTypeDescription: string | null;
+  practiceCode: string;
+  filingTypeCode: string;
+  filingTypeDescription: string;
   deedDate: DateTime | null;
-  cciaaCode: string | null;
-  filingYear: string | null;
-  filingNumber: string | null;
+  cciaaCode: string;
+  filingYear: string;
+  filingNumber: string;
   protocolDate: DateTime | null;
   depositDate: DateTime | null;
 };
 
 export type OwnershipTargetCompany = {
-  fiscalCode: string | null;
-  companyName: string | null;
-  legalFormCode: string | null;
+  fiscalCode: string;
+  companyName: string;
+  legalFormCode: string;
   legalFormDescription: string | null;
 };
 
 export type OwnershipMonetaryAmount = {
-  currencyCode: string | null;
-  currencyDescription: string | null;
+  currencyCode: string;
+  currencyDescription: string;
   amount: number | null;
 };
 
 export type OwnershipShareDetail = {
   nominalValue: number | null;
-  currencyCode: string | null;
-  currencyDescription: string | null;
+  currencyCode: string;
+  currencyDescription: string;
   rights: OwnershipRight[];
 };
 
 export type OwnershipRight = {
-  rightTypeCode: string | null;
-  rightTypeDescription: string | null;
+  rightTypeCode: string;
+  rightTypeDescription: string;
 };
 
 export type OwnershipParticipatedCompany = {
-  fiscalCode: string | null;
-  companyName: string | null;
+  fiscalCode: string;
+  companyName: string;
   participationStartDate: DateTime | null;
   rights: OwnershipParticipatedCompanyRight[];
 };
 
 export type OwnershipParticipatedCompanyRight = {
-  rightTypeCode: string | null;
-  rightTypeDescription: string | null;
+  rightTypeCode: string;
+  rightTypeDescription: string;
   nominalValue: number | null;
   capitalPercentage: number | null;
 };
 
 export type OwnershipAddress = {
   municipalityCode: string | null;
-  municipality: string | null;
-  province: string | null;
+  municipality: string;
+  province: string;
   toponymCode: string | null;
-  toponym: string | null;
-  street: string | null;
-  streetNumber: string | null;
-  postalCode: string | null;
+  toponym: string;
+  street: string;
+  streetNumber: string;
+  postalCode: string;
 };

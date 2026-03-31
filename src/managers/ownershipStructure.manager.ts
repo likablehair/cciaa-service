@@ -33,9 +33,9 @@ export class OwnershipStructureManager {
     const representatives = toArray(
       datiIdentificativi['persone-rappresentanti']?.['persona-rappresentante'],
     ).map((representative) => ({
-      firstName: representative.nome || null,
-      lastName: representative.cognome || null,
-      roleDescription: representative.carica || null,
+      firstName: representative.nome,
+      lastName: representative.cognome,
+      roleDescription: representative.carica,
       isRegistryRepresentative: representative['f-rappresentante-ri'] === 'S',
     }));
 
@@ -51,13 +51,13 @@ export class OwnershipStructureManager {
           nominalValue: parseLocaleNumber(
             riquadro['composizione-quote']?.['valore-nominale'],
           ),
-          currencyCode: riquadro['composizione-quote']?.['c-valuta'] || null,
-          currencyDescription: riquadro['composizione-quote']?.valuta || null,
+          currencyCode: riquadro['composizione-quote']?.['c-valuta'],
+          currencyDescription: riquadro['composizione-quote']?.valuta,
           rights: toArray(
             riquadro['diritti-partecipazione']?.['diritto-partecipazione'],
           ).map((right) => ({
-            rightTypeCode: right['c-tipo'] || null,
-            rightTypeDescription: right.tipo || null,
+            rightTypeCode: right['c-tipo'],
+            rightTypeDescription: right.tipo,
           })),
         }),
       );
@@ -65,27 +65,27 @@ export class OwnershipStructureManager {
       return {
         isCurrentSection: participation['f-paragrafo-attuale'] === 'S',
         practice: {
-          practiceCode: practice?.['c-pratica'] || null,
-          filingTypeCode: practice?.['c-tipo-adempimento'] || null,
-          filingTypeDescription: practice?.['tipo-adempimento'] || null,
+          practiceCode: practice?.['c-pratica'],
+          filingTypeCode: practice?.['c-tipo-adempimento'],
+          filingTypeDescription: practice?.['tipo-adempimento'],
           deedDate: parseUnknownDate(practice?.['dt-atto']),
-          cciaaCode: practice?.cciaa || null,
-          filingYear: practice?.anno || null,
-          filingNumber: practice?.n || null,
+          cciaaCode: practice?.cciaa,
+          filingYear: practice?.anno,
+          filingNumber: practice?.n,
           protocolDate: parseUnknownDate(practice?.['dt-protocollo']),
           depositDate: parseUnknownDate(practice?.['dt-deposito']),
         },
         isLatestShareholdersList: participation['f-ultimo-elenco-soci'] === 'S',
         targetCompany: {
-          fiscalCode: targetCompany?.['c-fiscale'] || null,
-          companyName: targetCompany?.denominazione || null,
-          legalFormCode: targetCompany?.['forma-giuridica']?.c || null,
+          fiscalCode: targetCompany?.['c-fiscale'],
+          companyName: targetCompany?.denominazione,
+          legalFormCode: targetCompany?.['forma-giuridica']?.c,
           legalFormDescription:
             targetCompany?.['forma-giuridica']?.['#text'] || null,
         },
         shareCapital: {
-          currencyCode: shareCapital?.['c-valuta'] || null,
-          currencyDescription: shareCapital?.valuta || null,
+          currencyCode: shareCapital?.['c-valuta'],
+          currencyDescription: shareCapital?.valuta,
           amount: parseLocaleNumber(shareCapital?.ammontare),
         },
         shareDetails,
@@ -96,16 +96,16 @@ export class OwnershipStructureManager {
       blocchiPersona['tabella-partecipate-impresa'],
     ).flatMap((table) =>
       toArray(table.partecipata).map((company) => ({
-        fiscalCode: company['c-fiscale'] || null,
-        companyName: company.denominazione || null,
+        fiscalCode: company['c-fiscale'],
+        companyName: company.denominazione,
         participationStartDate: parseUnknownDate(
           company['dt-inizio-partecipazione'],
         ),
         rights: toArray(
           company['quote-diritti-impresa']?.['quota-diritto-impresa'],
         ).map((right) => ({
-          rightTypeCode: right['c-tipo-diritto'] || null,
-          rightTypeDescription: right['tipo-diritto'] || null,
+          rightTypeCode: right['c-tipo-diritto'],
+          rightTypeDescription: right['tipo-diritto'],
           nominalValue: parseLocaleNumber(right['valore-nominale']),
           capitalPercentage: parseLocaleNumber(right['percentuale-capitale']),
         })),
@@ -114,14 +114,14 @@ export class OwnershipStructureManager {
 
     return {
       companyIdentity: {
-        sourceCode: datiIdentificativi['c-fonte'] || null,
-        sourceDescription: datiIdentificativi.fonte || null,
-        subjectTypeCode: datiIdentificativi['tipo-soggetto'] || null,
+        sourceCode: datiIdentificativi['c-fonte'],
+        sourceDescription: datiIdentificativi.fonte,
+        subjectTypeCode: datiIdentificativi['tipo-soggetto'],
         subjectTypeDescription:
-          datiIdentificativi['descrizione-tipo-soggetto'] || null,
-        companyTypeCode: datiIdentificativi['tipo-impresa'] || null,
+          datiIdentificativi['descrizione-tipo-soggetto'],
+        companyTypeCode: datiIdentificativi['tipo-impresa'],
         companyTypeDescription:
-          datiIdentificativi['descrizione-tipo-impresa'] || null,
+          datiIdentificativi['descrizione-tipo-impresa'],
         registrationDate: parseUnknownDate(
           datiIdentificativi['dt-iscrizione-ri'],
         ),
@@ -131,46 +131,42 @@ export class OwnershipStructureManager {
         lastFilingDate: parseUnknownDate(
           datiIdentificativi['dt-ultimo-protocollo'],
         ),
-        companyName: datiIdentificativi.denominazione || null,
-        fiscalCode: datiIdentificativi['c-fiscale'] || null,
-        vatNumber: datiIdentificativi['partita-iva'] || null,
-        cciaaCode: datiIdentificativi.cciaa || null,
-        reaNumber: datiIdentificativi['n-rea'] || null,
-        legalFormCode: datiIdentificativi['forma-giuridica']?.c || null,
+        companyName: datiIdentificativi.denominazione,
+        fiscalCode: datiIdentificativi['c-fiscale'],
+        vatNumber: datiIdentificativi['partita-iva'],
+        cciaaCode: datiIdentificativi.cciaa,
+        reaNumber: datiIdentificativi['n-rea'],
+        legalFormCode: datiIdentificativi['forma-giuridica']?.c,
         legalFormDescription:
           datiIdentificativi['forma-giuridica']?.['#text'] || null,
-        locationAddress: datiIdentificativi['indirizzo-localizzazione']
-          ? {
-              municipalityCode:
-                datiIdentificativi['indirizzo-localizzazione']['c-comune'] ||
-                null,
-              municipality:
-                datiIdentificativi['indirizzo-localizzazione'].comune || null,
-              province:
-                datiIdentificativi['indirizzo-localizzazione'].provincia ||
-                null,
-              toponymCode:
-                datiIdentificativi['indirizzo-localizzazione']['c-toponimo'] ||
-                null,
-              toponym:
-                datiIdentificativi['indirizzo-localizzazione'].toponimo || null,
-              street:
-                datiIdentificativi['indirizzo-localizzazione'].via || null,
-              streetNumber:
-                datiIdentificativi['indirizzo-localizzazione']['n-civico'] ||
-                null,
-              postalCode:
-                datiIdentificativi['indirizzo-localizzazione'].cap || null,
-            }
-          : null,
+        locationAddress: {
+          municipalityCode:
+            datiIdentificativi['indirizzo-localizzazione']['c-comune'] ||
+            null,
+          municipality:
+            datiIdentificativi['indirizzo-localizzazione'].comune,
+          province:
+            datiIdentificativi['indirizzo-localizzazione'].provincia,
+          toponymCode:
+            datiIdentificativi['indirizzo-localizzazione']['c-toponimo'] ||
+            null,
+          toponym:
+            datiIdentificativi['indirizzo-localizzazione'].toponimo,
+          street:
+            datiIdentificativi['indirizzo-localizzazione'].via,
+          streetNumber:
+            datiIdentificativi['indirizzo-localizzazione']['n-civico'],
+          postalCode:
+            datiIdentificativi['indirizzo-localizzazione'].cap,
+        },
         pec: datiIdentificativi['indirizzo-posta-certificata'] || null,
         representatives,
       },
       holderIdentity: {
-        holderTypeCode: anagraficaTitolare?.['c-tipo'] || null,
-        holderTypeDescription: anagraficaTitolare?.tipo || null,
-        fiscalCode: anagraficaTitolare?.['c-fiscale'] || null,
-        companyName: anagraficaTitolare?.denominazione || null,
+        holderTypeCode: anagraficaTitolare?.['c-tipo'],
+        holderTypeDescription: anagraficaTitolare?.tipo,
+        fiscalCode: anagraficaTitolare?.['c-fiscale'],
+        companyName: anagraficaTitolare?.denominazione,
       },
       participations,
       currentParticipatedCompanies,
