@@ -1,7 +1,10 @@
 import { parseUnknownDate } from 'src/helpers/date.helper';
 import { PartecipazioniData } from 'src/types/aiws.types';
 import { AIWS_ERROR_CODE, AIWSError } from 'src/types/aiwsError.type';
-import { CorporateHoldingStructure, OwnershipCompanyOrPersonIdentity } from 'src/types/ownershipStructure.types';
+import {
+  CorporateHoldingStructure,
+  OwnershipCompanyOrPersonIdentity,
+} from 'src/types/ownershipStructure.types';
 
 export class OwnershipStructureManager {
   public async mapPartecipazioniDataToCorporateHoldingStructure(params: {
@@ -42,7 +45,9 @@ export class OwnershipStructureManager {
     }
 
     const representatives = toArray(
-      datiIdentificativi?.['persone-rappresentanti']?.['persona-rappresentante'],
+      datiIdentificativi?.['persone-rappresentanti']?.[
+        'persona-rappresentante'
+      ],
     ).map((representative) => ({
       firstName: representative.nome,
       lastName: representative.cognome,
@@ -50,11 +55,9 @@ export class OwnershipStructureManager {
       isRegistryRepresentative: representative['f-rappresentante-ri'] === 'S',
     }));
 
-    const personType = datiIdentificativi
-      ? 'company'
-      : 'person';
+    const personType = datiIdentificativi ? 'company' : 'person';
 
-    let companyOrPersonIdentity: OwnershipCompanyOrPersonIdentity
+    let companyOrPersonIdentity: OwnershipCompanyOrPersonIdentity;
     if (personType === 'company' && datiIdentificativi) {
       companyOrPersonIdentity = {
         type: 'company',
@@ -101,8 +104,8 @@ export class OwnershipStructureManager {
           },
           pec: datiIdentificativi['indirizzo-posta-certificata'] || null,
           representatives,
-        }
-      } 
+        },
+      };
     } else {
       companyOrPersonIdentity = {
         type: 'person',
@@ -112,7 +115,8 @@ export class OwnershipStructureManager {
           fiscalCode: anagraficaPersona?.['c-fiscale'] || '',
           gender: anagraficaPersona?.sesso || null,
           locationAddress: {
-            municipalityCode: anagraficaPersona?.indirizzo?.['c-comune'] || null,
+            municipalityCode:
+              anagraficaPersona?.indirizzo?.['c-comune'] || null,
             municipality: anagraficaPersona?.indirizzo?.comune || '',
             province: anagraficaPersona?.indirizzo?.provincia || '',
             toponymCode: anagraficaPersona?.indirizzo?.['c-toponimo'] || null,
@@ -124,10 +128,12 @@ export class OwnershipStructureManager {
           dateOfBirth: anagraficaPersona?.['estremi-nascita']?.dt
             ? parseUnknownDate(anagraficaPersona['estremi-nascita'].dt)
             : null,
-          municipalityOfBirth: anagraficaPersona?.['estremi-nascita']?.comune || '',
-          provinceOfBirth: anagraficaPersona?.['estremi-nascita']?.provincia || '',
-        }
-      }
+          municipalityOfBirth:
+            anagraficaPersona?.['estremi-nascita']?.comune || '',
+          provinceOfBirth:
+            anagraficaPersona?.['estremi-nascita']?.provincia || '',
+        },
+      };
     }
 
     const participations = toArray(
@@ -209,7 +215,9 @@ export class OwnershipStructureManager {
         holderTypeCode: anagraficaTitolare?.['c-tipo'] || 'PF',
         holderTypeDescription: anagraficaTitolare?.tipo || 'Persona fisica',
         fiscalCode:
-          anagraficaTitolare?.['c-fiscale'] || anagraficaPersona?.['c-fiscale'] || '',
+          anagraficaTitolare?.['c-fiscale'] ||
+          anagraficaPersona?.['c-fiscale'] ||
+          '',
         companyName:
           anagraficaTitolare?.denominazione ||
           `${anagraficaPersona?.cognome || ''} ${anagraficaPersona?.nome || ''}`.trim(),

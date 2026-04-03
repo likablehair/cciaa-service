@@ -25,7 +25,7 @@ export type OwnershipPersonIdentity = {
   dateOfBirth: DateTime | null;
   municipalityOfBirth: string;
   provinceOfBirth: string;
-}
+};
 
 export type OwnershipCompanyIdentity = {
   sourceCode: string;
