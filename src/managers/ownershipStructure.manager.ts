@@ -1,7 +1,7 @@
 import { parseUnknownDate } from 'src/helpers/date.helper';
 import { PartecipazioniData } from 'src/types/aiws.types';
-import { AIWSError } from 'src/types/aiwsError.type';
-import { CorporateHoldingStructure } from 'src/types/ownershipStructure.types';
+import { AIWS_ERROR_CODE, AIWSError } from 'src/types/aiwsError.type';
+import { CorporateHoldingStructure, OwnershipCompanyOrPersonIdentity } from 'src/types/ownershipStructure.types';
 
 export class OwnershipStructureManager {
   public async mapPartecipazioniDataToCorporateHoldingStructure(params: {
@@ -27,17 +27,108 @@ export class OwnershipStructureManager {
 
     const blocchiPersona = partecipazioniData['blocchi-persona'];
     const datiIdentificativi = blocchiPersona['dati-identificativi'];
+    const anagraficaPersona =
+      blocchiPersona['anagrafica-persona']?.['dati-identificativi-persona'];
     const anagraficaTitolare =
       blocchiPersona['partecipazioni-societa']?.['anagrafica-titolare'];
 
+    if (!datiIdentificativi && !anagraficaPersona) {
+      errors.push({
+        code: AIWS_ERROR_CODE.PERSONA_DATA_NOT_FOUND,
+        message:
+          'Dati identificativi and anagrafica persona are missing in the response',
+      });
+      return null;
+    }
+
     const representatives = toArray(
-      datiIdentificativi['persone-rappresentanti']?.['persona-rappresentante'],
+      datiIdentificativi?.['persone-rappresentanti']?.['persona-rappresentante'],
     ).map((representative) => ({
       firstName: representative.nome,
       lastName: representative.cognome,
       roleDescription: representative.carica,
       isRegistryRepresentative: representative['f-rappresentante-ri'] === 'S',
     }));
+
+    const personType = datiIdentificativi
+      ? 'company'
+      : 'person';
+
+    let companyOrPersonIdentity: OwnershipCompanyOrPersonIdentity
+    if (personType === 'company' && datiIdentificativi) {
+      companyOrPersonIdentity = {
+        type: 'company',
+        companyIdentity: {
+          sourceCode: datiIdentificativi['c-fonte'],
+          sourceDescription: datiIdentificativi.fonte,
+          subjectTypeCode: datiIdentificativi['tipo-soggetto'],
+          subjectTypeDescription:
+            datiIdentificativi['descrizione-tipo-soggetto'],
+          companyTypeCode: datiIdentificativi['tipo-impresa'],
+          companyTypeDescription:
+            datiIdentificativi['descrizione-tipo-impresa'],
+          registrationDate: parseUnknownDate(
+            datiIdentificativi['dt-iscrizione-ri'],
+          ),
+          incorporationDate: parseUnknownDate(
+            datiIdentificativi['dt-atto-costituzione'],
+          ),
+          lastFilingDate: parseUnknownDate(
+            datiIdentificativi['dt-ultimo-protocollo'],
+          ),
+          companyName: datiIdentificativi.denominazione,
+          fiscalCode: datiIdentificativi['c-fiscale'],
+          vatNumber: datiIdentificativi['partita-iva'],
+          cciaaCode: datiIdentificativi.cciaa,
+          reaNumber: datiIdentificativi['n-rea'],
+          legalFormCode: datiIdentificativi['forma-giuridica']?.c,
+          legalFormDescription:
+            datiIdentificativi['forma-giuridica']?.['#text'] || null,
+          locationAddress: {
+            municipalityCode:
+              datiIdentificativi['indirizzo-localizzazione']['c-comune'] ||
+              null,
+            municipality: datiIdentificativi['indirizzo-localizzazione'].comune,
+            province: datiIdentificativi['indirizzo-localizzazione'].provincia,
+            toponymCode:
+              datiIdentificativi['indirizzo-localizzazione']['c-toponimo'] ||
+              null,
+            toponym: datiIdentificativi['indirizzo-localizzazione'].toponimo,
+            street: datiIdentificativi['indirizzo-localizzazione'].via,
+            streetNumber:
+              datiIdentificativi['indirizzo-localizzazione']['n-civico'],
+            postalCode: datiIdentificativi['indirizzo-localizzazione'].cap,
+          },
+          pec: datiIdentificativi['indirizzo-posta-certificata'] || null,
+          representatives,
+        }
+      } 
+    } else {
+      companyOrPersonIdentity = {
+        type: 'person',
+        personIdentity: {
+          firstName: anagraficaPersona?.nome || '',
+          lastName: anagraficaPersona?.cognome || '',
+          fiscalCode: anagraficaPersona?.['c-fiscale'] || '',
+          gender: anagraficaPersona?.sesso || null,
+          locationAddress: {
+            municipalityCode: anagraficaPersona?.indirizzo?.['c-comune'] || null,
+            municipality: anagraficaPersona?.indirizzo?.comune || '',
+            province: anagraficaPersona?.indirizzo?.provincia || '',
+            toponymCode: anagraficaPersona?.indirizzo?.['c-toponimo'] || null,
+            toponym: anagraficaPersona?.indirizzo?.toponimo || '',
+            street: anagraficaPersona?.indirizzo?.via || '',
+            streetNumber: anagraficaPersona?.indirizzo?.['n-civico'] || '',
+            postalCode: anagraficaPersona?.indirizzo?.cap || '',
+          },
+          dateOfBirth: anagraficaPersona?.['estremi-nascita']?.dt
+            ? parseUnknownDate(anagraficaPersona['estremi-nascita'].dt)
+            : null,
+          municipalityOfBirth: anagraficaPersona?.['estremi-nascita']?.comune || '',
+          provinceOfBirth: anagraficaPersona?.['estremi-nascita']?.provincia || '',
+        }
+      }
+    }
 
     const participations = toArray(
       blocchiPersona['partecipazioni-societa']?.partecipazioni?.partecipazione,
@@ -113,52 +204,15 @@ export class OwnershipStructureManager {
     );
 
     return {
-      companyIdentity: {
-        sourceCode: datiIdentificativi['c-fonte'],
-        sourceDescription: datiIdentificativi.fonte,
-        subjectTypeCode: datiIdentificativi['tipo-soggetto'],
-        subjectTypeDescription: datiIdentificativi['descrizione-tipo-soggetto'],
-        companyTypeCode: datiIdentificativi['tipo-impresa'],
-        companyTypeDescription: datiIdentificativi['descrizione-tipo-impresa'],
-        registrationDate: parseUnknownDate(
-          datiIdentificativi['dt-iscrizione-ri'],
-        ),
-        incorporationDate: parseUnknownDate(
-          datiIdentificativi['dt-atto-costituzione'],
-        ),
-        lastFilingDate: parseUnknownDate(
-          datiIdentificativi['dt-ultimo-protocollo'],
-        ),
-        companyName: datiIdentificativi.denominazione,
-        fiscalCode: datiIdentificativi['c-fiscale'],
-        vatNumber: datiIdentificativi['partita-iva'],
-        cciaaCode: datiIdentificativi.cciaa,
-        reaNumber: datiIdentificativi['n-rea'],
-        legalFormCode: datiIdentificativi['forma-giuridica']?.c,
-        legalFormDescription:
-          datiIdentificativi['forma-giuridica']?.['#text'] || null,
-        locationAddress: {
-          municipalityCode:
-            datiIdentificativi['indirizzo-localizzazione']['c-comune'] || null,
-          municipality: datiIdentificativi['indirizzo-localizzazione'].comune,
-          province: datiIdentificativi['indirizzo-localizzazione'].provincia,
-          toponymCode:
-            datiIdentificativi['indirizzo-localizzazione']['c-toponimo'] ||
-            null,
-          toponym: datiIdentificativi['indirizzo-localizzazione'].toponimo,
-          street: datiIdentificativi['indirizzo-localizzazione'].via,
-          streetNumber:
-            datiIdentificativi['indirizzo-localizzazione']['n-civico'],
-          postalCode: datiIdentificativi['indirizzo-localizzazione'].cap,
-        },
-        pec: datiIdentificativi['indirizzo-posta-certificata'] || null,
-        representatives,
-      },
+      companyOrPersonIdentity,
       holderIdentity: {
-        holderTypeCode: anagraficaTitolare?.['c-tipo'],
-        holderTypeDescription: anagraficaTitolare?.tipo,
-        fiscalCode: anagraficaTitolare?.['c-fiscale'],
-        companyName: anagraficaTitolare?.denominazione,
+        holderTypeCode: anagraficaTitolare?.['c-tipo'] || 'PF',
+        holderTypeDescription: anagraficaTitolare?.tipo || 'Persona fisica',
+        fiscalCode:
+          anagraficaTitolare?.['c-fiscale'] || anagraficaPersona?.['c-fiscale'] || '',
+        companyName:
+          anagraficaTitolare?.denominazione ||
+          `${anagraficaPersona?.cognome || ''} ${anagraficaPersona?.nome || ''}`.trim(),
       },
       participations,
       currentParticipatedCompanies,

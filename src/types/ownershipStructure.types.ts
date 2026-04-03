@@ -2,13 +2,30 @@ import { DateTime } from 'luxon';
 import { AIWSError } from './aiwsError.type';
 
 export type CorporateHoldingStructure = {
-  companyIdentity: OwnershipCompanyIdentity;
+  companyOrPersonIdentity: OwnershipCompanyOrPersonIdentity;
   holderIdentity: OwnershipHolderIdentity;
   participations: OwnershipParticipation[];
   currentParticipatedCompanies: OwnershipParticipatedCompany[];
   totalCurrentParticipations: number | null;
   aiwsError: AIWSError | null;
 };
+
+export type OwnershipCompanyOrPersonIdentity = {
+  type: 'company' | 'person';
+  companyIdentity?: OwnershipCompanyIdentity;
+  personIdentity?: OwnershipPersonIdentity;
+};
+
+export type OwnershipPersonIdentity = {
+  firstName: string;
+  lastName: string;
+  fiscalCode: string;
+  gender: string | null;
+  locationAddress: OwnershipAddress;
+  dateOfBirth: DateTime | null;
+  municipalityOfBirth: string;
+  provinceOfBirth: string;
+}
 
 export type OwnershipCompanyIdentity = {
   sourceCode: string;

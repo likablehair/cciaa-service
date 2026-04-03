@@ -252,7 +252,10 @@ export interface PartecipazioniData {
 }
 
 export interface BlocchiPersonaPartecipazioni {
-  'dati-identificativi': DatiIdentificativiPartecipazioni;
+  'anagrafica-persona'?: {
+    'dati-identificativi-persona': DatiIdentificativiPersona;
+  };
+  'dati-identificativi'?: DatiIdentificativiPartecipazioni;
   'partecipazioni-societa': PartecipazioniSocieta;
   'tabella-partecipate-impresa'?:
     | TabellaPartecipateImpresa
