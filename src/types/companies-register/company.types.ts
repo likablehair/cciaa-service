@@ -1,4 +1,4 @@
-import { AIWSError } from './aiwsError.type';
+import { AIWSError } from 'src/types/aiws-error.type';
 import { DateTime } from 'luxon';
 
 export type CompanySummary = {
@@ -23,7 +23,7 @@ export type CompanySummary = {
   companySourceDescription: string;
 
   /* === Attività === */
-  companyDeclaredActivity: string;
+  companyDeclaredActivity: string | null;
   companyAtecoCode: string;
   companyAtecoDescription: string;
   companyAtecoClassificationCode: number;
@@ -55,7 +55,7 @@ export type CompanySummary = {
   aiwsError: AIWSError | null;
 };
 
-export type CompanyFinancials = {
+export type CompanyBalanceSheet = {
   companyProfit: number | null;
   companyRevenue: number | null;
 };

@@ -1,9 +1,10 @@
 import { AIWSClient } from 'src/main';
-import { AIWS_ERROR_CODE, AIWSError } from 'src/types/aiwsError.type';
-import { CompanyShare, CompanySummary } from 'src/types/company.types';
-import { CompanyAdministrativeDataSummary } from 'src/types/administrativeDataCompany.types';
+import { AIWS_ERROR_CODE, AIWSError } from 'src/types/aiws-error.type';
+import { CompanyShare, CompanySummary } from 'src/types/companies-register/company.types';
+import { CompanyAdministrativeDataSummary } from 'src/types/companies-register/administrative-data-company.types';
 import { expect, test, describe, beforeAll } from 'vitest';
 import { DateTime } from 'luxon';
+import { COMPANY_BLOCK } from 'src/services/companies-register/company.service';
 
 describe('CCIAA Integration - Dati Aziendali', () => {
   let client: AIWSClient;
@@ -52,16 +53,16 @@ describe('CCIAA Integration - Dati Aziendali', () => {
   test('Recupero dati finanziari per la società con P.IVA 02650200203', async () => {
     const vat = '02650200203';
     const errors: AIWSError = [];
-    const financialData = await client.companyService.getFinancialsByVatNumber(
+    const balanceSheetData = await client.balanceSheetService.getBalanceSheetByVatNumber(
       vat,
       errors,
     );
 
-    if (financialData) {
-      expect(financialData).toBeDefined();
-      expect(typeof financialData).toBe('object');
-      expect(financialData.companyRevenue).toBeGreaterThan(0);
-      expect(financialData.companyProfit).toBeGreaterThan(0);
+    if (balanceSheetData) {
+      expect(balanceSheetData).toBeDefined();
+      expect(typeof balanceSheetData).toBe('object');
+      expect(balanceSheetData.companyRevenue).toBeGreaterThan(0);
+      expect(balanceSheetData.companyProfit).toBeGreaterThan(0);
     }
   });
 
@@ -100,7 +101,44 @@ describe('CCIAA Integration - Dati Aziendali', () => {
     const blocco = 'AMM';
     const errors: AIWSError = [];
 
-    await client.companyService.getCompanyByRea(cciaa, nRea, blocco, errors);
+    await client.companyService.getCompanyBlocks({
+      rea: {
+        cciaa: cciaa,
+        nRea: nRea,
+      },
+      blocco: blocco,
+      errors,
+    });
+  });
+
+  test('Recupero completo blocchi amministrativi società con CCIAA MN e N. REA 269396', async () => {
+    const cciaa = 'MN';
+    const nRea = 269396;
+    const blocco = [
+      COMPANY_BLOCK.ALB,
+      COMPANY_BLOCK.AMM,
+      COMPANY_BLOCK.APE,
+      COMPANY_BLOCK.CAP,
+      COMPANY_BLOCK.CON,
+      COMPANY_BLOCK.PAR,
+      COMPANY_BLOCK.PCO,
+      COMPANY_BLOCK.SOC,
+      COMPANY_BLOCK.STA,
+      COMPANY_BLOCK.STO,
+      COMPANY_BLOCK.SUL,
+      COMPANY_BLOCK.TFS
+    ];
+    const errors: AIWSError = [];
+    const blockSummary = await client.companyService.getCompanyBlocks({
+      rea: {
+        cciaa: cciaa,
+        nRea: nRea,
+      },
+      blocco: blocco,
+      errors,
+    });
+
+    expect(blockSummary).toBeDefined();
   });
 
   test('Recupero completo dati aziendali per P.IVA 02650200203', async () => {
@@ -116,12 +154,12 @@ describe('CCIAA Integration - Dati Aziendali', () => {
       expect(companySummaryData.companyStatusCode).toBe('R');
     }
 
-    const companyFinancials =
-      await client.companyService.getFinancialsByVatNumber(vat, errors);
-    if (companyFinancials) {
-      expect(companyFinancials).toBeDefined();
-      expect(companyFinancials.companyRevenue).toBeGreaterThan(0);
-      expect(companyFinancials.companyProfit).toBeGreaterThan(0);
+    const companyBalanceSheet =
+      await client.balanceSheetService.getBalanceSheetByVatNumber(vat, errors);
+    if (companyBalanceSheet) {
+      expect(companyBalanceSheet).toBeDefined();
+      expect(companyBalanceSheet.companyRevenue).toBeGreaterThan(0);
+      expect(companyBalanceSheet.companyProfit).toBeGreaterThan(0);
     }
 
     if (companySummaryData) {
@@ -138,18 +176,20 @@ describe('CCIAA Integration - Dati Aziendali', () => {
       if (companySummaryData) {
         const administrativeSummary:
           | CompanyAdministrativeDataSummary
-          | undefined = await client.companyService.getCompanyByRea(
-          companySummaryData.companyCciaaCode,
-          companySummaryData.companyReaNumber,
-          'AMM',
-          errors,
-        );
-
+          | undefined = await client.companyService.getCompanyBlocks({
+            rea: {
+              cciaa: companySummaryData.companyCciaaCode,
+              nRea: companySummaryData.companyReaNumber,
+            },
+            blocco: 'AMM',
+            errors,
+          });
+        
         const constitutionDate =
           administrativeSummary?.identification.constitutionDate;
         const fullCompanySummary: CompanySummary = {
           ...companySummaryData,
-          ...companyFinancials,
+          ...companyBalanceSheet,
           companyShares,
           companyIncorporationDate: constitutionDate
             ? DateTime.fromFormat(constitutionDate, 'dd/MM/yyyy')
@@ -174,6 +214,9 @@ describe('CCIAA Integration - Dati Aziendali', () => {
     const vat = '02650200203';
 
     const company = await client.companyService.getCompany(vat);
+
+    console.log('Company data retrieved for VAT number', vat, ':', JSON.stringify(company, null, 2));
+
     if (company) {
       expect(company).toBeDefined();
       expect(company.companyName).toBe('LH S.R.L.');

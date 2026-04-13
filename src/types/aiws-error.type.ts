@@ -1,6 +1,6 @@
 export enum AIWS_ERROR_CODE {
   COMPANY_SUMMARY_FETCH_FAILED = 'COMPANY_SUMMARY_FETCH_FAILED',
-  FINANCIALS_FETCH_FAILED = 'FINANCIALS_FETCH_FAILED',
+  BALANCE_SHEET_FETCH_FAILED = 'BALANCE_SHEET_FETCH_FAILED',
   SHARES_FETCH_FAILED = 'SHARES_FETCH_FAILED',
   PERSONA_DATA_FETCH_FAILED = 'PERSONA_DATA_FETCH_FAILED',
   PERSON_CORPORATE_HOLDINGS_FETCH_FAILED = 'PERSON_CORPORATE_HOLDINGS_FETCH_FAILED',
@@ -28,7 +28,7 @@ export type AIWSErrorItem = {
 
 export const AIWS_ERROR_MESSAGES: Record<AIWS_ERROR_CODE, string> = {
   COMPANY_SUMMARY_FETCH_FAILED: 'Errore nel recupero anagrafica impresa',
-  FINANCIALS_FETCH_FAILED: 'Errore nel recupero dati finanziari',
+  BALANCE_SHEET_FETCH_FAILED: 'Errore nel recupero dati di bilancio',
   PERSONA_DATA_FETCH_FAILED: 'Errore nel recupero dati persona',
   SHARES_FETCH_FAILED: 'Errore nel recupero quote societarie',
   PROTESTS_FETCH_FAILED: 'Errore nel recupero protesti',
@@ -43,11 +43,11 @@ export const AIWS_ERROR_MESSAGES: Record<AIWS_ERROR_CODE, string> = {
   BAD_REQUEST: 'Richiesta non valida',
   XML_PARSE_ERROR: 'Errore nel parsing XML',
   XBRL_EMPTY:
-    'Impossibile recuperare i dati finanziari. Errore nel recupero del file XBRL.',
+    'Impossibile recuperare i dati di bilancio. Errore nel recupero del file XBRL.',
   XBRL_DECODE_ERROR:
-    'Impossibile recuperare i dati finanziari. Errore nella decodifica del file XBRL.',
+    'Impossibile recuperare i dati di bilancio. Errore nella decodifica del file XBRL.',
   XBRL_MAPPING_ERROR:
-    'Impossibile recuperare i dati finanziari. Errore nella mappaggio del file XBRL.',
+    'Impossibile recuperare i dati di bilancio. Errore nella mappaggio del file XBRL.',
   INSUFFICIENT_CREDIT: 'Credito insufficiente per procedere',
   PERSONA_DATA_NOT_FOUND: 'Dati persona non trovati',
 };

@@ -1,6 +1,7 @@
 import { vi, describe, test, expect, beforeAll } from 'vitest';
-import { CompanyService } from 'src/services/company.service';
-import { AIWS_ERROR_CODE, AIWSError } from 'src/types/aiwsError.type';
+import { CompanyService } from 'src/services/companies-register/company.service';
+import { AIWS_ERROR_CODE, AIWSError } from 'src/types/aiws-error.type';
+import { BalanceSheetService } from 'src/services/companies-register/balance-sheet.service';
 
 describe('CompanyService error handling', () => {
   let service: CompanyService;
@@ -29,11 +30,13 @@ describe('CompanyService error handling', () => {
     expect(errors[0].code).toBe(AIWS_ERROR_CODE.COMPANY_NOT_FOUND);
   });
 
-  test('getFinancialsByVatNumber - service unavailable', async () => {
+  test('getBalanceSheetByVatNumber - service unavailable', async () => {
     mockAxios.get.mockResolvedValue({ status: 503, data: '' });
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const balanceSheetService = new BalanceSheetService(mockAxios as any);
     const errors: AIWSError = [];
-    const result = await service.getFinancialsByVatNumber(
+    const result = await balanceSheetService.getBalanceSheetByVatNumber(
       '00000000000',
       errors,
     );

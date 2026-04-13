@@ -1,10 +1,12 @@
 // src/clients/CCIAAService.ts
 import { AIWSConfig } from '../types/aiws.types';
-import { CompanyService as CompanyService } from '../services/company.service';
+
 import axios, { AxiosInstance } from 'axios';
-import { PersonService } from 'src/services/person.service';
-import { ProtestService } from 'src/services/protest.service';
-import { OwnershipStructureService } from 'src/services/ownershipStructure.service';
+import { CompanyService } from 'src/services/companies-register/company.service';
+import { BalanceSheetService } from 'src/services/companies-register/balance-sheet.service';
+import { PersonService } from 'src/services/companies-register/person.service';
+import { ProtestService } from 'src/services/protests-register/protest.service';
+import { OwnershipStructureService } from 'src/services/companies-register/ownership-structure.service';
 
 export default class AIWSClient {
   private axiosInstance: AxiosInstance;
@@ -12,6 +14,7 @@ export default class AIWSClient {
   public personService: PersonService;
   public protestService: ProtestService;
   public ownershipStructureService: OwnershipStructureService;
+  public balanceSheetService: BalanceSheetService;
 
   constructor(config: AIWSConfig) {
     const baseURL =
@@ -34,5 +37,6 @@ export default class AIWSClient {
     this.ownershipStructureService = new OwnershipStructureService(
       this.axiosInstance,
     );
+    this.balanceSheetService = new BalanceSheetService(this.axiosInstance);
   }
 }

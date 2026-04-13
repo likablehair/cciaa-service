@@ -19,8 +19,8 @@ export interface PersonaRappresentante {
 }
 
 export interface DatiIdentificativi {
-  'stato-attivita': { c: string; _: string };
-  'forma-giuridica': { c: string; _: string };
+  'stato-attivita': { c: string; '#text': string };
+  'forma-giuridica': { c: string; '#text': string };
   'indirizzo-localizzazione': {
     'c-comune': string;
     comune: string;

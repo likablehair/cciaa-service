@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { AIWSError } from './aiwsError.type';
+import { AIWSError } from 'src/types/aiws-error.type';
 
 export type CorporateHoldingStructure = {
   companyOrPersonIdentity: OwnershipCompanyOrPersonIdentity;
@@ -105,8 +105,8 @@ export type OwnershipShareDetail = {
 };
 
 export type OwnershipRight = {
-  rightTypeCode: string;
-  rightTypeDescription: string;
+  rightTypeCode: string | null;
+  rightTypeDescription: string | null;
 };
 
 export type OwnershipParticipatedCompany = {
@@ -117,8 +117,8 @@ export type OwnershipParticipatedCompany = {
 };
 
 export type OwnershipParticipatedCompanyRight = {
-  rightTypeCode: string;
-  rightTypeDescription: string;
+  rightTypeCode: string | null;
+  rightTypeDescription: string | null;
   nominalValue: number | null;
   capitalPercentage: number | null;
 };

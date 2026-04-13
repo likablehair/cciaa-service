@@ -1,17 +1,17 @@
 import { AxiosInstance } from 'axios';
-import { BaseService } from './base.service';
+import { BaseService } from '../base.service';
 import {
   AIWS_ERROR_CODE,
   AIWS_ERROR_MESSAGES,
   AIWSError,
   pushAIWSError,
-} from 'src/types/aiwsError.type';
+} from 'src/types/aiws-error.type';
 import {
   ParsedListaAnagraficheResponse,
   ParsedVisuraEffettoResponse,
 } from 'src/types/aiws.types';
-import { ProtestReport } from 'src/types/protest.type';
-import { ProtestManager } from 'src/managers/protest.manager';
+import { ProtestReport } from 'src/types/protests-register/protest.type';
+import { ProtestManager } from 'src/managers/protests-register/protest.manager';
 
 export class ProtestService extends BaseService {
   constructor(private client: AxiosInstance) {

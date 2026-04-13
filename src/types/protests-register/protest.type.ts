@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { AIWSError } from './aiwsError.type';
+import { AIWSError } from 'src/types/aiws-error.type';
 
 export type ProtestReport = {
   anagraphicKey: string;

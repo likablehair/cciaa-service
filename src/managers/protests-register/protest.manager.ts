@@ -1,7 +1,7 @@
 import { parseUnknownDate } from 'src/helpers/date.helper';
 import { VisuraEffettoResponse } from 'src/types/aiws.types';
-import { AIWSError } from 'src/types/aiwsError.type';
-import { ProtestReport } from 'src/types/protest.type';
+import { AIWSError } from 'src/types/aiws-error.type';
+import { ProtestReport } from 'src/types/protests-register/protest.type';
 
 export class ProtestManager {
   public async mapVisuraEffettoResponseToProtestReport(params: {

@@ -5,7 +5,7 @@ import {
   AIWS_ERROR_MESSAGES,
   AIWSError,
   pushAIWSError,
-} from 'src/types/aiwsError.type';
+} from 'src/types/aiws-error.type';
 
 export abstract class BaseService {
   protected parser = new XMLParser({

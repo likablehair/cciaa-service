@@ -1,7 +1,7 @@
 import { PersonaData } from 'src/types/aiws.types';
-import { AIWSError } from 'src/types/aiwsError.type';
-import { PersonCorporateRole, PersonSummary } from 'src/types/person.type';
-import { CompanySummary } from 'src/types/company.types';
+import { AIWSError } from 'src/types/aiws-error.type';
+import { PersonCorporateRole, PersonSummary } from 'src/types/companies-register/person.type';
+import { CompanySummary } from 'src/types/companies-register/company.types';
 import { parseUnknownDate } from 'src/helpers/date.helper';
 
 export class PersonManager {
@@ -84,18 +84,10 @@ export class PersonManager {
           companyDeclaredActivity: impresa['info-attivita']?.[
             'classificazioni-ateco'
           ]?.['classificazione-ateco']
-            ? Array.isArray(
-                impresa['info-attivita']?.['classificazioni-ateco']?.[
+            ? impresa['info-attivita']?.['classificazioni-ateco']?.[
                   'classificazione-ateco'
-                ],
-              )
-              ? impresa['info-attivita']?.['classificazioni-ateco']?.[
-                  'classificazione-ateco'
-                ][0]?.attivita
-              : impresa['info-attivita']?.['classificazioni-ateco']?.[
-                  'classificazione-ateco'
-                ]?.attivita
-            : '',
+                ][0]?.attivita ?? null
+              : null,
           companyAtecoCode:
             impresa['info-attivita']?.['classificazioni-ateco']?.[
               'c-codifica'

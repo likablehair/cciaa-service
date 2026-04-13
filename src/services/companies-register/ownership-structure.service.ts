@@ -1,14 +1,14 @@
 import { AxiosInstance } from 'axios';
-import { BaseService } from './base.service';
+import { BaseService } from '../base.service';
 import { AIWSError } from 'src/main';
-import { CorporateHoldingStructure } from 'src/types/ownershipStructure.types';
+import { CorporateHoldingStructure } from 'src/types/companies-register/ownership-structure.types';
 import {
   AIWS_ERROR_CODE,
   AIWS_ERROR_MESSAGES,
   pushAIWSError,
-} from 'src/types/aiwsError.type';
+} from 'src/types/aiws-error.type';
 import { ParsedPartecipazioniResponse } from 'src/types/aiws.types';
-import { OwnershipStructureManager } from 'src/managers/ownershipStructure.manager';
+import { OwnershipStructureManager } from 'src/managers/companies-register/ownership-structure.manager';
 
 export class OwnershipStructureService extends BaseService {
   constructor(private client: AxiosInstance) {

@@ -1,18 +1,18 @@
 import { XMLParser } from 'fast-xml-parser';
-import { CompanyFinancials } from 'src/types/company.types';
+import { CompanyBalanceSheet } from 'src/types/companies-register/company.types';
 import {
   AIWSError,
   AIWS_ERROR_CODE,
   AIWS_ERROR_MESSAGES,
   pushAIWSError,
-} from 'src/types/aiwsError.type';
+} from 'src/types/aiws-error.type';
 
-export class FinancialManager {
-  async getFinancialValues(
+export class BalanceSheetManager {
+  async getBalanceSheetValues(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     xmlBaseResponse: any,
     errors: AIWSError,
-  ): Promise<CompanyFinancials | null> {
+  ): Promise<CompanyBalanceSheet | null> {
     const base64Xbrl = xmlBaseResponse?.Risposta?.dati;
 
     if (!base64Xbrl) {

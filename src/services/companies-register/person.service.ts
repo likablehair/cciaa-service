@@ -1,14 +1,14 @@
 import { AxiosInstance } from 'axios';
-import { BaseService } from './base.service';
+import { BaseService } from '../base.service';
 import {
   AIWS_ERROR_CODE,
   AIWS_ERROR_MESSAGES,
   AIWSError,
   pushAIWSError,
-} from 'src/types/aiwsError.type';
-import { PersonCorporateRole } from 'src/types/person.type';
+} from 'src/types/aiws-error.type';
+import { PersonCorporateRole } from 'src/types/companies-register/person.type';
 import { ParsedAIWSResponse, PersonaData } from 'src/types/aiws.types';
-import { PersonManager } from 'src/managers/person.manager';
+import { PersonManager } from 'src/managers/companies-register/person.manager';
 
 export class PersonService extends BaseService {
   constructor(private client: AxiosInstance) {

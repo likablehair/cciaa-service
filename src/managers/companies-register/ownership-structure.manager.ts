@@ -1,10 +1,10 @@
 import { parseUnknownDate } from 'src/helpers/date.helper';
 import { PartecipazioniData } from 'src/types/aiws.types';
-import { AIWS_ERROR_CODE, AIWSError } from 'src/types/aiwsError.type';
+import { AIWS_ERROR_CODE, AIWSError } from 'src/types/aiws-error.type';
 import {
   CorporateHoldingStructure,
   OwnershipCompanyOrPersonIdentity,
-} from 'src/types/ownershipStructure.types';
+} from 'src/types/companies-register/ownership-structure.types';
 
 export class OwnershipStructureManager {
   public async mapPartecipazioniDataToCorporateHoldingStructure(params: {
@@ -153,8 +153,8 @@ export class OwnershipStructureManager {
           rights: toArray(
             riquadro['diritti-partecipazione']?.['diritto-partecipazione'],
           ).map((right) => ({
-            rightTypeCode: right['c-tipo'],
-            rightTypeDescription: right.tipo,
+            rightTypeCode: right['c-tipo'] ?? null,
+            rightTypeDescription: right.tipo ?? null,
           })),
         }),
       );

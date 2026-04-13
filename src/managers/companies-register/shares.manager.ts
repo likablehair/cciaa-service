@@ -1,5 +1,5 @@
-import { CompanyShare, CompanyShareType } from 'src/types/company.types';
-import { Indirizzo, Riquadro } from 'src/types/share.type';
+import { CompanyShare, CompanyShareType } from 'src/types/companies-register/company.types';
+import { Indirizzo, Riquadro } from 'src/types/companies-register/share.type';
 
 export const mapperType: Record<string, CompanyShareType> = {
   PERSONA: 'person',
