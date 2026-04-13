@@ -61,7 +61,7 @@ export class CompanyService extends BaseService {
 
     return Boolean(
       riquadro['composizione-quote']?.['valore-nominale'] &&
-        riquadro.titolari?.titolare,
+      riquadro.titolari?.titolare,
     );
   }
 
@@ -209,12 +209,12 @@ export class CompanyService extends BaseService {
   /** Estrae i blocchi informativi di una società tramite CCIAA e N. REA o P.IVA */
   public async getCompanyBlocks(params: {
     rea?: {
-      cciaa: string,
-      nRea: number,
-    },
-    fiscalCode?: string,
-    blocco: CompanyBlock[] | CompanyBlock,
-    errors: AIWSError,
+      cciaa: string;
+      nRea: number;
+    };
+    fiscalCode?: string;
+    blocco: CompanyBlock[] | CompanyBlock;
+    errors: AIWSError;
   }): Promise<CompanyRegistryBlocksSummary | undefined> {
     const { rea, fiscalCode, blocco, errors } = params;
 
@@ -236,7 +236,8 @@ export class CompanyService extends BaseService {
     }
 
     const urlByRea = '/registroimprese/output/impresa/blocchi/nrea/xml';
-    const urlByFiscalCode = '/registroimprese/output/impresa/blocchi/codicefiscale/xml';
+    const urlByFiscalCode =
+      '/registroimprese/output/impresa/blocchi/codicefiscale/xml';
 
     try {
       let response;
@@ -263,7 +264,6 @@ export class CompanyService extends BaseService {
       ) {
         return;
       }
-      
 
       const rawJson = this.parseXml<ParsedBlocchiImpresaResponse>(
         response.data,
@@ -321,16 +321,14 @@ export class CompanyService extends BaseService {
     let administrativeSummary: CompanyRegistryBlocksSummary | undefined;
 
     if (summary.companyCciaaCode && summary.companyReaNumber) {
-      administrativeSummary = await this.getCompanyBlocks(
-        {
-          rea: {
-            cciaa: summary.companyCciaaCode,
-            nRea: summary.companyReaNumber,
-          },
-          blocco: COMPANY_BLOCK.AMM,
-          errors,
-        }
-      );
+      administrativeSummary = await this.getCompanyBlocks({
+        rea: {
+          cciaa: summary.companyCciaaCode,
+          nRea: summary.companyReaNumber,
+        },
+        blocco: COMPANY_BLOCK.AMM,
+        errors,
+      });
     } else {
       pushAIWSError(
         errors,

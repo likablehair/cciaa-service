@@ -2,7 +2,7 @@
  * Shared config and XML helpers
  * ============================== */
 
-import { DatiIdentificativi } from "./companies-register/share.type";
+import { DatiIdentificativi } from './companies-register/share.type';
 
 export interface AIWSConfig {
   username: string;
@@ -315,7 +315,7 @@ export interface PartecipazioniSocieta {
   partecipazioni: {
     partecipazione: XmlOneOrMany<PartecipazioneSocieta>;
   };
-  'trasferimenti'?: Trasferimenti;
+  trasferimenti?: Trasferimenti;
 }
 export interface PartecipazioneSocieta {
   'f-paragrafo-attuale': string;
@@ -477,41 +477,41 @@ export interface PraticheAnno {
 
 export interface CapitaleInvestito {
   'c-valuta'?: string;
-  'valuta'?: string;
-  'ammontare'?: string;
+  valuta?: string;
+  ammontare?: string;
   'ammontare-convertito-in-euro'?: string;
 }
 
 export interface CapitaleSociale {
-  'deliberato'?: Deliberato;
-  'sottoscritto'?: Sottoscritto;
-  'versato'?: Versato;
+  deliberato?: Deliberato;
+  sottoscritto?: Sottoscritto;
+  versato?: Versato;
   'tipo-conferimenti'?: TipoConferimenti;
   'c-valuta'?: string;
-  'valuta'?: string;
-  'ammontare'?: string;
+  valuta?: string;
+  ammontare?: string;
   'n-azioni'?: string;
   'n-quote'?: string;
 }
 
 export interface Deliberato {
-  'ammontare'?: string;
+  ammontare?: string;
   'ammontare-convertito-in-euro'?: string;
 }
 
 export interface Sottoscritto {
-  'ammontare'?: string;
+  ammontare?: string;
   'ammontare-convertito-in-euro'?: string;
 }
 
 export interface Versato {
-  'ammontare'?: string;
+  ammontare?: string;
   'ammontare-convertito-in-euro'?: string;
 }
 
 export interface TipoConferimenti {
   _text?: string;
-  'c'?: string;
+  c?: string;
 }
 
 export interface InfoSedeImpresa {
@@ -763,23 +763,23 @@ export type ParsedBlocchiImpresaResponse = Omit<
 
 export interface AbilitazioneFacchinaggio {
   'c-fascia'?: string;
-  'fascia'?: string;
+  fascia?: string;
   'c-volume'?: string;
-  'volume'?: string;
+  volume?: string;
   'dt-denuncia'?: string;
   'ulteriori-specifiche'?: string;
 }
 
 export interface AbilitazioneImpiantisti {
   'c-qualifica'?: string;
-  'qualifica'?: string;
-  'lettera'?: string;
+  qualifica?: string;
+  lettera?: string;
   'descrizione-lettera'?: string;
-  'lettere'?: string;
-  'limitazioni'?: string;
+  lettere?: string;
+  limitazioni?: string;
   'f-tutte-attivita-impresa'?: string;
-  'provincia'?: string;
-  'n'?: string;
+  provincia?: string;
+  n?: string;
   'dt-accertamento'?: string;
   'dt-iscrizione'?: string;
   'c-ente-rilascio'?: string;
@@ -788,9 +788,9 @@ export interface AbilitazioneImpiantisti {
 
 export interface AbilitazionePulizia {
   'c-fascia'?: string;
-  'fascia'?: string;
+  fascia?: string;
   'c-volume'?: string;
-  'volume'?: string;
+  volume?: string;
   'dt-denuncia'?: string;
   'ulteriori-specifiche'?: string;
 }
@@ -824,11 +824,11 @@ export interface AccreditamentoOdc {
 export interface AddettiImpresa {
   'info-mesi'?: InfoMesi;
   'valori-medi'?: ValoriMedi;
-  'collaboratori'?: Collaboratori;
+  collaboratori?: Collaboratori;
   'distribuzione-dipendenti'?: DistribuzioneDipendenti;
   'c-tipo-informazione'?: string;
   'tipo-informazione'?: string;
-  'anno'?: string;
+  anno?: string;
   'dt-dichiarazione'?: string;
   'dt-rilevazione'?: string;
   'n-dipendenti'?: string;
@@ -850,14 +850,14 @@ export interface AmministrazioneControllo {
 
 export interface AnagraficaTitolare {
   'c-tipo'?: string;
-  'tipo'?: string;
+  tipo?: string;
   'c-fiscale'?: string;
   'c-cittadinanza'?: string;
-  'cittadinanza'?: string;
-  'denominazione'?: string;
+  cittadinanza?: string;
+  denominazione?: string;
   'denominazione-denunciata'?: string;
-  'cognome'?: string;
-  'nome'?: string;
+  cognome?: string;
+  nome?: string;
   'f-cessata'?: string;
   'dt-cancellazione'?: string;
 }
@@ -866,7 +866,7 @@ export interface AnnotazioneLibroSoci {
   'estremi-pratica'?: EstremiPratica;
   'estremi-pratica-riconfermata'?: EstremiPraticaRiconfermata;
   'riquadri-trasferimento'?: RiquadriTrasferimento;
-  'note'?: string[];
+  note?: string[];
 }
 
 export interface AnnotazioniLibroSoci {
@@ -884,7 +884,7 @@ export interface Apparecchi {
 /** simpleContent: testo + attributo c */
 export interface AreaIntervento {
   _text?: string;
-  'c'?: string;
+  c?: string;
 }
 
 export interface AreeIntervento {
@@ -892,24 +892,24 @@ export interface AreeIntervento {
 }
 
 export interface AssegnatariMarchio {
-  'iscrizione'?: Iscrizione;
-  'cancellazione'?: Cancellazione;
+  iscrizione?: Iscrizione;
+  cancellazione?: Cancellazione;
 }
 
 export interface Attestazione {
   'certificato-qualita'?: CertificatoQualita;
   'c-fonte'?: string;
   'c-identificativo-SOA'?: string;
-  'denominazione'?: string;
+  denominazione?: string;
   'n-attestazione'?: string;
   'dt-rilascio'?: string;
   'dt-scadenza'?: string;
-  'regolamento'?: string;
+  regolamento?: string;
 }
 
 export interface AttestazioneQualificazioni {
   'categorie-opere'?: CategorieOpere;
-  'attestazione'?: Attestazione;
+  attestazione?: Attestazione;
 }
 
 export interface AttestazioniQualificazioni {
@@ -917,7 +917,7 @@ export interface AttestazioniQualificazioni {
 }
 
 export interface Atti {
-  'atto'?: Atto[];
+  atto?: Atto[];
 }
 
 export interface AttiConferimentoCariche {
@@ -937,7 +937,7 @@ export interface AttivitaAa {
 
 export interface AttivitaAaBz {
   'mestieri-aa'?: MestieriAa;
-  'descrizione'?: string[];
+  descrizione?: string[];
   'cancellazione-aa-bz'?: CancellazioneAaBz;
   'dt-inizio'?: string;
   'f-attivita-secondaria'?: string;
@@ -950,12 +950,12 @@ export interface AttivitaAgricola {
 }
 
 export interface AttivitaNoAa {
-  'descrizione'?: string[];
+  descrizione?: string[];
   'informazioni-supplementari-aa'?: string;
   'cancellazione-aa'?: CancellazioneAa;
   'dt-inizio'?: string;
   'c-categoria'?: string;
-  'categoria'?: string;
+  categoria?: string;
 }
 
 /** simpleContent: testo + attributo */
@@ -966,19 +966,19 @@ export interface AttivitaPrevalente {
 
 export interface Atto {
   'estremi-notarili'?: EstremiNotarili;
-  'omologazione'?: Omologazione;
-  'registrazione'?: Registrazione;
+  omologazione?: Omologazione;
+  registrazione?: Registrazione;
   'presentazione-cciaa'?: PresentazioneCciaa;
   'iscrizione-modifica'?: IscrizioneModifica;
-  'c'?: string;
+  c?: string;
   'c-tipo'?: string;
-  'tipo'?: string;
+  tipo?: string;
   'descrizione-tipo'?: string;
   'dt-atto'?: string;
 }
 
 export interface AttoConferimentoCariche {
-  'cariche'?: Cariche;
+  cariche?: Cariche;
   'poteri-persona'?: PoteriPersona;
   'estremi-atto'?: EstremiAtto;
   'proprieta-quota'?: ProprietaQuota;
@@ -989,22 +989,22 @@ export interface AttoConferimentoCariche {
 }
 
 export interface AttoParcheggiato {
-  'tipo'?: string;
-  'cciaa'?: string;
-  'anno'?: string;
-  'n'?: string;
+  tipo?: string;
+  cciaa?: string;
+  anno?: string;
+  n?: string;
   'dt-atto'?: string;
   'dt-deposito'?: string;
 }
 
 export interface AttoTrascrizioni {
-  'atto'?: Atto;
+  atto?: Atto;
   'trascrizioni-ri'?: TrscrizioniRi;
 }
 
 export interface AutorizzazionePs {
-  'n'?: string;
-  'dt'?: string;
+  n?: string;
+  dt?: string;
 }
 
 // =============================================================================
@@ -1014,7 +1014,7 @@ export interface AutorizzazionePs {
 /** simpleContent: testo + attributo c */
 export interface BeneServizio {
   _text?: string;
-  'c'?: string;
+  c?: string;
 }
 
 export interface BeniServizi {
@@ -1022,7 +1022,7 @@ export interface BeniServizi {
 }
 
 export interface Bilanci {
-  'bilancio'?: Array<{ 'anno'?: string }>;
+  bilancio?: Array<{ anno?: string }>;
 }
 
 export interface BlocchiImpresa {
@@ -1038,7 +1038,7 @@ export interface BlocchiImpresa {
   'storia-addetti'?: StoriaAddetti;
   'albi-ruoli-licenze'?: AlbiRuoliLicenze;
   'persone-sede'?: PersoneSede;
-  'localizzazioni'?: Localizzazioni;
+  localizzazioni?: Localizzazioni;
   'protocolli-aperti'?: ProtocolliAperti;
   'protocolli-completi'?: ProtocolliCompleti;
   'societa-quotata'?: SocietaQuotata;
@@ -1051,8 +1051,8 @@ export interface BlocchiImpresa {
   'pratiche-soggetti-controllanti'?: PraticheSoggettiControllanti;
   'partecipazioni-societa'?: PartecipazioniSocieta;
   'tabella-partecipate-impresa'?: TabellaPartecipateImpresa[];
-  'mad'?: Mad;
-  'trascrizioni'?: Trascrizioni;
+  mad?: Mad;
+  trascrizioni?: Trascrizioni;
   'storia-cciaa-provenienza'?: StoriaCciaaProvenienza;
   'storia-sedi-precedenti'?: StoriaSediPrecedenti;
   'iscrizione-ri'?: IscrizioneRi;
@@ -1079,13 +1079,13 @@ export interface Cancellazione {
   'dt-domanda'?: string;
   'dt-denuncia'?: string;
   'c-causale'?: string;
-  'causale'?: string;
+  causale?: string;
   'dt-cessazione-attivita'?: string;
 }
 
 export interface CancellazioneAa {
   'c-causale'?: string;
-  'causale'?: string;
+  causale?: string;
   'dt-domanda-accertamento'?: string;
   'dt-delibera'?: string;
   'dt-cessazione'?: string;
@@ -1095,19 +1095,19 @@ export interface CancellazioneAaBz {
   'dt-effetto'?: string;
   'dt-domanda-accertamento'?: string;
   'c-causale'?: string;
-  'causale'?: string;
+  causale?: string;
 }
 
 export interface CancellazioneRuolo {
   'c-causale'?: string;
-  'causale'?: string;
+  causale?: string;
   'dt-domanda'?: string;
   'dt-delibera'?: string;
   'dt-cessazione'?: string;
 }
 
 export interface CancellazioneTrasferimento {
-  'cancellazione'?: Cancellazione;
+  cancellazione?: Cancellazione;
   'indirizzo-sede-estero'?: IndirizzoSedeEstero;
   'trasferimento-sede'?: TrasferimentoSede;
   'trasferimento-sede-ul-attiva'?: TrasferimentoSedeUlAttiva;
@@ -1116,19 +1116,19 @@ export interface CancellazioneTrasferimento {
 
 export interface CapitaleInvestito {
   'c-valuta'?: string;
-  'valuta'?: string;
-  'ammontare'?: string;
+  valuta?: string;
+  ammontare?: string;
   'ammontare-convertito-in-euro'?: string;
 }
 
 export interface CapitaleSociale {
-  'deliberato'?: Deliberato;
-  'sottoscritto'?: Sottoscritto;
-  'versato'?: Versato;
+  deliberato?: Deliberato;
+  sottoscritto?: Sottoscritto;
+  versato?: Versato;
   'tipo-conferimenti'?: TipoConferimenti;
   'c-valuta'?: string;
-  'valuta'?: string;
-  'ammontare'?: string;
+  valuta?: string;
+  ammontare?: string;
   'n-azioni'?: string;
   'n-quote'?: string;
 }
@@ -1163,14 +1163,14 @@ export interface Carica {
 }
 
 export interface Cariche {
-  'carica'?: Carica[];
+  carica?: Carica[];
 }
 
 export interface CategoriaOpere {
   'c-categoria'?: string;
-  'categoria'?: string;
+  categoria?: string;
   'c-classificazione'?: string;
-  'classificazione'?: string;
+  classificazione?: string;
 }
 
 export interface CategorieOpere {
@@ -1184,34 +1184,34 @@ export interface CertificatoQualita {
 }
 
 export interface Certificazione {
-  'settori'?: Settori;
+  settori?: Settori;
   'c-schema-accreditamento'?: string;
   'schema-accreditamento'?: string;
   'norma-riferimento'?: string;
   'n-certificato'?: string;
-  'nota'?: string;
+  nota?: string;
   'dt-emissione'?: string;
   'denominazione-odc'?: string;
   'c-fiscale-odc'?: string;
 }
 
 export interface CertificazioneBio {
-  'fonte'?: string;
+  fonte?: string;
   'dt-ultimo-aggiornamento'?: string;
   'c-operatore'?: string;
-  'operatore'?: string;
+  operatore?: string;
   'dt-assoggettamento'?: string;
-  'attivita'?: string;
+  attivita?: string;
   'n-certificato'?: string;
   'c-odc'?: string;
-  'odc'?: string;
+  odc?: string;
   'attivita-certificata'?: string;
   'n-certificato-conformita'?: string;
   'dt-scadenza'?: string;
 }
 
 export interface Certificazioni {
-  'certificazione'?: Certificazione[];
+  certificazione?: Certificazione[];
   'dt-ultima-modifica'?: string;
 }
 
@@ -1220,7 +1220,7 @@ export interface CertificazioniBio {
 }
 
 export interface CessazioneEsercizio {
-  'note'?: string[];
+  note?: string[];
   'dt-cessazione'?: string;
   'dt-decorrenza'?: string;
 }
@@ -1232,33 +1232,33 @@ export interface CessazioneLocalizzazione {
   'dt-domanda'?: string;
   'dt-denuncia'?: string;
   'c-causale'?: string;
-  'causale'?: string;
+  causale?: string;
 }
 
 export interface ClassificazioneAteco {
   'c-attivita'?: string;
-  'attivita'?: string;
+  attivita?: string;
   'c-importanza'?: string;
-  'importanza'?: string;
+  importanza?: string;
   'c-nace'?: string;
   'dt-inizio'?: string;
   'dt-riferimento'?: string;
   'c-fonte'?: string;
-  'fonte'?: string;
+  fonte?: string;
 }
 
 export interface ClassificazioneAteco2002 {
   'c-attivita'?: string;
-  'attivita'?: string;
+  attivita?: string;
   'c-importanza'?: string;
-  'importanza'?: string;
+  importanza?: string;
   'dt-inizio'?: string;
 }
 
 export interface ClassificazioniAteco {
   'classificazione-ateco'?: ClassificazioneAteco[];
   'c-codifica'?: string;
-  'codifica'?: string;
+  codifica?: string;
 }
 
 export interface ClassificazioniAteco2002 {
@@ -1266,10 +1266,10 @@ export interface ClassificazioniAteco2002 {
 }
 
 export interface CodiciLei {
-  'c'?: string;
+  c?: string;
   'dt-scadenza'?: string;
   'c-fonte'?: string;
-  'fonte'?: string;
+  fonte?: string;
 }
 
 export interface Collaboratori {
@@ -1288,7 +1288,7 @@ export interface CollegioSindacaleInCarica {
   'n-in-carica'?: string;
   'anni-durata'?: string;
   'c-durata'?: string;
-  'durata'?: string;
+  durata?: string;
   'dt-inizio-carica'?: string;
   'dt-fine-carica'?: string;
 }
@@ -1303,10 +1303,10 @@ export interface CommercioDettaglio {
 
 export interface ComposizioneQuote {
   'c-tipo'?: string;
-  'tipo'?: string;
-  'n'?: string;
+  tipo?: string;
+  n?: string;
   'c-valuta'?: string;
-  'valuta'?: string;
+  valuta?: string;
   'valore-nominale'?: string;
   'n-azioni'?: string;
   'n-quote'?: string;
@@ -1317,7 +1317,7 @@ export interface ComposizioneQuote {
 
 export interface ComunicazioneCuratore {
   'estremi-udienza'?: EstremiUdienza;
-  'tribunale'?: string;
+  tribunale?: string;
   'n-provvedimento'?: string;
   'dt-provvedimento'?: string;
   'nome-giudice'?: string;
@@ -1349,10 +1349,10 @@ export interface DatiArtigiani {
   'cancellazione-aa'?: CancellazioneAa;
   'f-albo-soppresso'?: string;
   'c-riferimento-legge'?: string;
-  'n'?: string;
+  n?: string;
   'c-categoria'?: string;
-  'categoria'?: string;
-  'provincia'?: string;
+  categoria?: string;
+  provincia?: string;
   'dt-iscrizione-accertamento'?: string;
   'dt-domanda'?: string;
   'dt-domanda-accertamento'?: string;
@@ -1365,9 +1365,9 @@ export interface DatiBilanci {
 }
 
 export interface DatiBilancio {
-  'anno'?: string;
+  anno?: string;
   'utile-perdite'?: string;
-  'ricavi'?: string;
+  ricavi?: string;
   'valore-produzione'?: string;
 }
 
@@ -1380,7 +1380,7 @@ export interface DatiIscrizioneReaRd {
 }
 
 export interface Deliberato {
-  'ammontare'?: string;
+  ammontare?: string;
   'ammontare-convertito-in-euro'?: string;
 }
 
@@ -1390,7 +1390,7 @@ export interface DenunceInizioAttivita {
 
 export interface DenunciaInizioAttivita {
   'c-tipo'?: string;
-  'tipo'?: string;
+  tipo?: string;
   'dt-denuncia'?: string;
   'c-ente-rilascio'?: string;
   'ente-rilascio'?: string;
@@ -1405,7 +1405,7 @@ export interface DettaglioAttivita {
 export interface DettagliAttivita {
   'dettaglio-attivita'?: DettaglioAttivita[];
   'c-tipo'?: string;
-  'tipo'?: string;
+  tipo?: string;
 }
 
 export interface DettagliIscrizione {
@@ -1426,20 +1426,20 @@ export interface DettaglioIscrizione {
 export interface Dichiarazione {
   _text?: string;
   'c-tipo'?: string;
-  'tipo'?: string;
+  tipo?: string;
   'dt-iscrizione'?: string;
 }
 
 export interface DichiarazioneAmbientale {
   'dettagli-iscrizione'?: DettagliIscrizione;
   'c-tipo'?: string;
-  'tipo'?: string;
+  tipo?: string;
   'c-fonte'?: string;
-  'fonte'?: string;
+  fonte?: string;
   'provincia-sezione'?: string;
-  'provincia'?: string;
-  'n'?: string;
-  'anno'?: string;
+  provincia?: string;
+  n?: string;
+  anno?: string;
   'dt-prima-iscrizione'?: string;
   'dt-iscrizione'?: string;
   'dt-cancellazione'?: string;
@@ -1452,32 +1452,32 @@ export interface DichiarazioneAmbientale {
 export interface DichiarazioneIncubatore {
   _text?: string;
   'c-tipo'?: string;
-  'tipo'?: string;
+  tipo?: string;
 }
 
 /** simpleContent: testo + attributi */
 export interface DichiarazionePmi {
   _text?: string;
   'c-tipo'?: string;
-  'tipo'?: string;
+  tipo?: string;
 }
 
 /** simpleContent: testo + attributi */
 export interface DichiarazioneScuolaLavoro {
   _text?: string;
   'c-tipo'?: string;
-  'tipo'?: string;
+  tipo?: string;
 }
 
 /** simpleContent: testo + attributi */
 export interface DichiarazioneStartUp {
   _text?: string;
   'c-tipo'?: string;
-  'tipo'?: string;
+  tipo?: string;
 }
 
 export interface Dichiarazioni {
-  'dichiarazione'?: Dichiarazione[];
+  dichiarazione?: Dichiarazione[];
 }
 
 export interface DichiarazioniAmbientali {
@@ -1506,7 +1506,7 @@ export interface DipendentiContratti {
 
 export interface DipendentiContratto {
   'info-mesi'?: InfoMesi;
-  'contratto'?: string;
+  contratto?: string;
 }
 
 export interface DipendentiOrariLavoro {
@@ -1520,7 +1520,7 @@ export interface DipendentiOrarioLavoro {
 
 export interface DipendentiQualifica {
   'info-mesi'?: InfoMesi;
-  'qualifica'?: string;
+  qualifica?: string;
 }
 
 export interface DipendentiQualifiche {
@@ -1530,13 +1530,13 @@ export interface DipendentiQualifiche {
 export interface DirittoPartecipazione {
   'ruolo-partecipazione'?: RuoloPartecipazione[];
   'c-tipo'?: string;
-  'tipo'?: string;
+  tipo?: string;
   'frazione-numeratore'?: string;
   'frazione-denominatore'?: string;
-  'percentuale'?: string;
+  percentuale?: string;
   'c-valuta'?: string;
-  'valuta'?: string;
-  'valore'?: string;
+  valuta?: string;
+  valore?: string;
 }
 
 export interface DistribuzioneDipendenti {
@@ -1547,7 +1547,7 @@ export interface DistribuzioneDipendenti {
 }
 
 export interface DocConsultabili {
-  'bilanci'?: Bilanci;
+  bilanci?: Bilanci;
   'f-esiste-statuto'?: string;
   'n-altri-atti'?: string;
   'rendicontazione-sos'?: string;
@@ -1556,17 +1556,17 @@ export interface DocConsultabili {
 }
 
 export interface Domicilio {
-  'comune'?: string;
-  'provincia'?: string;
+  comune?: string;
+  provincia?: string;
   'provincia-ter'?: string;
-  'via'?: string;
+  via?: string;
   'n-civico'?: string;
-  'cap'?: string;
+  cap?: string;
   'cap-ter'?: string;
   'c-stato'?: string;
-  'stato'?: string;
-  'frazione'?: string;
-  'presso'?: string;
+  stato?: string;
+  frazione?: string;
+  presso?: string;
 }
 
 /** Stesso schema di Domicilio */
@@ -1574,18 +1574,18 @@ export type DomicilioRi = Domicilio;
 
 export interface DomicilioFiscale {
   'c-comune'?: string;
-  'comune'?: string;
-  'provincia'?: string;
+  comune?: string;
+  provincia?: string;
   'provincia-ter'?: string;
   'c-toponimo'?: string;
-  'toponimo'?: string;
-  'via'?: string;
+  toponimo?: string;
+  via?: string;
   'n-civico'?: string;
-  'cap'?: string;
+  cap?: string;
   'cap-ter'?: string;
   'c-stato'?: string;
-  'stato'?: string;
-  'frazione'?: string;
+  stato?: string;
+  frazione?: string;
   'altre-indicazioni'?: string;
 }
 
@@ -1606,8 +1606,8 @@ export interface ElencoSoci {
   'estremi-pratica'?: EstremiPratica;
   'estremi-pratica-riconfermata'?: EstremiPraticaRiconfermata;
   'capitale-sociale'?: CapitaleSociale;
-  'riquadri'?: Riquadri;
-  'note'?: string[];
+  riquadri?: Riquadri;
+  note?: string[];
   'note-pratica-riconfermata'?: string[];
   'dt-soci-titolari-dal'?: string;
   'dt-soci-titolari-al'?: string;
@@ -1619,9 +1619,9 @@ export interface ElencoSoci {
 
 export interface EstremiAtto {
   'c-tipo'?: string;
-  'tipo'?: string;
-  'notaio'?: string;
-  'tribunale'?: string;
+  tipo?: string;
+  notaio?: string;
+  tribunale?: string;
   'altre-indicazioni'?: string;
   'n-registrazione'?: string;
   'dt-registrazione'?: string;
@@ -1631,9 +1631,9 @@ export interface EstremiAtto {
 
 export interface EstremiAttoCostituzione {
   'c-tipo'?: string;
-  'tipo'?: string;
+  tipo?: string;
   'n-repertorio'?: string;
-  'notaio'?: string;
+  notaio?: string;
   'localita-notaio'?: string;
   'provincia-notaio'?: string;
   'n-registrazione'?: string;
@@ -1645,24 +1645,24 @@ export interface EstremiAttoCostituzione {
 export interface EstremiImpresa {
   'forma-giuridica'?: FormaGiuridica;
   'c-fiscale'?: string;
-  'denominazione'?: string;
+  denominazione?: string;
   'f-cessata'?: string;
   'dt-cancellazione'?: string;
 }
 
 export interface EstremiNascita {
-  'dt'?: string;
+  dt?: string;
   'c-comune'?: string;
-  'comune'?: string;
-  'provincia'?: string;
+  comune?: string;
+  provincia?: string;
   'c-stato'?: string;
-  'stato'?: string;
+  stato?: string;
 }
 
 export interface EstremiNotarili {
   'c-forma'?: string;
-  'forma'?: string;
-  'notaio'?: string;
+  forma?: string;
+  notaio?: string;
   'n-repertorio'?: string;
   'localita-notaio'?: string;
   'provincia-notaio'?: string;
@@ -1673,9 +1673,9 @@ export interface EstremiPratica {
   'c-tipo-adempimento'?: string;
   'tipo-adempimento'?: string;
   'dt-atto'?: string;
-  'cciaa'?: string;
-  'anno'?: string;
-  'n'?: string;
+  cciaa?: string;
+  anno?: string;
+  n?: string;
   'dt-protocollo'?: string;
   'dt-deposito'?: string;
   'f-riconferma'?: string;
@@ -1687,44 +1687,44 @@ export interface EstremiPratica {
 }
 
 export interface EstremiPraticaRiconfermata {
-  'cciaa'?: string;
-  'anno'?: string;
-  'n'?: string;
+  cciaa?: string;
+  anno?: string;
+  n?: string;
 }
 
 export interface EstremiUdienza {
   'dt-udienza'?: string;
   'dt-termine'?: string;
-  'luogo'?: string;
+  luogo?: string;
 }
 
 export interface Euid {
   'c-euid'?: string;
   'c-stato'?: string;
-  'stato'?: string;
+  stato?: string;
   'c-registro'?: string;
-  'registro'?: string;
+  registro?: string;
   'n-registrazione'?: string;
   'c-forma-giuridica'?: string;
   'forma-giuridica'?: string;
 }
 
 export interface Eventi {
-  'evento'?: Evento[];
+  evento?: Evento[];
 }
 
 export interface Evento {
   'p-societa'?: string;
-  'denominazione'?: string;
+  denominazione?: string;
   'c-fiscale'?: string;
-  'comune'?: string;
-  'cciaa'?: string;
+  comune?: string;
+  cciaa?: string;
   'n-rea'?: string;
   'n-rd'?: string;
   'n-rs'?: string;
   'c-tribunale'?: string;
-  'tribunale'?: string;
-  'provincia'?: string;
+  tribunale?: string;
+  provincia?: string;
   'n-ri'?: string;
   'c-euid'?: string;
 }
@@ -1743,17 +1743,17 @@ export interface FallimentoInProprio {
   'estremi-nascita'?: EstremiNascita;
   'n-fallimento'?: string;
   'dt-fallimento'?: string;
-  'tribunale'?: string;
+  tribunale?: string;
   'provincia-tribunale'?: string;
   'n-sentenza'?: string;
   'dt-sentenza'?: string;
-  'curatore'?: string;
+  curatore?: string;
   'dt-chiusura'?: string;
   'c-organo-giudiziario'?: string;
   'organo-giudiziario'?: string;
-  'sesso'?: string;
-  'cognome'?: string;
-  'nome'?: string;
+  sesso?: string;
+  cognome?: string;
+  nome?: string;
   'c-fiscale'?: string;
 }
 
@@ -1761,8 +1761,8 @@ export interface FallimentoInProprio {
 export type FallimentoPerEstensione = FallimentoInProprio;
 
 export interface FamiliarePartecipe {
-  'cognome'?: string;
-  'nome'?: string;
+  cognome?: string;
+  nome?: string;
   'c-fiscale'?: string;
   'f-coltivatore-diretto'?: string;
 }
@@ -1772,23 +1772,23 @@ export interface FamiliariPartecipi {
 }
 
 export interface FilanziamentoSpecificoAffare {
-  'costituzione'?: string;
-  'modifica'?: Modifica;
-  'cessazione'?: string;
+  costituzione?: string;
+  modifica?: Modifica;
+  cessazione?: string;
 }
 
 export interface FondoConsortile {
-  'descrizioni'?: Descrizioni;
+  descrizioni?: Descrizioni;
   'c-valuta'?: string;
-  'valuta'?: string;
-  'ammontare'?: string;
+  valuta?: string;
+  ammontare?: string;
   'ammontare-convertito-in-euro'?: string;
 }
 
 /** simpleContent: testo (denominazione) + attributi */
 export interface FormaAmministrativa {
   _text?: string;
-  'c'?: string;
+  c?: string;
   'f-in-carica'?: string;
   'f-organo-controllo'?: string;
   'n-min-amministratori'?: string;
@@ -1798,11 +1798,11 @@ export interface FormaAmministrativa {
 /** simpleContent: testo (denominazione) + attributi */
 export interface FormaAmministrativaInCarica {
   _text?: string;
-  'c'?: string;
+  c?: string;
   'n-amministratori-in-carica'?: string;
   'anni-durata'?: string;
   'c-durata'?: string;
-  'durata'?: string;
+  durata?: string;
   'dt-inizio-carica'?: string;
   'dt-fine-carica'?: string;
 }
@@ -1816,15 +1816,15 @@ export interface FormeAmministrativeInCarica {
 }
 
 export interface FusioneScissione {
-  'eventi'?: Eventi;
-  'dichiarazioni'?: Dichiarazioni;
+  eventi?: Eventi;
+  dichiarazioni?: Dichiarazioni;
   'p-fusione'?: string;
   'c-tipo'?: string;
-  'tipo'?: string;
+  tipo?: string;
   'c-approvazione'?: string;
-  'approvazione'?: string;
+  approvazione?: string;
   'c-evento'?: string;
-  'evento'?: string;
+  evento?: string;
   'dt-iscrizione'?: string;
   'dt-modifica'?: string;
   'dt-atto'?: string;
@@ -1846,7 +1846,7 @@ export interface GruppoIva {
   _text?: string;
   'c-fonte'?: string;
   'dt-ultimo-aggiornamento'?: string;
-  'denominazione'?: string;
+  denominazione?: string;
   'dt-inizio'?: string;
 }
 
@@ -1862,14 +1862,14 @@ export interface ImpresaSociale {
 }
 
 export interface ImpresaRiferimento {
-  'denominazione'?: string;
+  denominazione?: string;
   'c-fiscale'?: string;
 }
 
 export interface ImpresaSubentrante {
-  'denominazione'?: string;
+  denominazione?: string;
   'c-fiscale'?: string;
-  'cciaa'?: string;
+  cciaa?: string;
   'n-rea'?: string;
   'n-rd'?: string;
   'n-ri'?: string;
@@ -1878,9 +1878,9 @@ export interface ImpresaSubentrante {
 }
 
 export interface ImpresaSubentrata {
-  'denominazione'?: string;
+  denominazione?: string;
   'c-fiscale'?: string;
-  'cciaa'?: string;
+  cciaa?: string;
   'n-rea'?: string;
   'n-rd'?: string;
   'n-aa'?: string;
@@ -1891,18 +1891,18 @@ export interface ImpresaSubentrata {
 
 export interface Indirizzo {
   'c-comune'?: string;
-  'comune'?: string;
-  'provincia'?: string;
+  comune?: string;
+  provincia?: string;
   'provincia-ter'?: string;
   'c-toponimo'?: string;
-  'toponimo'?: string;
-  'via'?: string;
+  toponimo?: string;
+  via?: string;
   'n-civico'?: string;
-  'cap'?: string;
+  cap?: string;
   'cap-ter'?: string;
   'c-stato'?: string;
-  'stato'?: string;
-  'frazione'?: string;
+  stato?: string;
+  frazione?: string;
   'altre-indicazioni'?: string;
 }
 
@@ -1912,14 +1912,14 @@ export type IndirizzoRi = Indirizzo;
 export interface IndirizzoSedeEstero {
   'info-trasferimento'?: string;
   'c-stato'?: string;
-  'stato'?: string;
-  'indirizzo'?: string;
+  stato?: string;
+  indirizzo?: string;
 }
 
 export interface InfoAltroRegistro {
   'trasferimento-altro-registro'?: TrasferimentoAltroRegistro;
-  'cancellazione'?: Cancellazione;
-  'cciaa'?: string;
+  cancellazione?: Cancellazione;
+  cciaa?: string;
 }
 
 export interface InfoAmministratori {
@@ -1940,22 +1940,22 @@ export interface InfoAttivita {
   'attivita-prevalente'?: AttivitaPrevalente;
   'attestazioni-qualificazioni'?: AttestazioniQualificazioni;
   'certificazioni-bio'?: CertificazioniBio;
-  'certificazioni'?: Certificazioni;
+  certificazioni?: Certificazioni;
   'accreditamenti-odc'?: AccreditamentiOdc;
   'impresa-sociale'?: ImpresaSociale;
-  'runts'?: Runts;
+  runts?: Runts;
   'rating-legalita'?: RatingLegalita;
   'addetti-impresa'?: AddettiImpresa[];
   'addetti-comuni'?: AddettiComuni[];
   'dt-inizio-attivita-impresa'?: string;
   'dt-inizio'?: string;
   'c-stato'?: string;
-  'stato'?: string;
+  stato?: string;
 }
 
 export interface InfoMese {
   'c-mese'?: string;
-  'mese'?: string;
+  mese?: string;
   'n-dipendenti'?: string;
   'n-indipendenti'?: string;
   'n-totale'?: string;
@@ -1990,12 +1990,12 @@ export interface InfoPersone {
 }
 
 export interface InfoSede {
-  'telefono'?: Telefono;
-  'telex'?: string;
-  'telefax'?: Telefax;
+  telefono?: Telefono;
+  telex?: string;
+  telefax?: Telefax;
   'indirizzo-posta-certificata'?: string;
   'sito-internet'?: string;
-  'email'?: string;
+  email?: string;
   'legal-mail'?: string;
   'altre-funzioni-sede'?: string;
   'dati-iscrizione-rea-rd'?: DatiIscrizioneReaRd;
@@ -2004,8 +2004,8 @@ export interface InfoSede {
   'partita-iva'?: PartitaIva;
   'gruppo-iva'?: GruppoIva;
   'codice-lei'?: CodiciLei;
-  'insegna'?: string;
-  'euid'?: Euid;
+  insegna?: string;
+  euid?: Euid;
   'sede-secondaria-rs'?: SedeSecondariaRs;
   'provenienza-trasferimento'?: ProvenienzaTrasferimento;
   'informazioni-supplementari'?: InformazioniSupplementari;
@@ -2013,12 +2013,12 @@ export interface InfoSede {
 }
 
 export interface Telefono {
-  'prefisso'?: string;
+  prefisso?: string;
   n?: string;
 }
 
 export interface Telefax {
-  'prefisso'?: string;
+  prefisso?: string;
   n?: string;
 }
 
@@ -2030,9 +2030,9 @@ export interface InfoStatuto {
   'durata-societa'?: DurataSocieta;
   'iscrizione-rs'?: IscrizioneRs;
   'oggetto-sociale'?: string;
-  'poteri'?: Poteri;
-  'riferimenti'?: Riferimenti;
-  'dichiarazioni'?: Dichiarazioni;
+  poteri?: Poteri;
+  riferimenti?: Riferimenti;
+  dichiarazioni?: Dichiarazioni;
   'sigla-denominazione'?: string;
   'dt-fondazione'?: string;
   'dt-comunicazione-unica'?: string;
@@ -2048,7 +2048,7 @@ export interface InfoSupplementariStoriche {
 export interface InformazioneASocio {
   _text?: string;
   'c-tipo'?: string;
-  'tipo'?: string;
+  tipo?: string;
 }
 
 export interface InformazioniSocio {
@@ -2063,16 +2063,16 @@ export interface InformazioniSupplementari {
 }
 
 export interface InformazioniAtto {
-  'titolari'?: Titolari;
+  titolari?: Titolari;
   'n-repertorio'?: string;
-  'notaio'?: string;
+  notaio?: string;
   'c-oggetto'?: string;
-  'oggetto'?: string;
+  oggetto?: string;
 }
 
 export interface IntegrazioneInformazioni {
   'tabelle-speciali'?: TabelleSpeciali;
-  'note'?: string[];
+  note?: string[];
   'cessazione-esercizio'?: CessazioneEsercizio;
   'dt-inserimento'?: string;
   'dt-decorrenza'?: string;
@@ -2094,13 +2094,13 @@ export interface IntegrazioneInformazioni {
 
 export interface Iscrizione {
   'c-tipo'?: string;
-  'tipo'?: string;
+  tipo?: string;
   'dt-iscrizione'?: string;
   'n-marchio'?: string;
-  'cciaa'?: string;
+  cciaa?: string;
   'dt-assegnazione'?: string;
   'c-categoria'?: string;
-  'categoria'?: string;
+  categoria?: string;
 }
 
 export interface IscrizioneModifica {
@@ -2113,7 +2113,7 @@ export interface IscrizioneModifica {
 }
 
 export interface IscrizioneRi {
-  'sezioni'?: Sezioni;
+  sezioni?: Sezioni;
   'n-annotazione-ri'?: string;
   'n-iscrizione-ri'?: string;
   'n-c-fiscale'?: string;
@@ -2156,30 +2156,30 @@ export interface Licenza {
 export interface LicenzaAutorizzazione {
   'c-autorita-rilascio'?: string;
   'autorita-rilascio'?: string;
-  'n'?: string;
+  n?: string;
   'dt-iscrizione'?: string;
-  'c'?: string;
-  'tipo'?: string;
+  c?: string;
+  tipo?: string;
 }
 
 export interface Licenze {
-  'licenza'?: Licenza[];
+  licenza?: Licenza[];
 }
 
 export interface IndirizzoLocalizzazione {
   'c-comune'?: string;
-  'comune'?: string;
-  'provincia'?: string;
+  comune?: string;
+  provincia?: string;
   'provincia-ter'?: string;
   'c-toponimo'?: string;
-  'toponimo'?: string;
-  'via'?: string;
+  toponimo?: string;
+  via?: string;
   'n-civico'?: string;
-  'cap'?: string;
+  cap?: string;
   'cap-ter'?: string;
   'c-stato'?: string;
-  'stato'?: string;
-  'frazione'?: string;
+  stato?: string;
+  frazione?: string;
   'altre-indicazioni'?: string;
   'c-stradario'?: string;
   'c-zona'?: string;
@@ -2189,9 +2189,9 @@ export interface IndirizzoLocalizzazione {
 export interface Localizzazione {
   'sotto-tipi'?: SottoTipi;
   'indirizzo-localizzazione'?: IndirizzoLocalizzazione;
-  'telefono'?: Telefono;
-  'telex'?: string;
-  'telefax'?: Telefax;
+  telefono?: Telefono;
+  telex?: string;
+  telefax?: Telefax;
   'sede-fuori-provincia'?: SedeFuoriProvincia;
   'sede-secondaria-rs'?: SedeSecondariaRs;
   'impresa-subentrata'?: ImpresaSubentrata;
@@ -2203,19 +2203,19 @@ export interface Localizzazione {
   'classificazioni-ateco-2002'?: ClassificazioniAteco2002;
   'classificazioni-ateco'?: ClassificazioniAteco[];
   'albi-ruoli-licenze'?: AlbiRuoliLicenze;
-  'persone'?: Persone;
+  persone?: Persone;
   'informazioni-supplementari'?: InformazioniSupplementari;
   'cessazione-localizzazione'?: CessazioneLocalizzazione;
   'trasferimento-localizzazione'?: TrasferimentoLocalizzazione;
   'impresa-subentrante'?: ImpresaSubentrante;
-  'progressivo'?: string;
+  progressivo?: string;
   'f-dati-ridotti'?: string;
   'c-tipo'?: string;
-  'tipo'?: string;
+  tipo?: string;
   'c-tipo-iscrizione'?: string;
   'tipo-iscrizione'?: string;
-  'denominazione'?: string;
-  'insegna'?: string;
+  denominazione?: string;
+  insegna?: string;
   'dt-apertura'?: string;
   'f-cessazione'?: string;
   'c-euid'?: string;
@@ -2223,7 +2223,7 @@ export interface Localizzazione {
 }
 
 export interface Localizzazioni {
-  'localizzazione'?: Localizzazione[];
+  localizzazione?: Localizzazione[];
 }
 
 // =============================================================================
@@ -2246,8 +2246,8 @@ export interface Mad {
 /** simpleContent: testo (descrizione mestiere) + attributi */
 export interface MestiereAa {
   _text?: string;
-  'c'?: string;
-  'descrizione'?: string;
+  c?: string;
+  descrizione?: string;
   'ulteriore-descrizione'?: string;
   'dt-inizio-attivita'?: string;
 }
@@ -2257,17 +2257,17 @@ export interface MestieriAa {
 }
 
 export interface Modelli {
-  'modello'?: Modello[];
+  modello?: Modello[];
 }
 
 export interface ModelliTrascrizioni {
-  'modelli'?: Modelli;
+  modelli?: Modelli;
   'trascrizioni-ri'?: TrscrizioniRi;
 }
 
 export interface Modello {
-  'riquadri'?: Riquadri;
-  'c'?: string;
+  riquadri?: Riquadri;
+  c?: string;
   'n-ricorrenze'?: string;
 }
 
@@ -2276,32 +2276,32 @@ export interface Modifica {
   _text?: string;
   'p-modifica'?: string;
   'c-tipo'?: string;
-  'tipo'?: string;
+  tipo?: string;
   'dt-effetto'?: string;
   'c-modifica'?: string;
   'descrizione-c-modifica'?: string;
 }
 
 export interface Modifiche {
-  'modifica'?: Modifica[];
+  modifica?: Modifica[];
 }
 
 export interface Molini {
   'potenze-cereali-macchinari'?: PotenzeCerealiMacchinari;
-  'stoccaggio'?: Stoccaggio;
-  'categoria'?: string;
+  stoccaggio?: Stoccaggio;
+  categoria?: string;
 }
 
 export interface MoliniPanificatori {
-  'panificatori'?: Panificatori;
-  'molini'?: Molini;
+  panificatori?: Panificatori;
+  molini?: Molini;
   'c-tipo'?: string;
-  'tipo'?: string;
-  'n'?: string;
+  tipo?: string;
+  n?: string;
   'dt-iscrizione'?: string;
-  'stato'?: string;
-  'conduzione'?: string;
-  'denominazione'?: string;
+  stato?: string;
+  conduzione?: string;
+  denominazione?: string;
   'dt-inizio-rapporto'?: string;
   'dt-fine-rapporto'?: string;
 }
@@ -2311,15 +2311,15 @@ export interface MoliniPanificatori {
 // =============================================================================
 
 export interface NSoci {
-  'soci'?: string;
-  'accomandatari'?: string;
-  'amministratori'?: string;
+  soci?: string;
+  accomandatari?: string;
+  amministratori?: string;
 }
 
 /** simpleContent: testo + attributo c */
 export interface NotaElencoSoci {
   _text?: string;
-  'c'?: string;
+  c?: string;
 }
 
 export interface NoteElencoSoci {
@@ -2329,7 +2329,7 @@ export interface NoteElencoSoci {
 /** simpleContent: testo + attributo c */
 export interface NotaPartecipazione {
   _text?: string;
-  'c'?: string;
+  c?: string;
 }
 
 export interface NotePartecipazione {
@@ -2342,7 +2342,7 @@ export interface NotePartecipazione {
 
 export interface Omologazione {
   'dt-omologazione'?: string;
-  'n'?: string;
+  n?: string;
 }
 
 export interface OrganiControlloInCarica {
@@ -2356,7 +2356,7 @@ export interface OrganiControlloInCarica {
 export interface Panificatori {
   'caratteristiche-impianto-1'?: CaratteristicheImpianto1;
   'caratteristiche-impianto-2'?: CaratteristicheImpianto2;
-  'apparecchi'?: Apparecchi;
+  apparecchi?: Apparecchi;
 }
 
 export interface Parametri {
@@ -2372,7 +2372,7 @@ export interface Partecipata {
   'quote-diritti-impresa'?: QuoteDirittiImpresa;
   'note-partecipazione'?: NotePartecipazione;
   'c-fiscale'?: string;
-  'denominazione'?: string;
+  denominazione?: string;
   'f-consorzio'?: string;
   'f-cooperativa'?: string;
   'f-cessata'?: string;
@@ -2385,7 +2385,7 @@ export interface Partecipazione {
   'estremi-impresa'?: EstremiImpresa;
   'estremi-pratica'?: EstremiPratica;
   'capitale-sociale'?: CapitaleSociale;
-  'riquadri'?: Riquadri;
+  riquadri?: Riquadri;
   'f-ultimo-elenco-soci'?: string;
   'f-paragrafo-attuale'?: string;
   'f-info-incompleta'?: string;
@@ -2398,7 +2398,7 @@ export interface PartecipazioneUtili {
 }
 
 export interface Partecipazioni {
-  'partecipazione'?: Partecipazione[];
+  partecipazione?: Partecipazione[];
   'f-presenza-info'?: string;
 }
 
@@ -2411,16 +2411,16 @@ export interface PartitaIva {
 }
 
 export interface PatrimonioSpecificoAffare {
-  'costituzione'?: string;
-  'modifica'?: Modifica;
-  'cessazione'?: string;
+  costituzione?: string;
+  modifica?: Modifica;
+  cessazione?: string;
 }
 
 export interface PattiParasociali {
   'esercizio-diritto-voto'?: string;
   'trasferimento-azioni-partecip'?: string;
   'esercizio-influenza-dominante'?: string;
-  'altro'?: string;
+  altro?: string;
 }
 
 export interface Persona {
@@ -2428,17 +2428,17 @@ export interface Persona {
   'persona-giuridica'?: PersonaGiuridica;
   'informazioni-socio'?: InformazioniSocio;
   'indirizzo-posta-certificata'?: string;
-  'indirizzo'?: Indirizzo;
+  indirizzo?: Indirizzo;
   'indirizzo-ri'?: IndirizzoRi;
-  'telefono'?: Telefono;
-  'telefax'?: Telefax;
-  'quota'?: Quota;
+  telefono?: Telefono;
+  telefax?: Telefax;
+  quota?: Quota;
   'atti-conferimento-cariche'?: AttiConferimentoCariche;
-  'fallimento'?: Fallimento;
+  fallimento?: Fallimento;
   'abilitazioni-impiantisti'?: AbilitazioniImpiantisti;
   'ruoli-persona'?: RuoliPersona;
-  'licenze'?: Licenze;
-  'progressivo'?: string;
+  licenze?: Licenze;
+  progressivo?: string;
   'f-rappresentante-rea'?: string;
   'f-rappresentante-ri'?: string;
   'f-rappresentante-ae'?: string;
@@ -2446,10 +2446,10 @@ export interface Persona {
   'f-sindaco'?: string;
   'f-elettore'?: string;
   'tipo-modifica'?: string;
-  'cognome'?: string;
-  'nome'?: string;
+  cognome?: string;
+  nome?: string;
   'c-fiscale'?: string;
-  'cciaa'?: string;
+  cciaa?: string;
   'n-rd'?: string;
   'n-rea'?: string;
   'f-firma-depositata'?: string;
@@ -2460,12 +2460,12 @@ export interface PersonaFisica {
   'estremi-nascita'?: EstremiNascita;
   'domicilio-fiscale'?: DomicilioFiscale;
   'titoli-onorifici'?: TitoliOnorifici;
-  'cognome'?: string;
-  'nome'?: string;
+  cognome?: string;
+  nome?: string;
   'c-fiscale'?: string;
-  'sesso'?: string;
+  sesso?: string;
   'c-cittadinanza'?: string;
-  'cittadinanza'?: string;
+  cittadinanza?: string;
   'c-capacita-di-agire'?: string;
   'capacita-di-agire'?: string;
   'c-titolo-studio'?: string;
@@ -2477,8 +2477,8 @@ export interface PersonaFisica {
 export interface PersonaGiuridica {
   'n-rea'?: string;
   'n-rd'?: string;
-  'cciaa'?: string;
-  'denominazione'?: string;
+  cciaa?: string;
+  denominazione?: string;
   'denominazione-ri'?: string;
   'c-fiscale'?: string;
   'dt-costituzione'?: string;
@@ -2487,23 +2487,23 @@ export interface PersonaGiuridica {
 }
 
 export interface PersonaGiuridicaPrivata {
-  'registro'?: string;
-  'ente'?: string;
-  'n'?: string;
+  registro?: string;
+  ente?: string;
+  n?: string;
   'dt-iscrizione'?: string;
   'f-accertamento-requisiti'?: string;
 }
 
 export interface Persone {
-  'persona'?: Persona[];
+  persona?: Persona[];
 }
 
 export interface PersonePco {
-  'persona'?: Persona[];
+  persona?: Persona[];
 }
 
 export interface PotenzaCerealiMacchinari {
-  'macchinari'?: Macchinari;
+  macchinari?: Macchinari;
   'quintali-potenza-nominale'?: string;
   'quintali-potenza-reale'?: string;
   'tipo-cereale'?: string;
@@ -2518,7 +2518,7 @@ export interface PotenzeCerealiMacchinari {
 export interface PoteriCarica {
   _text?: string;
   'c-carica'?: string;
-  'carica'?: string;
+  carica?: string;
 }
 
 /** simpleContent: testo + attributo */
@@ -2540,12 +2540,12 @@ export interface Poteri {
 export interface PraticaSoggettiControllanti {
   'estremi-pratica'?: EstremiPratica;
   'soggetti-controllanti'?: SoggettiControllanti;
-  'note'?: string[];
+  note?: string[];
 }
 
 export interface PraticheAnno {
   'dt-inizio'?: string;
-  'n'?: string;
+  n?: string;
 }
 
 export interface PraticheSoggettiControllanti {
@@ -2560,11 +2560,11 @@ export interface PresentazioneCciaa {
 
 export interface ProceduraConcorsuale {
   'estremi-atto'?: EstremiAtto;
-  'dichiarazioni'?: Dichiarazioni;
+  dichiarazioni?: Dichiarazioni;
   'comunicazioni-curatore'?: ComunicazioniCuratore;
-  'cl'?: string;
+  cl?: string;
   'c-tipo'?: string;
-  'tipo'?: string;
+  tipo?: string;
   'dt-iscrizione-procedura'?: string;
   'dt-provvedimento'?: string;
   'dt-atto'?: string;
@@ -2589,7 +2589,7 @@ export interface ProcedureConcorsuali {
   'cessazione-esercizio-provv'?: string;
   'esecuzione-concordato'?: string;
   'annotazioni-procedure'?: string;
-  'dichiarazioni'?: Dichiarazioni;
+  dichiarazioni?: Dichiarazioni;
   'persone-pco'?: PersonePco;
   'f-presenza-info'?: string;
   'cciaa-fuori-provincia'?: string;
@@ -2606,7 +2606,7 @@ export interface ProprietaQuota {
 }
 
 export interface Protocolli {
-  'protocollo'?: Protocollo[];
+  protocollo?: Protocollo[];
 }
 
 export interface ProtocolliAperti {
@@ -2615,7 +2615,7 @@ export interface ProtocolliAperti {
 }
 
 export interface ProtocolliCompleti {
-  'protocolli'?: Protocolli;
+  protocolli?: Protocolli;
   'trascrizioni-prot-completi'?: TrscrizioniProtCompleti;
   'f-presenza-info'?: string;
   'dt-estrazione'?: string;
@@ -2632,8 +2632,8 @@ export interface ProtocolliRs {
 }
 
 export interface Protocollo {
-  'modelli'?: Modelli;
-  'atti'?: Atti;
+  modelli?: Modelli;
+  atti?: Atti;
   'c-albo'?: string;
   'c-stato-avanzamento'?: string;
   'stato-avanzamento'?: string;
@@ -2642,16 +2642,16 @@ export interface Protocollo {
   'cciaa-intercamerale'?: string;
   'dt-protocollo'?: string;
   'dt-ultima-modifica'?: string;
-  'anno'?: string;
-  'n'?: string;
+  anno?: string;
+  n?: string;
   'adempimento-comunica'?: string;
   'enti-destinatari'?: string;
 }
 
 export interface ProtocolloAperto {
-  'note'?: string[];
-  'modelli'?: Modelli;
-  'atti'?: Atti;
+  note?: string[];
+  modelli?: Modelli;
+  atti?: Atti;
   'c-albo'?: string;
   'c-stato-avanzamento'?: string;
   'stato-avanzamento'?: string;
@@ -2660,8 +2660,8 @@ export interface ProtocolloAperto {
   'cciaa-intercamerale'?: string;
   'dt-protocollo'?: string;
   'dt-ultima-modifica'?: string;
-  'anno'?: string;
-  'n'?: string;
+  anno?: string;
+  n?: string;
   'adempimento-comunica'?: string;
   'enti-destinatari'?: string;
 }
@@ -2671,7 +2671,7 @@ export interface ProtocolloRi {
   'atti-trascrizioni'?: AttiTrascrizioni;
   'n-protocollo'?: string;
   'n-protocollo-ufficio'?: string;
-  'anno'?: string;
+  anno?: string;
   'dt-protocollo'?: string;
   'n-comunicazione-intercamerale'?: string;
   'n-protocollo-intercamerale'?: string;
@@ -2684,19 +2684,19 @@ export interface ProtocolloRi {
 }
 
 export interface ProtocolloRs {
-  'atto'?: Atto;
+  atto?: Atto;
   'trascrizioni-rs'?: TrscrizioniRs;
   'n-riferimento'?: string;
   'n-registro-ordine'?: string;
   'anno-registro-ordine'?: string;
   'c-comune-tribunale'?: string;
-  'tribunale'?: string;
+  tribunale?: string;
   'provincia-tribunale'?: string;
 }
 
 export interface ProvenienzaTrasferimento {
   'dt-trasferimento'?: string;
-  'cciaa'?: string;
+  cciaa?: string;
   'n-rea'?: string;
   'n-rd'?: string;
   'n-aa'?: string;
@@ -2707,19 +2707,19 @@ export interface ProvenienzaTrasferimento {
 // =============================================================================
 
 export interface Qualifica {
-  'c'?: string;
+  c?: string;
 }
 
 export interface Qualifiche {
-  'qualifica'?: Qualifica;
+  qualifica?: Qualifica;
 }
 
 export interface Quota {
   'c-valuta'?: string;
-  'valuta'?: string;
-  'valore'?: string;
+  valuta?: string;
+  valore?: string;
   'ammontare-convertito-in-euro'?: string;
-  'percentuale'?: string;
+  percentuale?: string;
 }
 
 export interface QuotaDiritto {
@@ -2741,36 +2741,36 @@ export interface QuoteDiritti {
 export interface RatingLegalita {
   'c-fonte'?: string;
   'dt-ultimo-aggiornamento'?: string;
-  'punteggio'?: string;
-  'identificativo'?: string;
+  punteggio?: string;
+  identificativo?: string;
   'dt-rinnovo'?: string;
 }
 
 export interface Registrazione {
   'dt-registrazione'?: string;
-  'n'?: string;
+  n?: string;
   'ufficio-registro'?: string;
   'provincia-ufficio-registro'?: string;
 }
 
 export interface RegistroPreziosi {
-  'qualifica'?: Qualifica;
-  'qualifiche'?: Qualifiche;
+  qualifica?: Qualifica;
+  qualifiche?: Qualifiche;
   'autorizzazione-ps'?: AutorizzazionePs;
   'tassa-cg'?: TassaCg;
-  'marchio'?: string;
+  marchio?: string;
   'cancellazione-ruolo'?: CancellazioneRuolo;
-  'n'?: string;
+  n?: string;
   'dt-domanda'?: string;
 }
 
 export interface RequisitoMoraleProfessionale {
   'c-tipo'?: string;
-  'tipo'?: string;
+  tipo?: string;
   'c-stato'?: string;
-  'stato'?: string;
+  stato?: string;
   'c-ente'?: string;
-  'ente'?: string;
+  ente?: string;
   'dt-denuncia'?: string;
   'dt-accertamento'?: string;
   'dt-decadenza'?: string;
@@ -2785,7 +2785,7 @@ export interface ReteImprese {
   'impresa-riferimento'?: ImpresaRiferimento;
   'n-repertorio'?: string;
   'n-registrazione'?: string;
-  'denominazione'?: string;
+  denominazione?: string;
   'c-fiscale'?: string;
 }
 
@@ -2794,14 +2794,14 @@ export interface RetiImprese {
 }
 
 export interface Riferimenti {
-  'clausole'?: Clausole;
+  clausole?: Clausole;
   'modifiche-statutarie'?: string;
   'deposito-statuto'?: string;
   'modifica-statuto'?: string;
   'aggregazione-imprese'?: string;
   'provvedimenti-giudice'?: string;
   'effetti-differiti'?: string;
-  'arbitrato'?: string;
+  arbitrato?: string;
   'condizioni-sospensive'?: string;
   'provvedimenti-conservatore'?: string;
   'provvedimenti-autorita'?: string;
@@ -2827,7 +2827,7 @@ export interface RiconoscimentiProfessionali {
 }
 
 export interface Riquadri {
-  'riquadro'?: Riquadro[];
+  riquadro?: Riquadro[];
 }
 
 export interface RiquadriTrasferimento {
@@ -2838,10 +2838,10 @@ export interface Riquadro {
   'tipo-atto'?: TipoAtto;
   'composizione-quote'?: ComposizioneQuote;
   'vincoli-quote'?: string[];
-  'titolari'?: Titolari;
+  titolari?: Titolari;
   'diritti-partecipazione'?: DirittiPartecipazione;
-  'note'?: string[];
-  'c'?: string;
+  note?: string[];
+  c?: string;
   'n-ricorrenze'?: string;
   'dt-annotazione'?: string;
   'dt-evento'?: string;
@@ -2851,8 +2851,8 @@ export interface RiquadroTrasferimento {
   'tipo-atto'?: TipoAtto;
   'composizione-quote'?: ComposizioneQuote;
   'vincoli-quote'?: string[];
-  'titolari'?: Titolari;
-  'note'?: string[];
+  titolari?: Titolari;
+  note?: string[];
   'dt-annotazione'?: string;
   'dt-evento'?: string;
 }
@@ -2864,7 +2864,7 @@ export interface RipartizioniUtiliPerdite {
 }
 
 export interface Ruoli {
-  'ruolo'?: Ruolo[];
+  ruolo?: Ruolo[];
 }
 
 export interface RuoliPersona {
@@ -2874,46 +2874,46 @@ export interface RuoliPersona {
 export interface Ruolo {
   'cancellazione-ruolo'?: CancellazioneRuolo;
   'c-tipo'?: string;
-  'tipo'?: string;
+  tipo?: string;
   'c-categoria'?: string;
-  'categoria'?: string;
+  categoria?: string;
   'c-qualifica'?: string;
-  'qualifica'?: string;
+  qualifica?: string;
   'c-forma'?: string;
-  'forma'?: string;
-  'n'?: string;
+  forma?: string;
+  n?: string;
   'dt-iscrizione'?: string;
   'c-ente-rilascio'?: string;
   'ente-rilascio'?: string;
-  'provincia'?: string;
+  provincia?: string;
 }
 
 /** simpleContent: testo + attributo c */
 export interface RuoloPartecipazione {
   _text?: string;
-  'c'?: string;
+  c?: string;
 }
 
 export interface RuoloPersona {
   'f-sezione-rea'?: string;
   'c-tipo'?: string;
-  'tipo'?: string;
+  tipo?: string;
   'c-categoria'?: string;
-  'categoria'?: string;
+  categoria?: string;
   'c-qualifica'?: string;
-  'qualifica'?: string;
+  qualifica?: string;
   'c-forma'?: string;
-  'forma'?: string;
-  'n'?: string;
+  forma?: string;
+  n?: string;
   'dt-iscrizione'?: string;
   'c-ente-rilascio'?: string;
   'ente-rilascio'?: string;
-  'provincia'?: string;
+  provincia?: string;
 }
 
 export interface Runts {
-  'sezioni'?: Sezioni;
-  'id'?: string;
+  sezioni?: Sezioni;
+  id?: string;
 }
 
 // =============================================================================
@@ -2931,7 +2931,7 @@ export interface SedeFuoriProvincia {
   'n-rea'?: string;
   'n-rd'?: string;
   'n-aa'?: string;
-  'cciaa'?: string;
+  cciaa?: string;
 }
 
 export interface SedeSecondariaRs {
@@ -2943,17 +2943,17 @@ export interface SedeSecondariaRs {
 }
 
 export interface SessioneAa {
-  'modifiche'?: Modifiche[];
+  modifiche?: Modifiche[];
   'c-movimentazione'?: string;
-  'movimentazione'?: string;
+  movimentazione?: string;
   'dt-delibera'?: string;
   'dt-domanda-accertamento'?: string;
 }
 
 export interface SessioneRdRea {
-  'modifiche'?: Modifiche;
+  modifiche?: Modifiche;
   'c-movimentazione'?: string;
-  'movimentazione'?: string;
+  movimentazione?: string;
   'dt-denuncia'?: string;
 }
 
@@ -2969,17 +2969,17 @@ export interface SessioniRdRea {
 /** simpleContent: testo + attributo c */
 export interface Settore {
   _text?: string;
-  'c'?: string;
+  c?: string;
 }
 
 export interface Settori {
-  'settore'?: Settore[];
+  settore?: Settore[];
 }
 
 /** simpleContent: testo + attributo c */
 export interface SettoreAttivita {
   _text?: string;
-  'c'?: string;
+  c?: string;
 }
 
 export interface SettoriAttivita {
@@ -2987,8 +2987,8 @@ export interface SettoriAttivita {
 }
 
 export interface Sezione {
-  'c'?: string;
-  'descrizione'?: string;
+  c?: string;
+  descrizione?: string;
   'dt-iscrizione'?: string;
   'dt-ultima-comunicazione'?: string;
   'f-coltivatore-diretto'?: string;
@@ -2999,7 +2999,7 @@ export interface Sezione {
 }
 
 export interface Sezioni {
-  'sezione'?: Sezione[];
+  sezione?: Sezione[];
 }
 
 export interface SintesiAttivita {
@@ -3043,11 +3043,11 @@ export interface SintesiCifreImpresa {
 /** simpleContent: testo + attributo c */
 export interface SistemaAmministrazione {
   _text?: string;
-  'c'?: string;
+  c?: string;
 }
 
 export interface Soci {
-  'socio'?: Socio[];
+  socio?: Socio[];
 }
 
 export interface Socio {
@@ -3064,11 +3064,11 @@ export interface SocietaCooperativa {
   'n-iscrizione'?: string;
   'dt-iscrizione'?: string;
   'c-sezione'?: string;
-  'sezione'?: string;
+  sezione?: string;
   'c-sotto-sezione'?: string;
   'sotto-sezione'?: string;
   'c-categoria'?: string;
-  'categoria'?: string;
+  categoria?: string;
   'c-categoria-attivita-eserc'?: string;
   'categoria-attivita-esercitata'?: string;
   'c-tipo-forma-amministrativa'?: string;
@@ -3078,9 +3078,9 @@ export interface SocietaCooperativa {
 export interface SocietaQuotata {
   'anno-dal'?: string;
   'anno-al'?: string;
-  'mercato'?: string;
+  mercato?: string;
   'c-fonte'?: string;
-  'fonte'?: string;
+  fonte?: string;
   'dt-ultimo-aggiornamento'?: string;
   'dt-ultimo-deposito-es'?: string;
 }
@@ -3090,13 +3090,13 @@ export interface SoggettiControllanti {
 }
 
 export interface SoggettoControllante {
-  'note'?: string[];
-  'denominazione'?: string;
+  note?: string[];
+  denominazione?: string;
   'c-fiscale'?: string;
   'dt-costituzione'?: string;
   'c-stato'?: string;
-  'stato'?: string;
-  'cciaa'?: string;
+  stato?: string;
+  cciaa?: string;
   'n-rea'?: string;
   'dt-riferimento'?: string;
   'c-tipo-dichiarazione'?: string;
@@ -3108,7 +3108,7 @@ export interface SoggettoControllante {
 /** simpleContent: testo + attributo c */
 export interface SoggettoControlloContabile {
   _text?: string;
-  'c'?: string;
+  c?: string;
 }
 
 export interface SottoTipi {
@@ -3118,12 +3118,12 @@ export interface SottoTipi {
 /** simpleContent: testo + attributo c */
 export interface SottoTipo {
   _text?: string;
-  'c'?: string;
+  c?: string;
 }
 
 export interface Stoccaggio {
-  'magazzini'?: string;
-  'silos'?: string;
+  magazzini?: string;
+  silos?: string;
 }
 
 export interface StoriaAddetti {
@@ -3136,15 +3136,15 @@ export interface StoriaAttivita {
 }
 
 export interface StoriaCciaaProvenienza {
-  'mad'?: Mad;
-  'trascrizioni'?: Trascrizioni;
-  'cciaa'?: string;
+  mad?: Mad;
+  trascrizioni?: Trascrizioni;
+  cciaa?: string;
 }
 
 export interface StoriaSedePrecedente {
-  'mad'?: Mad;
-  'trascrizioni'?: Trascrizioni;
-  'cciaa'?: string;
+  mad?: Mad;
+  trascrizioni?: Trascrizioni;
+  cciaa?: string;
   'n-rea'?: string;
 }
 
@@ -3155,32 +3155,32 @@ export interface StoriaSediPrecedenti {
 export interface StrumentiFinanziari {
   'azioni-ordinarie'?: string;
   'altre-azioni'?: string;
-  'obbligazioni'?: string;
+  obbligazioni?: string;
   'obbligazioni-convertibili'?: string;
   'titoli-debito'?: string;
   'altri-strumenti'?: string;
 }
 
 export interface Subentri {
-  'subentro'?: Subentro[];
+  subentro?: Subentro[];
 }
 
 export interface SubentriImpresa {
   'impresa-subentrata'?: ImpresaSubentrata;
-  'subentri'?: Subentri;
+  subentri?: Subentri;
   'impresa-subentrante'?: ImpresaSubentrante;
 }
 
 export interface Subentro {
   'c-tipo'?: string;
-  'tipo'?: string;
-  'denominazione'?: string;
+  tipo?: string;
+  denominazione?: string;
   'c-fiscale'?: string;
-  'cciaa'?: string;
+  cciaa?: string;
   'n-rea'?: string;
   'n-ri'?: string;
   'c-titolo'?: string;
-  'titolo'?: string;
+  titolo?: string;
 }
 
 // =============================================================================
@@ -3190,13 +3190,13 @@ export interface Subentro {
 export interface TaFusioniScissioniSubentri {
   'trasferimenti-azienda'?: TrasferimentiAzienda;
   'fusioni-scissioni'?: FusioniScissioni;
-  'dichiarazioni'?: Dichiarazioni;
+  dichiarazioni?: Dichiarazioni;
   'subentri-impresa'?: SubentriImpresa;
   'f-presenza-info'?: string;
 }
 
 export interface TabellaElencoSoci {
-  'soci'?: Soci;
+  soci?: Soci;
   'note-elenco-soci'?: NoteElencoSoci;
 }
 
@@ -3206,24 +3206,24 @@ export interface TabelleSpeciali {
   'f-farmacia'?: string;
   'f-vendita-generi-monopolio'?: string;
   'f-vendita-carburanti'?: string;
-  'mq'?: string;
+  mq?: string;
 }
 
 export interface TassaCg {
-  'n'?: string;
-  'dt'?: string;
+  n?: string;
+  dt?: string;
 }
 
 /** simpleContent: testo + attributo c */
 export interface TipoAtto {
   _text?: string;
-  'c'?: string;
+  c?: string;
 }
 
 /** simpleContent: testo + attributo c */
 export interface TipoConferimenti {
   _text?: string;
-  'c'?: string;
+  c?: string;
 }
 
 /** simpleContent: testo + attributi */
@@ -3236,21 +3236,21 @@ export interface TipoTrascrizione {
 
 export interface Titolare {
   'anagrafica-titolare'?: AnagraficaTitolare;
-  'domicilio'?: Domicilio;
+  domicilio?: Domicilio;
   'domicilio-ri'?: DomicilioRi;
   'indirizzo-posta-certificata'?: string;
   'diritto-partecipazione'?: DirittoPartecipazione;
-  'note'?: string[];
+  note?: string[];
   'c-situazione'?: string;
-  'situazione'?: string;
+  situazione?: string;
   'c-tipo'?: string;
-  'tipo'?: string;
+  tipo?: string;
   'f-rappresentante'?: string;
 }
 
 export interface Titolari {
-  'titolare'?: Titolare[];
-  'note'?: string[];
+  titolare?: Titolare[];
+  note?: string[];
 }
 
 export interface TitoliOnorifici {
@@ -3260,7 +3260,7 @@ export interface TitoliOnorifici {
 /** simpleContent: testo + attributo c */
 export interface TitoloOnorifico {
   _text?: string;
-  'c'?: string;
+  c?: string;
 }
 
 export interface TrscrizioneProtCompleti {
@@ -3271,9 +3271,9 @@ export interface TrscrizioneProtCompleti {
 }
 
 export interface TrscrizioneRi {
-  'persona'?: Persona;
+  persona?: Persona;
   'tipo-trascrizione'?: TipoTrascrizione;
-  'descrizioni'?: Descrizioni;
+  descrizioni?: Descrizioni;
   'iscrizione-modifica'?: IscrizioneModifica;
   'p-trascrizione'?: string;
   'c-tipo-modifica'?: string;
@@ -3281,9 +3281,9 @@ export interface TrscrizioneRi {
 }
 
 export interface TrscrizioneRs {
-  'persona'?: Persona;
+  persona?: Persona;
   'tipo-trascrizione'?: TipoTrascrizione;
-  'descrizioni'?: Descrizioni;
+  descrizioni?: Descrizioni;
   'p-trascrizione'?: string;
   'c-tipo-modifica'?: string;
   'tipo-modifica'?: string;
@@ -3307,7 +3307,7 @@ export interface TrscrizioniRs {
 }
 
 export interface Trasferimenti {
-  'trasferimento'?: Trasferimento[];
+  trasferimento?: Trasferimento[];
 }
 
 export interface TrasferimentiAzienda {
@@ -3324,39 +3324,39 @@ export interface TrasferimentiQuote {
 export interface Trasferimento {
   'estremi-impresa'?: EstremiImpresa;
   'estremi-pratica'?: EstremiPratica;
-  'riquadri'?: Riquadri;
+  riquadri?: Riquadri;
   'f-successivo-ultimo-es'?: string;
 }
 
 export interface TrasferimentoAltroRegistro {
   'c-tipo'?: string;
-  'tipo'?: string;
+  tipo?: string;
 }
 
 export interface TrasferimentoAzienda {
   'estremi-pratica'?: EstremiPratica;
   'informazioni-atto'?: InformazioniAtto;
-  'note'?: string[];
+  note?: string[];
 }
 
 export interface TrasferimentoLocalizzazione {
-  'comune'?: string;
-  'provincia'?: string;
+  comune?: string;
+  provincia?: string;
 }
 
 export interface TrasferimentoQuote {
   'estremi-pratica'?: EstremiPratica;
   'riquadri-trasferimento'?: RiquadriTrasferimento;
-  'note'?: string[];
+  note?: string[];
   'f-contestuale'?: string;
 }
 
 export interface TrasferimentoSede {
-  'comune'?: string;
-  'provincia'?: string;
+  comune?: string;
+  provincia?: string;
   'c-toponimo'?: string;
-  'toponimo'?: string;
-  'via'?: string;
+  toponimo?: string;
+  via?: string;
   'n-civico'?: string;
   'n-rea'?: string;
   'n-rd'?: string;
@@ -3365,8 +3365,8 @@ export interface TrasferimentoSede {
 
 export interface TrasferimentoSedeUlAttiva {
   'c-causale'?: string;
-  'causale'?: string;
-  'dt'?: string;
+  causale?: string;
+  dt?: string;
 }
 
 // =============================================================================
@@ -3381,7 +3381,7 @@ export interface UlterioriDettagli {
 export interface UlterioreDettaglio {
   _text?: string;
   'c-tipo'?: string;
-  'tipo'?: string;
+  tipo?: string;
 }
 
 // =============================================================================
@@ -3390,8 +3390,8 @@ export interface UlterioreDettaglio {
 
 export interface ValoreNominaleConferimenti {
   'c-valuta'?: string;
-  'valuta'?: string;
-  'ammontare'?: string;
+  valuta?: string;
+  ammontare?: string;
   'ammontare-convertito-in-euro'?: string;
 }
 
@@ -3406,9 +3406,9 @@ export interface VariazioneFormaGiuridica {
   'estremi-atto'?: EstremiAtto;
   'p-variazione'?: string;
   'c-old'?: string;
-  'old'?: string;
+  old?: string;
   'c-new'?: string;
-  'new'?: string;
+  new?: string;
   'dt-atto'?: string;
 }
 
@@ -3417,7 +3417,7 @@ export interface VariazioniFormaGiuridica {
 }
 
 export interface Versato {
-  'ammontare'?: string;
+  ammontare?: string;
   'ammontare-convertito-in-euro'?: string;
 }
 
@@ -3432,13 +3432,13 @@ export interface ClausolaConFlagStatuto {
 }
 
 export interface Clausole {
-  'recesso'?: ClausolaConFlagStatuto;
-  'esclusione'?: ClausolaConFlagStatuto;
-  'gradimento'?: ClausolaConFlagStatuto;
-  'prelazione'?: ClausolaConFlagStatuto;
-  'limitazione'?: ClausolaConFlagStatuto;
-  'compromissorie'?: ClausolaConFlagStatuto;
-  'altre'?: ClausolaConFlagStatuto;
+  recesso?: ClausolaConFlagStatuto;
+  esclusione?: ClausolaConFlagStatuto;
+  gradimento?: ClausolaConFlagStatuto;
+  prelazione?: ClausolaConFlagStatuto;
+  limitazione?: ClausolaConFlagStatuto;
+  compromissorie?: ClausolaConFlagStatuto;
+  altre?: ClausolaConFlagStatuto;
 }
 
 // =============================================================================
@@ -3446,7 +3446,7 @@ export interface Clausole {
 // =============================================================================
 
 export interface Descrizioni {
-  'descrizione'?: string[];
+  descrizione?: string[];
 }
 
 /** simpleContent: testo + attributo */
@@ -3465,10 +3465,10 @@ export interface AlbiRuoliLicenze {
   'abilitazioni-impiantisti'?: AbilitazioniImpiantisti;
   'abilitazione-pulizia'?: AbilitazionePulizia;
   'abilitazione-facchinaggio'?: AbilitazioneFacchinaggio;
-  'ruoli'?: Ruoli;
+  ruoli?: Ruoli;
   'registro-preziosi'?: RegistroPreziosi;
   'denunce-inizio-attivita'?: DenunceInizioAttivita;
-  'licenze'?: Licenze;
+  licenze?: Licenze;
   'requisiti-morali-professionali'?: RequisitiMoraliProfessionali;
   'commercio-dettaglio'?: CommercioDettaglio;
   'societa-cooperativa'?: SocietaCooperativa;
@@ -3478,7 +3478,7 @@ export interface AlbiRuoliLicenze {
 }
 
 export interface AlboRegionaleCoopSociali {
-  'sezioni'?: Sezioni;
+  sezioni?: Sezioni;
   'aree-intervento'?: AreeIntervento;
   'desc-albo'?: string;
   'dt-iscrizione'?: string;

@@ -1,6 +1,9 @@
 import { AIWSClient } from 'src/main';
 import { AIWS_ERROR_CODE, AIWSError } from 'src/types/aiws-error.type';
-import { CompanyShare, CompanySummary } from 'src/types/companies-register/company.types';
+import {
+  CompanyShare,
+  CompanySummary,
+} from 'src/types/companies-register/company.types';
 import { CompanyAdministrativeDataSummary } from 'src/types/companies-register/administrative-data-company.types';
 import { expect, test, describe, beforeAll } from 'vitest';
 import { DateTime } from 'luxon';
@@ -53,10 +56,8 @@ describe('CCIAA Integration - Dati Aziendali', () => {
   test('Recupero dati finanziari per la società con P.IVA 02650200203', async () => {
     const vat = '02650200203';
     const errors: AIWSError = [];
-    const balanceSheetData = await client.balanceSheetService.getBalanceSheetByVatNumber(
-      vat,
-      errors,
-    );
+    const balanceSheetData =
+      await client.balanceSheetService.getBalanceSheetByVatNumber(vat, errors);
 
     if (balanceSheetData) {
       expect(balanceSheetData).toBeDefined();
@@ -126,7 +127,7 @@ describe('CCIAA Integration - Dati Aziendali', () => {
       COMPANY_BLOCK.STA,
       COMPANY_BLOCK.STO,
       COMPANY_BLOCK.SUL,
-      COMPANY_BLOCK.TFS
+      COMPANY_BLOCK.TFS,
     ];
     const errors: AIWSError = [];
     const blockSummary = await client.companyService.getCompanyBlocks({
@@ -177,14 +178,14 @@ describe('CCIAA Integration - Dati Aziendali', () => {
         const administrativeSummary:
           | CompanyAdministrativeDataSummary
           | undefined = await client.companyService.getCompanyBlocks({
-            rea: {
-              cciaa: companySummaryData.companyCciaaCode,
-              nRea: companySummaryData.companyReaNumber,
-            },
-            blocco: 'AMM',
-            errors,
-          });
-        
+          rea: {
+            cciaa: companySummaryData.companyCciaaCode,
+            nRea: companySummaryData.companyReaNumber,
+          },
+          blocco: 'AMM',
+          errors,
+        });
+
         const constitutionDate =
           administrativeSummary?.identification.constitutionDate;
         const fullCompanySummary: CompanySummary = {
@@ -215,7 +216,12 @@ describe('CCIAA Integration - Dati Aziendali', () => {
 
     const company = await client.companyService.getCompany(vat);
 
-    console.log('Company data retrieved for VAT number', vat, ':', JSON.stringify(company, null, 2));
+    console.log(
+      'Company data retrieved for VAT number',
+      vat,
+      ':',
+      JSON.stringify(company, null, 2),
+    );
 
     if (company) {
       expect(company).toBeDefined();

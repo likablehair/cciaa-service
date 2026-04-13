@@ -31,7 +31,7 @@ export class CompanyManager {
 
   private toSingleOrNull<T>(value: T | T[] | undefined): T | null {
     if (!value) return null;
-    return Array.isArray(value) ? value[0] ?? null : value;
+    return Array.isArray(value) ? (value[0] ?? null) : value;
   }
 
   private mapAddress(address?: {
@@ -224,7 +224,9 @@ export class CompanyManager {
     const classificazioneAteco = sintesiAttivita?.['classificazione-ateco'];
 
     const representativeSource =
-      datiIdentificativi?.['persone-rappresentanti']?.['persona-rappresentante'];
+      datiIdentificativi?.['persone-rappresentanti']?.[
+        'persona-rappresentante'
+      ];
 
     const representative = representativeSource
       ? this.toArray(representativeSource).map((item) => ({
@@ -248,13 +250,16 @@ export class CompanyManager {
     const shareholdersTableRaw = blocchiImpresa['tabella-elenco-soci'];
     const changesHistoryRaw = blocchiImpresa.mad;
     const filingsTranscriptionsRaw = blocchiImpresa.trascrizioni;
-    const previousHeadquartersHistoryRaw = blocchiImpresa['storia-sedi-precedenti'];
+    const previousHeadquartersHistoryRaw =
+      blocchiImpresa['storia-sedi-precedenti'];
     const registerEnrollmentRaw = blocchiImpresa['iscrizione-ri'];
     const bylawsInfoRaw = blocchiImpresa['info-statuto'];
     const governanceAndControlRaw = blocchiImpresa['amministrazione-controllo'];
-    const financialAssetInfoRaw = blocchiImpresa['info-patrimoniali-finanziarie'];
+    const financialAssetInfoRaw =
+      blocchiImpresa['info-patrimoniali-finanziarie'];
     const insolvencyProceduresRaw = blocchiImpresa['procedure-concorsuali'];
-    const mergersSplitsTransfersRaw = blocchiImpresa['ta-fusioni-scissioni-subentri'];
+    const mergersSplitsTransfersRaw =
+      blocchiImpresa['ta-fusioni-scissioni-subentri'];
 
     const mapEmployee = (entry: {
       'c-tipo-informazione'?: string;
@@ -292,8 +297,7 @@ export class CompanyManager {
           total: month['n-totale'] ?? null,
         }),
       ),
-      contractDistribution:
-        entry['distribuzione-dipendenti'] ?? null,
+      contractDistribution: entry['distribuzione-dipendenti'] ?? null,
       workingHoursDistribution: null,
       qualificationDistribution: null,
     });
@@ -317,7 +321,8 @@ export class CompanyManager {
           streetNumber:
             datiIdentificativi?.['indirizzo-localizzazione']?.['n-civico'] ??
             null,
-          city: datiIdentificativi?.['indirizzo-localizzazione']?.comune ?? null,
+          city:
+            datiIdentificativi?.['indirizzo-localizzazione']?.comune ?? null,
           province:
             datiIdentificativi?.['indirizzo-localizzazione']?.provincia ?? null,
           postalCode:
@@ -328,12 +333,14 @@ export class CompanyManager {
           topographyName:
             datiIdentificativi?.['indirizzo-localizzazione']?.toponimo ?? null,
         },
-        certifiedEmail: datiIdentificativi?.['indirizzo-posta-certificata'] ?? null,
+        certifiedEmail:
+          datiIdentificativi?.['indirizzo-posta-certificata'] ?? null,
         representatives: {
           representative,
         },
         isInterchamberOffice:
-          this.toYesNoFlag(datiIdentificativi?.['f-sede-intercamerale']) ?? null,
+          this.toYesNoFlag(datiIdentificativi?.['f-sede-intercamerale']) ??
+          null,
         sourceCode: datiIdentificativi?.['c-fonte'] ?? null,
         sourceName: datiIdentificativi?.fonte ?? null,
         subjectType: datiIdentificativi?.['tipo-soggetto'] ?? null,
@@ -356,7 +363,8 @@ export class CompanyManager {
         reaNumber: datiIdentificativi?.['n-rea'] ?? null,
       },
       activitySummary: {
-        mainActivityDescription: sintesiAttivita?.['attivita-prevalente-r'] ?? null,
+        mainActivityDescription:
+          sintesiAttivita?.['attivita-prevalente-r'] ?? null,
         atecoClassification: {
           activityCode: classificazioneAteco?.['c-attivita'] ?? null,
           activityDescription: classificazioneAteco?.attivita ?? null,
@@ -370,15 +378,26 @@ export class CompanyManager {
         },
         startDate: sintesiAttivita?.['dt-inizio'] ?? null,
         aaActivityDescription: sintesiAttivita?.['attivita-aa-r'] ?? null,
-        agriculturalActivityDescription: sintesiAttivita?.['attivita-agricola-r'] ?? null,
-        environmentalRegistersFlag: this.toYesNoFlag(sintesiAttivita?.['f-albi-registri-ambientali']) ?? null,
-        importExportFlag: this.toYesNoFlag(sintesiAttivita?.['f-import-export']) ?? null,
-        networkContractFlag: this.toYesNoFlag(sintesiAttivita?.['f-contratto-rete']) ?? null,
-        pursuedActivityDescription: sintesiAttivita?.['attivita-esercitata-r'] ?? null,
-        qualityCertificationsFlag: this.toYesNoFlag(sintesiAttivita?.['f-certificazioni-qualita']) ?? null,
+        agriculturalActivityDescription:
+          sintesiAttivita?.['attivita-agricola-r'] ?? null,
+        environmentalRegistersFlag:
+          this.toYesNoFlag(sintesiAttivita?.['f-albi-registri-ambientali']) ??
+          null,
+        importExportFlag:
+          this.toYesNoFlag(sintesiAttivita?.['f-import-export']) ?? null,
+        networkContractFlag:
+          this.toYesNoFlag(sintesiAttivita?.['f-contratto-rete']) ?? null,
+        pursuedActivityDescription:
+          sintesiAttivita?.['attivita-esercitata-r'] ?? null,
+        qualityCertificationsFlag:
+          this.toYesNoFlag(sintesiAttivita?.['f-certificazioni-qualita']) ??
+          null,
         ratingScore: sintesiAttivita?.['punteggio-rating-legalita'] ?? null,
-        registersAndEnvironmentalRolesFlag: this.toYesNoFlag(sintesiAttivita?.['f-albi-ruoli-licenze']) ?? null,
-        soaCertificationsFlag: this.toYesNoFlag(sintesiAttivita?.['f-certificazioni-qualita']) ?? null,
+        registersAndEnvironmentalRolesFlag:
+          this.toYesNoFlag(sintesiAttivita?.['f-albi-ruoli-licenze']) ?? null,
+        soaCertificationsFlag:
+          this.toYesNoFlag(sintesiAttivita?.['f-certificazioni-qualita']) ??
+          null,
       },
       financialSummary: financialSummaryRaw
         ? {
@@ -407,7 +426,8 @@ export class CompanyManager {
         : null,
       headquartersInfo: headquartersInfoRaw
         ? {
-            certifiedEmail: headquartersInfoRaw['indirizzo-posta-certificata'] ?? null,
+            certifiedEmail:
+              headquartersInfoRaw['indirizzo-posta-certificata'] ?? null,
             reaRegistration: headquartersInfoRaw['dati-iscrizione-rea-rd']
               ? {
                   reaNumber:
@@ -422,8 +442,9 @@ export class CompanyManager {
                     headquartersInfoRaw['provenienza-trasferimento']?.cciaa ??
                     null,
                   reaNumber:
-                    headquartersInfoRaw['provenienza-trasferimento']?.['n-rea'] ??
-                    null,
+                    headquartersInfoRaw['provenienza-trasferimento']?.[
+                      'n-rea'
+                    ] ?? null,
                 }
               : null,
           }
@@ -450,16 +471,17 @@ export class CompanyManager {
             )
               ? {
                   codingCode:
-                    this.toSingleOrNull(activityInfoRaw['classificazioni-ateco'])?.[
-                      'c-codifica'
-                    ] ?? null,
+                    this.toSingleOrNull(
+                      activityInfoRaw['classificazioni-ateco'],
+                    )?.['c-codifica'] ?? null,
                   coding:
-                    this.toSingleOrNull(activityInfoRaw['classificazioni-ateco'])
-                      ?.codifica ?? null,
+                    this.toSingleOrNull(
+                      activityInfoRaw['classificazioni-ateco'],
+                    )?.codifica ?? null,
                   classifications: this.toArray(
-                    this.toSingleOrNull(activityInfoRaw['classificazioni-ateco'])?.[
-                      'classificazione-ateco'
-                    ],
+                    this.toSingleOrNull(
+                      activityInfoRaw['classificazioni-ateco'],
+                    )?.['classificazione-ateco'],
                   ).map((classification) => ({
                     activityCode: classification['c-attivita'] ?? null,
                     activity: classification.attivita ?? null,
@@ -498,30 +520,32 @@ export class CompanyManager {
             )
               .flatMap((entry) => this.toArray(entry['addetti-comune']))
               .map((item) => ({
-              municipalityCode: item['c-comune'] ?? null,
-              municipality: item.comune ?? null,
-              province: item.provincia ?? null,
-              localUnits: this.toArray(
-                item['pro-localizzazioni']?.['pro-localizzazione'],
-              ).map((value) => String(value)),
-              monthlyDetails: this.toArray(item['info-mesi']?.['info-mese']).map(
-                (month) => ({
+                municipalityCode: item['c-comune'] ?? null,
+                municipality: item.comune ?? null,
+                province: item.provincia ?? null,
+                localUnits: this.toArray(
+                  item['pro-localizzazioni']?.['pro-localizzazione'],
+                ).map((value) => String(value)),
+                monthlyDetails: this.toArray(
+                  item['info-mesi']?.['info-mese'],
+                ).map((month) => ({
                   monthCode: month['c-mese'] ?? null,
                   numEmployees: month['n-dipendenti'] ?? null,
                   numSelfEmployed: month['n-indipendenti'] ?? null,
                   total: month['n-totale'] ?? null,
-                }),
-              ),
-              averageValues: item['valori-medi']
-                ? {
-                    employees:
-                      item['valori-medi']?.['valore-medio-dipendenti'] ?? null,
-                    selfEmployed:
-                      item['valori-medi']?.['valore-medio-indipendenti'] ??
-                      null,
-                    total: item['valori-medi']?.['valore-medio-totale'] ?? null,
-                  }
-                : null,
+                })),
+                averageValues: item['valori-medi']
+                  ? {
+                      employees:
+                        item['valori-medi']?.['valore-medio-dipendenti'] ??
+                        null,
+                      selfEmployed:
+                        item['valori-medi']?.['valore-medio-indipendenti'] ??
+                        null,
+                      total:
+                        item['valori-medi']?.['valore-medio-totale'] ?? null,
+                    }
+                  : null,
               })),
           }
         : null,
@@ -581,13 +605,14 @@ export class CompanyManager {
                 birthInfo: persona['persona-fisica']['estremi-nascita']
                   ? {
                       date:
-                        persona['persona-fisica']['estremi-nascita']?.dt ?? null,
+                        persona['persona-fisica']['estremi-nascita']?.dt ??
+                        null,
                       city:
                         persona['persona-fisica']['estremi-nascita']?.comune ??
                         null,
                       province:
-                        persona['persona-fisica']['estremi-nascita']?.provincia ??
-                        null,
+                        persona['persona-fisica']['estremi-nascita']
+                          ?.provincia ?? null,
                     }
                   : null,
               }
@@ -628,7 +653,8 @@ export class CompanyManager {
             practiceDetails: shareholdersListRaw['estremi-pratica']
               ? {
                   practiceCode:
-                    shareholdersListRaw['estremi-pratica']?.['c-pratica'] ?? null,
+                    shareholdersListRaw['estremi-pratica']?.['c-pratica'] ??
+                    null,
                   filingTypeCode:
                     shareholdersListRaw['estremi-pratica']?.[
                       'c-tipo-adempimento'
@@ -667,32 +693,38 @@ export class CompanyManager {
                         frame['composizione-quote']['valore-versato'] ?? null,
                     }
                   : null,
-                holders: this.toArray(frame.titolari?.titolare).map((holder) => ({
-                  isRepresentative: holder['f-rappresentante'] ?? null,
-                  domicile: this.mapAddress(holder.domicilio),
-                  holderIdentity: holder['anagrafica-titolare']
-                    ? {
-                        typeCode:
-                          holder['anagrafica-titolare']?.['c-tipo'] ?? null,
-                        type: holder['anagrafica-titolare']?.tipo ?? null,
-                        taxCode:
-                          holder['anagrafica-titolare']?.['c-fiscale'] ?? null,
-                        name:
-                          holder['anagrafica-titolare']?.denominazione ?? null,
-                        lastName:
-                          holder['anagrafica-titolare']?.cognome ?? null,
-                        firstName:
-                          holder['anagrafica-titolare']?.nome ?? null,
-                      }
-                    : null,
-                  participationRight: holder['diritto-partecipazione']
-                    ? {
-                        rightTypeCode:
-                          holder['diritto-partecipazione']?.['c-tipo'] ?? null,
-                        rightType: holder['diritto-partecipazione']?.tipo ?? null,
-                      }
-                    : null,
-                })),
+                holders: this.toArray(frame.titolari?.titolare).map(
+                  (holder) => ({
+                    isRepresentative: holder['f-rappresentante'] ?? null,
+                    domicile: this.mapAddress(holder.domicilio),
+                    holderIdentity: holder['anagrafica-titolare']
+                      ? {
+                          typeCode:
+                            holder['anagrafica-titolare']?.['c-tipo'] ?? null,
+                          type: holder['anagrafica-titolare']?.tipo ?? null,
+                          taxCode:
+                            holder['anagrafica-titolare']?.['c-fiscale'] ??
+                            null,
+                          name:
+                            holder['anagrafica-titolare']?.denominazione ??
+                            null,
+                          lastName:
+                            holder['anagrafica-titolare']?.cognome ?? null,
+                          firstName:
+                            holder['anagrafica-titolare']?.nome ?? null,
+                        }
+                      : null,
+                    participationRight: holder['diritto-partecipazione']
+                      ? {
+                          rightTypeCode:
+                            holder['diritto-partecipazione']?.['c-tipo'] ??
+                            null,
+                          rightType:
+                            holder['diritto-partecipazione']?.tipo ?? null,
+                        }
+                      : null,
+                  }),
+                ),
               }),
             ),
             notes: this.toArray(shareholdersListRaw.note).join('\n') || null,
@@ -702,23 +734,22 @@ export class CompanyManager {
         shareholders: this.toArray(shareholdersTableRaw?.soci?.socio),
       },
       changesHistory: {
-        sessions: this.toArray(changesHistoryRaw?.['sessioni-rd-rea']?.['sessione-rd-rea']).map(
-          (session) => ({
-            movementCode: session['c-movimentazione'] ?? null,
-            movement: session.movimentazione ?? null,
-            filingDate: session['dt-denuncia'] ?? null,
-            changes: this.toArray(session.modifiche?.modifica).map((change) => ({
-              paragraphCode: change['p-modifica'] ?? null,
-              effectiveDate: change['dt-effetto'] ?? null,
-              typeCode: change['c-tipo'] ?? null,
-              type: change.tipo ?? null,
-              changeCode: change['c-modifica'] ?? null,
-              changeCodeDescription:
-                change['descrizione-c-modifica'] ?? null,
-              text: this.getXmlText(change) ?? null,
-            })),
-          }),
-        ),
+        sessions: this.toArray(
+          changesHistoryRaw?.['sessioni-rd-rea']?.['sessione-rd-rea'],
+        ).map((session) => ({
+          movementCode: session['c-movimentazione'] ?? null,
+          movement: session.movimentazione ?? null,
+          filingDate: session['dt-denuncia'] ?? null,
+          changes: this.toArray(session.modifiche?.modifica).map((change) => ({
+            paragraphCode: change['p-modifica'] ?? null,
+            effectiveDate: change['dt-effetto'] ?? null,
+            typeCode: change['c-tipo'] ?? null,
+            type: change.tipo ?? null,
+            changeCode: change['c-modifica'] ?? null,
+            changeCodeDescription: change['descrizione-c-modifica'] ?? null,
+            text: this.getXmlText(change) ?? null,
+          })),
+        })),
       },
       filingsTranscriptions: {
         protocols: this.toArray(
@@ -759,16 +790,18 @@ export class CompanyManager {
               movementCode: session['c-movimentazione'] ?? null,
               movement: session.movimentazione ?? null,
               filingDate: session['dt-denuncia'] ?? null,
-              changes: this.toArray(session.modifiche?.modifica).map((change) => ({
-                paragraphCode: change['p-modifica'] ?? null,
-                effectiveDate: change['dt-effetto'] ?? null,
-                typeCode: change['c-tipo'] ?? null,
-                type: change.tipo ?? null,
-                changeCode: change['c-modifica'] ?? null,
-                changeCodeDescription:
-                  change['descrizione-c-modifica'] ?? null,
-                text: this.getXmlText(change) ?? null,
-              })),
+              changes: this.toArray(session.modifiche?.modifica).map(
+                (change) => ({
+                  paragraphCode: change['p-modifica'] ?? null,
+                  effectiveDate: change['dt-effetto'] ?? null,
+                  typeCode: change['c-tipo'] ?? null,
+                  type: change.tipo ?? null,
+                  changeCode: change['c-modifica'] ?? null,
+                  changeCodeDescription:
+                    change['descrizione-c-modifica'] ?? null,
+                  text: this.getXmlText(change) ?? null,
+                }),
+              ),
             })),
           },
           filingsTranscriptions: {
@@ -779,22 +812,21 @@ export class CompanyManager {
               officeProtocolNumber: protocol['n-protocollo-ufficio'] ?? null,
               year: protocol.anno ?? null,
               protocolDate: protocol['dt-protocollo'] ?? null,
-              extraFields: Object.entries(protocol).reduce<Record<string, unknown>>(
-                (acc, [key, value]) => {
-                  if (
-                    ![
-                      'n-protocollo',
-                      'n-protocollo-ufficio',
-                      'anno',
-                      'dt-protocollo',
-                    ].includes(key)
-                  ) {
-                    acc[key] = value;
-                  }
-                  return acc;
-                },
-                {},
-              ),
+              extraFields: Object.entries(protocol).reduce<
+                Record<string, unknown>
+              >((acc, [key, value]) => {
+                if (
+                  ![
+                    'n-protocollo',
+                    'n-protocollo-ufficio',
+                    'anno',
+                    'dt-protocollo',
+                  ].includes(key)
+                ) {
+                  acc[key] = value;
+                }
+                return acc;
+              }, {}),
             })),
           },
         })),
@@ -819,10 +851,13 @@ export class CompanyManager {
         : null,
       governanceAndControl: governanceAndControlRaw
         ? {
-            administrationSystem: governanceAndControlRaw['sistema-amministrazione']
+            administrationSystem: governanceAndControlRaw[
+              'sistema-amministrazione'
+            ]
               ? {
                   code:
-                    governanceAndControlRaw['sistema-amministrazione']?.c ?? null,
+                    governanceAndControlRaw['sistema-amministrazione']?.c ??
+                    null,
                   text: this.getXmlText(
                     governanceAndControlRaw['sistema-amministrazione'],
                   ),

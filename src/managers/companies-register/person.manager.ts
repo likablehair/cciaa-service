@@ -1,6 +1,9 @@
 import { PersonaData } from 'src/types/aiws.types';
 import { AIWSError } from 'src/types/aiws-error.type';
-import { PersonCorporateRole, PersonSummary } from 'src/types/companies-register/person.type';
+import {
+  PersonCorporateRole,
+  PersonSummary,
+} from 'src/types/companies-register/person.type';
 import { CompanySummary } from 'src/types/companies-register/company.types';
 import { parseUnknownDate } from 'src/helpers/date.helper';
 
@@ -84,10 +87,10 @@ export class PersonManager {
           companyDeclaredActivity: impresa['info-attivita']?.[
             'classificazioni-ateco'
           ]?.['classificazione-ateco']
-            ? impresa['info-attivita']?.['classificazioni-ateco']?.[
-                  'classificazione-ateco'
-                ][0]?.attivita ?? null
-              : null,
+            ? (impresa['info-attivita']?.['classificazioni-ateco']?.[
+                'classificazione-ateco'
+              ][0]?.attivita ?? null)
+            : null,
           companyAtecoCode:
             impresa['info-attivita']?.['classificazioni-ateco']?.[
               'c-codifica'

@@ -1,9 +1,14 @@
-import { AxiosInstance } from "axios";
-import { BaseService } from "../base.service";
-import { CompanyBalanceSheet } from "src/types/companies-register/company.types";
-import { AIWS_ERROR_CODE, AIWS_ERROR_MESSAGES, AIWSError, pushAIWSError } from "src/types/aiws-error.type";
-import { ParsedAIWSResponse } from "src/types/aiws.types";
-import { BalanceSheetManager } from "src/managers/companies-register/balance-sheet.manager";
+import { AxiosInstance } from 'axios';
+import { BaseService } from '../base.service';
+import { CompanyBalanceSheet } from 'src/types/companies-register/company.types';
+import {
+  AIWS_ERROR_CODE,
+  AIWS_ERROR_MESSAGES,
+  AIWSError,
+  pushAIWSError,
+} from 'src/types/aiws-error.type';
+import { ParsedAIWSResponse } from 'src/types/aiws.types';
+import { BalanceSheetManager } from 'src/managers/companies-register/balance-sheet.manager';
 
 export class BalanceSheetService extends BaseService {
   constructor(private client: AxiosInstance) {
