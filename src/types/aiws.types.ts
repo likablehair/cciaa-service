@@ -510,7 +510,7 @@ export interface Versato {
 }
 
 export interface TipoConferimenti {
-  _text?: string;
+  "#text"?: string;
   c?: string;
 }
 
@@ -803,7 +803,7 @@ export interface AbilitazioniImpiantisti {
 
 /** simpleContent: testo libero + attributo */
 export interface AbilitazioniProfessionali {
-  _text?: string;
+  "#text"?: string;
   'p-abilitazioni'?: string;
 }
 
@@ -883,7 +883,7 @@ export interface Apparecchi {
 
 /** simpleContent: testo + attributo c */
 export interface AreaIntervento {
-  _text?: string;
+  "#text"?: string;
   c?: string;
 }
 
@@ -930,7 +930,7 @@ export interface AttiTrascrizioni {
 
 /** simpleContent: testo + attributi */
 export interface AttivitaAa {
-  _text?: string;
+  "#text"?: string;
   'dt-iscrizione-inizio'?: string;
   'dt-inizio'?: string;
 }
@@ -945,7 +945,7 @@ export interface AttivitaAaBz {
 
 /** simpleContent: testo + attributo */
 export interface AttivitaAgricola {
-  _text?: string;
+  "#text"?: string;
   'dt-inizio'?: string;
 }
 
@@ -960,7 +960,7 @@ export interface AttivitaNoAa {
 
 /** simpleContent: testo + attributo */
 export interface AttivitaPrevalente {
-  _text?: string;
+  "#text"?: string;
   'f-attivita-non-iniziata'?: string;
 }
 
@@ -1013,7 +1013,7 @@ export interface AutorizzazionePs {
 
 /** simpleContent: testo + attributo c */
 export interface BeneServizio {
-  _text?: string;
+  "#text"?: string;
   c?: string;
 }
 
@@ -1029,7 +1029,7 @@ export interface BlocchiImpresa {
   'dati-identificativi'?: DatiIdentificativi;
   'sintesi-attivita'?: SintesiAttivita;
   'sintesi-cifre-impresa'?: SintesiCifreImpresa;
-  'doc-consultabili'?: DocConsultabili;
+  'doc-consultabili'?: DocConsultabili; // Skippato
   'info-sede'?: InfoSede;
   'estremi-atto-costituzione'?: EstremiAttoCostituzione;
   'cancellazione-trasferimento'?: CancellazioneTrasferimento;
@@ -1037,23 +1037,23 @@ export interface BlocchiImpresa {
   'storia-attivita'?: StoriaAttivita;
   'storia-addetti'?: StoriaAddetti;
   'albi-ruoli-licenze'?: AlbiRuoliLicenze;
-  'persone-sede'?: PersoneSede;
-  localizzazioni?: Localizzazioni;
-  'protocolli-aperti'?: ProtocolliAperti;
-  'protocolli-completi'?: ProtocolliCompleti;
+  'persone-sede'?: PersoneSede; // da modificare
+  localizzazioni?: Localizzazioni; // da fare
+  'protocolli-aperti'?: ProtocolliAperti; // da fare
+  'protocolli-completi'?: ProtocolliCompleti; // da fare
   'societa-quotata'?: SocietaQuotata;
   'elenco-soci'?: ElencoSoci;
   'tabella-elenco-soci'?: TabellaElencoSoci;
   'annotazioni-libro-soci'?: AnnotazioniLibroSoci;
-  'trasferimenti-quote'?: TrasferimentiQuote;
-  'trasferimento-quote'?: TrasferimentoQuote;
-  'soci-trasferimento-quote'?: SociTrasferimentoQuote;
+  'trasferimenti-quote'?: TrasferimentiQuote; // skip
+  'trasferimento-quote'?: TrasferimentoQuote; // skip
+  'soci-trasferimento-quote'?: SociTrasferimentoQuote; // skip
   'pratiche-soggetti-controllanti'?: PraticheSoggettiControllanti;
-  'partecipazioni-societa'?: PartecipazioniSocieta;
+  'partecipazioni-societa'?: PartecipazioniSocieta; // skip
   'tabella-partecipate-impresa'?: TabellaPartecipateImpresa[];
   mad?: Mad;
   trascrizioni?: Trascrizioni;
-  'storia-cciaa-provenienza'?: StoriaCciaaProvenienza;
+  'storia-cciaa-provenienza'?: StoriaCciaaProvenienza; // skip
   'storia-sedi-precedenti'?: StoriaSediPrecedenti;
   'iscrizione-ri'?: IscrizioneRi;
   'info-statuto'?: InfoStatuto;
@@ -1147,7 +1147,7 @@ export interface CaratteristicheImpianto2 {
 
 /** simpleContent: testo (denominazione carica) + attributi */
 export interface Carica {
-  _text?: string;
+  "#text"?: string;
   'p-carica'?: string;
   'c-carica'?: string;
   'dt-iscrizione'?: string;
@@ -1330,12 +1330,12 @@ export interface ComunicazioniCuratore {
 
 /** simpleContent: testo + attributo */
 export interface ConferimentiPrestazioni {
-  _text?: string;
+  "#text"?: string;
   'p-conferimenti'?: string;
 }
 
 export interface ConferimentiBenefici {
-  _text?: string;
+  "#text"?: string;
   'f-presenza-nello-statuto'?: string;
 }
 
@@ -1398,7 +1398,7 @@ export interface DenunciaInizioAttivita {
 
 /** simpleContent: testo (descrizione dettaglio) + attributo */
 export interface DettaglioAttivita {
-  _text?: string;
+  "#text"?: string;
   'c-dettaglio'?: string;
 }
 
@@ -1424,7 +1424,7 @@ export interface DettaglioIscrizione {
 
 /** simpleContent: testo + attributi */
 export interface Dichiarazione {
-  _text?: string;
+  "#text"?: string;
   'c-tipo'?: string;
   tipo?: string;
   'dt-iscrizione'?: string;
@@ -1450,28 +1450,28 @@ export interface DichiarazioneAmbientale {
 
 /** simpleContent: testo + attributi */
 export interface DichiarazioneIncubatore {
-  _text?: string;
+  "#text"?: string;
   'c-tipo'?: string;
   tipo?: string;
 }
 
 /** simpleContent: testo + attributi */
 export interface DichiarazionePmi {
-  _text?: string;
+  "#text"?: string;
   'c-tipo'?: string;
   tipo?: string;
 }
 
 /** simpleContent: testo + attributi */
 export interface DichiarazioneScuolaLavoro {
-  _text?: string;
+  "#text"?: string;
   'c-tipo'?: string;
   tipo?: string;
 }
 
 /** simpleContent: testo + attributi */
 export interface DichiarazioneStartUp {
-  _text?: string;
+  "#text"?: string;
   'c-tipo'?: string;
   tipo?: string;
 }
@@ -1787,7 +1787,7 @@ export interface FondoConsortile {
 
 /** simpleContent: testo (denominazione) + attributi */
 export interface FormaAmministrativa {
-  _text?: string;
+  "#text"?: string;
   c?: string;
   'f-in-carica'?: string;
   'f-organo-controllo'?: string;
@@ -1797,7 +1797,7 @@ export interface FormaAmministrativa {
 
 /** simpleContent: testo (denominazione) + attributi */
 export interface FormaAmministrativaInCarica {
-  _text?: string;
+  "#text"?: string;
   c?: string;
   'n-amministratori-in-carica'?: string;
   'anni-durata'?: string;
@@ -1843,7 +1843,7 @@ export interface FusioniScissioni {
 
 /** simpleContent: testo + attributi */
 export interface GruppoIva {
-  _text?: string;
+  "#text"?: string;
   'c-fonte'?: string;
   'dt-ultimo-aggiornamento'?: string;
   denominazione?: string;
@@ -2046,7 +2046,7 @@ export interface InfoSupplementariStoriche {
 }
 
 export interface InformazioneASocio {
-  _text?: string;
+  "#text"?: string;
   'c-tipo'?: string;
   tipo?: string;
 }
@@ -2245,7 +2245,7 @@ export interface Mad {
 
 /** simpleContent: testo (descrizione mestiere) + attributi */
 export interface MestiereAa {
-  _text?: string;
+  "#text"?: string;
   c?: string;
   descrizione?: string;
   'ulteriore-descrizione'?: string;
@@ -2273,7 +2273,7 @@ export interface Modello {
 
 /** simpleContent: testo + attributi */
 export interface Modifica {
-  _text?: string;
+  "#text"?: string;
   'p-modifica'?: string;
   'c-tipo'?: string;
   tipo?: string;
@@ -2318,7 +2318,7 @@ export interface NSoci {
 
 /** simpleContent: testo + attributo c */
 export interface NotaElencoSoci {
-  _text?: string;
+  "#text"?: string;
   c?: string;
 }
 
@@ -2328,7 +2328,7 @@ export interface NoteElencoSoci {
 
 /** simpleContent: testo + attributo c */
 export interface NotaPartecipazione {
-  _text?: string;
+  "#text"?: string;
   c?: string;
 }
 
@@ -2393,7 +2393,7 @@ export interface Partecipazione {
 
 /** simpleContent: testo + attributo */
 export interface PartecipazioneUtili {
-  _text?: string;
+  "#text"?: string;
   'p-partecipazione'?: string;
 }
 
@@ -2404,7 +2404,7 @@ export interface Partecipazioni {
 
 /** simpleContent: testo + attributi */
 export interface PartitaIva {
-  _text?: string;
+  "#text"?: string;
   'c-fonte-cess'?: string;
   'dt-ultimo-aggiornamento'?: string;
   'dt-cessazione'?: string;
@@ -2516,14 +2516,14 @@ export interface PotenzeCerealiMacchinari {
 
 /** simpleContent: testo (denominazione carica) + attributi */
 export interface PoteriCarica {
-  _text?: string;
+  "#text"?: string;
   'c-carica'?: string;
   carica?: string;
 }
 
 /** simpleContent: testo + attributo */
 export interface PoteriPersona {
-  _text?: string;
+  "#text"?: string;
   'p-poteri'?: string;
 }
 
@@ -2601,7 +2601,7 @@ export interface ProLocalizzazioni {
 
 /** simpleContent: testo + attributo */
 export interface ProprietaQuota {
-  _text?: string;
+  "#text"?: string;
   'p-proprieta'?: string;
 }
 
@@ -2817,7 +2817,7 @@ export interface Riferimenti {
 
 /** simpleContent: testo + attributo */
 export interface RiconoscimentoProfessionale {
-  _text?: string;
+  "#text"?: string;
   'dt-provvedimento'?: string;
   'n-iscrizione'?: string;
 }
@@ -2859,7 +2859,7 @@ export interface RiquadroTrasferimento {
 
 /** simpleContent: testo + attributo */
 export interface RipartizioniUtiliPerdite {
-  _text?: string;
+  "#text"?: string;
   'f-presenza-nello-statuto'?: string;
 }
 
@@ -2890,7 +2890,7 @@ export interface Ruolo {
 
 /** simpleContent: testo + attributo c */
 export interface RuoloPartecipazione {
-  _text?: string;
+  "#text"?: string;
   c?: string;
 }
 
@@ -2968,7 +2968,7 @@ export interface SessioniRdRea {
 
 /** simpleContent: testo + attributo c */
 export interface Settore {
-  _text?: string;
+  "#text"?: string;
   c?: string;
 }
 
@@ -2978,7 +2978,7 @@ export interface Settori {
 
 /** simpleContent: testo + attributo c */
 export interface SettoreAttivita {
-  _text?: string;
+  "#text"?: string;
   c?: string;
 }
 
@@ -3042,7 +3042,7 @@ export interface SintesiCifreImpresa {
 
 /** simpleContent: testo + attributo c */
 export interface SistemaAmministrazione {
-  _text?: string;
+  "#text"?: string;
   c?: string;
 }
 
@@ -3107,7 +3107,7 @@ export interface SoggettoControllante {
 
 /** simpleContent: testo + attributo c */
 export interface SoggettoControlloContabile {
-  _text?: string;
+  "#text"?: string;
   c?: string;
 }
 
@@ -3117,7 +3117,7 @@ export interface SottoTipi {
 
 /** simpleContent: testo + attributo c */
 export interface SottoTipo {
-  _text?: string;
+  "#text"?: string;
   c?: string;
 }
 
@@ -3202,7 +3202,7 @@ export interface TabellaElencoSoci {
 
 /** simpleContent: testo + attributi */
 export interface TabelleSpeciali {
-  _text?: string;
+  "#text"?: string;
   'f-farmacia'?: string;
   'f-vendita-generi-monopolio'?: string;
   'f-vendita-carburanti'?: string;
@@ -3216,19 +3216,19 @@ export interface TassaCg {
 
 /** simpleContent: testo + attributo c */
 export interface TipoAtto {
-  _text?: string;
+  "#text"?: string;
   c?: string;
 }
 
 /** simpleContent: testo + attributo c */
 export interface TipoConferimenti {
-  _text?: string;
+  "#text"?: string;
   c?: string;
 }
 
 /** simpleContent: testo + attributi */
 export interface TipoTrascrizione {
-  _text?: string;
+  "#text"?: string;
   'c-tipo-trascrizione'?: string;
   'c-tipo-modifica'?: string;
   'tipo-modifica'?: string;
@@ -3259,7 +3259,7 @@ export interface TitoliOnorifici {
 
 /** simpleContent: testo + attributo c */
 export interface TitoloOnorifico {
-  _text?: string;
+  "#text"?: string;
   c?: string;
 }
 
@@ -3379,7 +3379,7 @@ export interface UlterioriDettagli {
 
 /** simpleContent: testo + attributi */
 export interface UlterioreDettaglio {
-  _text?: string;
+  "#text"?: string;
   'c-tipo'?: string;
   tipo?: string;
 }
@@ -3427,7 +3427,7 @@ export interface Versato {
 
 /** simpleContent: testo + attributo */
 export interface ClausolaConFlagStatuto {
-  _text?: string;
+  "#text"?: string;
   'f-presenza-nello-statuto'?: string;
 }
 
@@ -3451,7 +3451,7 @@ export interface Descrizioni {
 
 /** simpleContent: testo + attributo */
 export interface LimitazioniResponsabilita {
-  _text?: string;
+  "#text"?: string;
   'f-presenza-nello-statuto'?: string;
 }
 
@@ -3483,4 +3483,74 @@ export interface AlboRegionaleCoopSociali {
   'desc-albo'?: string;
   'dt-iscrizione'?: string;
   'dt-cancellazione'?: string;
+}
+
+// =============================================================================
+// Bilanci (XBRL)
+// =============================================================================
+
+/**
+ * Parsed XBRL document for financial statements.
+ * Designed for namespaced tags like `itcc-ci:*`, `itcc-ci-abb:*`, `xbrli:*`.
+ */
+export interface BilancioXbrlData {
+  xbrl: XbrlDocument;
+}
+
+export interface XbrlDocument {
+  'link:schemaRef'?: XmlOneOrMany<XbrlSchemaRef>;
+  context?: XmlOneOrMany<XbrlContext>;
+  unit?: XmlOneOrMany<XbrlUnit>;
+  [factQName: `${string}:${string}`]:
+    | XmlOneOrMany<XbrlFact>
+    | XmlOneOrMany<XbrlSchemaRef>
+    | XmlOneOrMany<XbrlContext>
+    | XmlOneOrMany<XbrlUnit>
+    | undefined;
+}
+
+export interface XbrlSchemaRef {
+  'xlink:type'?: string;
+  'xlink:href'?: string;
+  'xlink:arcrole'?: string;
+}
+
+export interface XbrlContext {
+  entity?: XbrlEntity;
+  period?: XbrlPeriod;
+  scenario?: XbrlScenario;
+  id?: string;
+}
+
+export interface XbrlEntity {
+  identifier?: XbrlIdentifier;
+}
+
+export interface XbrlIdentifier {
+  '#text'?: string;
+  scheme?: string;
+}
+
+export interface XbrlPeriod {
+  instant?: string;
+  startDate?: string;
+  endDate?: string;
+}
+
+export interface XbrlScenario {
+  'itcc-ci-abb:scen'?: string;
+}
+
+export interface XbrlUnit {
+  measure?: string;
+  id?: string;
+}
+
+/**
+ * Generic XBRL fact with value (`#text`) and standard XBRL attributes.
+ */
+export interface XbrlFact extends XmlTextValue {
+  contextRef?: string;
+  unitRef?: string;
+  decimals?: string;
 }

@@ -122,28 +122,39 @@ export interface BloccoImpresa {
 // English mapped types — top-level profile
 // =============================================================================
 
+// testone
 export interface CompanyRegistryProfile {
   recognition: Recognition;
-  identification: CompanyIdentification;
-  activitySummary: ActivitySummary;
-  financialSummary: FinancialSummary | null;
-  headquartersInfo: HeadquartersInfo | null;
-  incorporationActDetails: IncorporationActDetails | null;
-  activityInfo: ActivityInfo | null;
-  workforceHistory: WorkforceHistory | null;
-  licensesAndRegisters: LicensesAndRegisters | null;
-  officePeople: OfficePeople | null;
-  shareholdersList: ShareholdersList | null;
-  shareholdersTable: ShareholdersTable | null;
-  changesHistory: ChangesHistory | null;
-  filingsTranscriptions: FilingsTranscriptions | null;
-  previousHeadquartersHistory: PreviousHeadquartersHistory | null;
-  registerEnrollment: RegisterEnrollment | null;
-  bylawsInfo: BylawsInfo | null;
+  identification: CompanyIdentification; // dati-identificativi
+  activitySummary: ActivitySummary; // sintesi-attivita
+  financialSummary: FinancialSummary | null; //sintesi-cifre-impresa
+  headquartersInfo: HeadquartersInfo | null; // info-sede
+  incorporationActDetails: IncorporationActDetails | null; // estremi-atto-costituzione
+  cancellationOrTransfer: CancellationOrTransfer | null; // cancellazione-trasferimento
+  activityInfo: CompanyActivityInfo | null; // info-attivita
+  activityHistory: ActivityHistory | null; // storia-attivita
+  workforceHistory: WorkforceHistory | null; // storia-addetti
+  licensesAndRegisters: BusinessLicensesAndRegisters | null; // albi-ruoli-licenze
+  officePeople: OfficePeople | null; // persone-sede
+  listedCompanyInfo: ListedCompany | null; // societa-quotata
+  shareholdersList: ShareholderListEntry | null; // elenco-soci
+  shareholdersTable: ShareholdersTableEntry | null; // tabella-elenco-soci
+  shareholdersBookAnnotations: ShareholdersBookAnnotations | null; // annotazioni-libro-soci
+  controllingSubjectsPractices: ControllingSubjectsPractices | null; // pratiche-soggetti-controllanti
+  subsidiaryCompaniesTable: SubsidiaryCompaniesTable[] | null; // tabella-partecipate-impresa
+  changesHistory: ChangesHistory | null; // mad (movimentazione anagrafe ditte)
+  transcriptions: Transcriptions | null; // trascrizioni
+  previousHeadquartersHistory: PreviousHeadquartersHistory | null; // storia-sedi-precedenti
+  registerEnrollment: RegisterEnrollmentDetails | null; // iscrizione-ri
+  bylawsDetails: BylawsDetails | null; // info-statuto
+  businessNetworks: BusinessNetworks | null; // reti-imprese
   governanceAndControl: GovernanceAndControl | null;
-  financialAssetInfo: FinancialAssetInfo | null;
-  insolvencyProcedures: InsolvencyProcedures | null;
-  mergersSplitsTransfers: MergersSplitsTransfers | null;
+  financialAndAssetInfo: FinancialAndAssetInfo | null; // info-patrimoniali-finanziarie
+  shareholdersAgreements: ShareholdersAgreements | null; // patti-parasociali
+  insolvencyProcedures: InsolvencyProcedures | null; // procedure-concorsuali
+  legalFormChanges: LegalFormChanges | null; // variazioni-forma-giuridica
+  historicSupplementaryInfo: HistoricSupplementaryInfo | null; // notizie-storiche
+  corporateRestructuring: CorporateRestructuring | null; // scioglimento-fusioni-scissioni
 }
 
 export type CompanyRegistryBlocksSummary = CompanyRegistryProfile;
@@ -171,9 +182,9 @@ export interface InstallerAuthorization {
   letterDescription: string | null; // descrizione-lettera
   letters: string | null; // lettere
   limitations: string | null; // limitazioni
-  allCompanyActivitiesFlag: string | null; // f-tutte-attivita-impresa
+  allCompanyActivitiesFlag: boolean | null; // f-tutte-attivita-impresa
   province: string | null; // provincia
-  number: string | null; // n
+  number: number | null; // n
   assessmentDate: string | null; // dt-accertamento
   enrollmentDate: string | null; // dt-iscrizione
   issuingBodyCode: string | null; // c-ente-rilascio
@@ -201,7 +212,7 @@ export interface InstallerAuthorizations {
 export interface ConformityBodyAccreditation {
   schemeCode: string | null; // c-schema-accreditamento
   scheme: string | null; // schema-accreditamento
-  certificateNumber: string | null; // n-certificato
+  certificateNumber: number | null; // n-certificato
   issueDate: string | null; // dt-emissione
   expiryDate: string | null; // dt-scadenza
   downloadFile: string | null; // file-download
@@ -225,9 +236,9 @@ export interface CompanyWorkforce {
   year: string | null; // anno
   declarationDate: string | null; // dt-dichiarazione
   surveyDate: string | null; // dt-rilevazione
-  numEmployees: string | null; // n-dipendenti
-  numSelfEmployed: string | null; // n-indipendenti
-  total: string | null; // n-totale
+  numEmployees: number | null; // n-dipendenti
+  numSelfEmployed: number | null; // n-indipendenti
+  total: number | null; // n-totale
   employeeSurveyCode: string | null; // c-rilevazione-dipendenti
 }
 
@@ -235,12 +246,12 @@ export interface CompanyWorkforce {
 export interface WorkforceMonthlyDetail {
   monthCode: string | null; // c-mese
   month: string | null; // mese
-  numEmployees: string | null; // n-dipendenti
-  numSelfEmployed: string | null; // n-indipendenti
-  total: string | null; // n-totale
-  numCollaborators: string | null; // n-collaboratori
+  numEmployees: number | null; // n-dipendenti
+  numSelfEmployed: number | null; // n-indipendenti
+  total: number | null; // n-totale
+  numCollaborators: number | null; // n-collaboratori
   employeePercentage: string | null; // percentuale-dipendenti
-  numNonAgriculturalEmployees: string | null; // n-dip-no-agricoli
+  numNonAgriculturalEmployees: number | null; // n-dip-no-agricoli
 }
 
 /** valori-medi */
@@ -303,11 +314,11 @@ export interface ShareholdersBookAnnotations {
 
 /** apparecchi */
 export interface BakeryEquipment {
-  kneaders: string | null; // n-impastatrici
-  shaping: string | null; // n-formatrici
-  breadstickMachines: string | null; // n-grissinatrici
-  dividers: string | null; // n-spezzatrici
-  laminators: string | null; // n-laminatoi
+  kneaders: number | null; // n-impastatrici
+  shaping: number | null; // n-formatrici
+  breadstickMachines: number | null; // n-grissinatrici
+  dividers: number | null; // n-spezzatrici
+  laminators: number | null; // n-laminatoi
 }
 
 /** area-intervento (simpleContent) */
@@ -333,7 +344,7 @@ export interface SoaCertification {
   sourceCode: string | null; // c-fonte
   soaIdentifierCode: string | null; // c-identificativo-SOA
   name: string | null; // denominazione
-  certificationNumber: string | null; // n-attestazione
+  certificationNumber: number | null; // n-attestazione
   issueDate: string | null; // dt-rilascio
   expiryDate: string | null; // dt-scadenza
   regulation: string | null; // regolamento
@@ -391,7 +402,7 @@ export interface StagedDeed {
   type: string | null; // tipo
   chamberCode: string | null; // cciaa
   year: string | null; // anno
-  number: string | null; // n
+  number: number | null; // n
   deedDate: string | null; // dt-atto
   filingDate: string | null; // dt-deposito
 }
@@ -417,10 +428,10 @@ export interface CraftsActivity {
 /** attivita-aa-bz */
 export interface CraftsActivityBolzano {
   trades: CraftsTrades | null; // mestieri-aa
-  descriptions: string[]; // descrizione[]
+  descriptions: string[] | null; // descrizione[]
   cancellation: CraftsCancellationBolzano | null; // cancellazione-aa-bz
   startDate: string | null; // dt-inizio
-  isSecondaryActivityFlag: string | null; // f-attivita-secondaria
+  isSecondaryActivityFlag: boolean | null; // f-attivita-secondaria
 }
 
 /** attivita-agricola (simpleContent) */
@@ -431,7 +442,7 @@ export interface AgriculturalActivity {
 
 /** attivita-no-aa */
 export interface NonCraftsActivity {
-  descriptions: string[]; // descrizione[]
+  descriptions: string[] | null; // descrizione[]
   supplementaryInfo: string | null; // informazioni-supplementari-aa
   cancellation: CraftsCancellation | null; // cancellazione-aa
   startDate: string | null; // dt-inizio
@@ -442,12 +453,12 @@ export interface NonCraftsActivity {
 /** attivita-prevalente (simpleContent) */
 export interface PrimaryActivity {
   description: string | null; // _text
-  notStartedFlag: string | null; // f-attivita-non-iniziata
+  notStartedFlag: boolean | null; // f-attivita-non-iniziata
 }
 
 /** autorizzazione-ps */
 export interface PublicSecurityAuthorization {
-  number: string | null; // n
+  number: number | null; // n
   date: string | null; // dt
 }
 
@@ -532,8 +543,8 @@ export interface ShareCapitalEntry {
   currencyCode: string | null; // c-valuta
   currency: string | null; // valuta
   amount: string | null; // ammontare
-  numShares: string | null; // n-azioni
-  numQuotas: string | null; // n-quote
+  numShares: number | null; // n-azioni
+  numQuotas: number | null; // n-quote
 }
 
 /** caratteristiche-impianto-1 / caratteristiche-impianto-2 */
@@ -553,7 +564,7 @@ export interface RoleEntry {
   appointmentDeedDate: string | null; // dt-atto-nomina
   appointmentDate: string | null; // dt-nomina
   endDate: string | null; // dt-fine
-  yearsOfOffice: string | null; // n-anni-esercizio
+  yearsOfOffice: number | null; // n-anni-esercizio
   durationCode: string | null; // c-durata
   durationDescription: string | null; // descrizione-durata
   balanceReferenceDate: string | null; // dt-riferimento-bilancio
@@ -593,7 +604,7 @@ export interface QualityCertificationEntry {
   schemeCode: string | null; // c-schema-accreditamento
   scheme: string | null; // schema-accreditamento
   referenceStandard: string | null; // norma-riferimento
-  certificateNumber: string | null; // n-certificato
+  certificateNumber: number | null; // n-certificato
   note: string | null; // nota
   issueDate: string | null; // dt-emissione
   certifierName: string | null; // denominazione-odc
@@ -614,11 +625,11 @@ export interface OrganicCertification {
   operator: string | null; // operatore
   subjectDate: string | null; // dt-assoggettamento
   activity: string | null; // attivita
-  certificateNumber: string | null; // n-certificato
+  certificateNumber: number | null; // n-certificato
   certifierCode: string | null; // c-odc
   certifier: string | null; // odc
   certifiedActivity: string | null; // attivita-certificata
-  conformityCertificateNumber: string | null; // n-certificato-conformita
+  conformityCertificateNumber: number | null; // n-certificato-conformita
   expiryDate: string | null; // dt-scadenza
 }
 
@@ -689,15 +700,15 @@ export interface LeiCode {
 
 /** collegio-sindacale */
 export interface AuditingBoard {
-  numEffectiveMembers: string | null; // n-effettivi
-  numAlternateMembers: string | null; // n-supplenti
-  minMembers: string | null; // n-min
-  maxMembers: string | null; // n-max
+  numEffectiveMembers: number | null; // n-effettivi
+  numAlternateMembers: number | null; // n-supplenti
+  minMembers: number | null; // n-min
+  maxMembers: number | null; // n-max
 }
 
 /** collegio-sindacale-in-carica */
 export interface ActiveAuditingBoard {
-  numActiveMembers: string | null; // n-in-carica
+  numActiveMembers: number | null; // n-in-carica
   yearsOfOffice: string | null; // anni-durata
   durationCode: string | null; // c-durata
   duration: string | null; // durata
@@ -723,12 +734,12 @@ export interface RetailAdditionalInfo {
   effectDate: string | null; // dt-decorrenza
   requestTypeCode: string | null; // c-tipo-domanda
   requestType: string | null; // tipo-domanda
-  authorizationNumber: string | null; // n-autorizzazione
+  authorizationNumber: number | null; // n-autorizzazione
   presentationDate: string | null; // dt-presentazione
   municipalityCode: string | null; // c-comune-presentazione
   municipality: string | null; // comune-presentazione
   province: string | null; // provincia-presentazione
-  protocolNumber: string | null; // n-protocollo
+  protocolNumber: number | null; // n-protocollo
   facilityTypeCode: string | null; // c-struttura-esercizio
   facilityType: string | null; // struttura-esercizio
   foodSalesAreaSqm: string | null; // mq-vendita-alimentare
@@ -740,9 +751,9 @@ export interface RetailAdditionalInfo {
 /** tabelle-speciali (simpleContent) */
 export interface SpecialTables {
   text: string | null; // _text
-  pharmacyFlag: string | null; // f-farmacia
-  tobaccoSalesFlag: string | null; // f-vendita-generi-monopolio
-  fuelSalesFlag: string | null; // f-vendita-carburanti
+  pharmacyFlag: boolean | null; // f-farmacia
+  tobaccoSalesFlag: boolean | null; // f-vendita-generi-monopolio
+  fuelSalesFlag: boolean | null; // f-vendita-carburanti
   squareMeters: string | null; // mq
 }
 
@@ -750,12 +761,12 @@ export interface SpecialTables {
 export interface ShareComposition {
   typeCode: string | null; // c-tipo
   type: string | null; // tipo
-  number: string | null; // n
+  number: number | null; // n
   currencyCode: string | null; // c-valuta
   currency: string | null; // valuta
   nominalValue: string | null; // valore-nominale
-  numShares: string | null; // n-azioni
-  numQuotas: string | null; // n-quote
+  numShares: number | null; // n-azioni
+  numQuotas: number | null; // n-quote
   unitValue: string | null; // valore-unitario
   amountInEuros: string | null; // ammontare-convertito-in-euro
   paidValue: string | null; // valore-versato
@@ -765,7 +776,7 @@ export interface ShareComposition {
 export interface ReceiverCommunication {
   hearingDetails: HearingDetails | null; // estremi-udienza
   court: string | null; // tribunale
-  orderNumber: string | null; // n-provvedimento
+  orderNumber: number | null; // n-provvedimento
   orderDate: string | null; // dt-provvedimento
   judgeName: string | null; // nome-giudice
   judgeSurname: string | null; // cognome-giudice
@@ -785,7 +796,7 @@ export interface Contributions {
 /** conferimenti-benefici (simpleContent) */
 export interface BenefitContributions {
   text: string | null; // _text
-  inBylawsFlag: string | null; // f-presenza-nello-statuto
+  inBylawsFlag: boolean | null; // f-presenza-nello-statuto
 }
 
 /** dati-artigiani */
@@ -793,9 +804,9 @@ export interface CraftsData {
   craftsActivity: CraftsActivity | null; // attivita-aa
   supplementaryInfo: string | null; // informazioni-supplementari-aa
   cancellation: CraftsCancellation | null; // cancellazione-aa
-  suppressedRegisterFlag: string | null; // f-albo-soppresso
+  suppressedRegisterFlag: boolean | null; // f-albo-soppresso
   lawReferenceCode: string | null; // c-riferimento-legge
-  number: string | null; // n
+  number: number | null; // n
   categoryCode: string | null; // c-categoria
   category: string | null; // categoria
   province: string | null; // provincia
@@ -816,8 +827,8 @@ export interface BalanceSheetData {
 
 /** dati-iscrizione-rea-rd */
 export interface ReaRdRegistration {
-  reaNumber: string | null; // n-rea
-  rdNumber: string | null; // n-rd
+  reaNumber: number | null; // n-rea
+  rdNumber: number | null; // n-rd
   enrollmentDate: string | null; // dt-iscrizione
   enrollmentTypeCode: string | null; // c-tipo-iscrizione
   enrollmentType: string | null; // tipo-iscrizione
@@ -884,7 +895,7 @@ export interface EnvironmentalDeclarationEntry {
   source: string | null; // fonte
   provinceSection: string | null; // provincia-sezione
   province: string | null; // provincia
-  number: string | null; // n
+  number: number | null; // n
   year: string | null; // anno
   firstEnrollmentDate: string | null; // dt-prima-iscrizione
   enrollmentDate: string | null; // dt-iscrizione
@@ -906,7 +917,7 @@ export interface EmployeeDistribution {
   contractDistribution: ContractDistribution | null; // dipendenti-contratti
   workingHoursDistribution: WorkingHoursDistribution | null; // dipendenti-orari-lavoro
   qualificationDistribution: QualificationDistribution | null; // dipendenti-qualifiche
-  agriculturalWorkersFlag: string | null; // f-presenza-agricoli
+  agriculturalWorkersFlag: boolean | null; // f-presenza-agricoli
 }
 
 /** dipendenti-contratto */
@@ -964,8 +975,8 @@ export interface ParticipationRole {
 /** doc-consultabili */
 export interface ConsultableDocuments {
   financialStatements: FinancialStatementYears | null; // bilanci
-  bylawsExistsFlag: string | null; // f-esiste-statuto
-  numOtherDeeds: string | null; // n-altri-atti
+  bylawsExistsFlag: boolean | null; // f-esiste-statuto
+  numOtherDeeds: number | null; // n-altri-atti
   sosReporting: string | null; // rendicontazione-sos
   benefitReport: string | null; // relazione-benefit
   socialBalance: string | null; // bilancio-sociale
@@ -977,7 +988,7 @@ export interface DomicileAddress {
   province: string | null; // provincia
   provinceTer: string | null; // provincia-ter
   street: string | null; // via
-  streetNumber: string | null; // n-civico
+  streetNumber: number | null; // n-civico
   postalCode: string | null; // cap
   postalCodeTer: string | null; // cap-ter
   countryCode: string | null; // c-stato
@@ -995,7 +1006,7 @@ export interface FiscalDomicile {
   topographyCode: string | null; // c-toponimo
   topography: string | null; // toponimo
   street: string | null; // via
-  streetNumber: string | null; // n-civico
+  streetNumber: number | null; // n-civico
   postalCode: string | null; // cap
   postalCodeTer: string | null; // cap-ter
   countryCode: string | null; // c-stato
@@ -1008,10 +1019,10 @@ export interface FiscalDomicile {
 export interface CompanyDuration {
   fiscalYearMaturity: FiscalYearMaturity | null; // scadenza-esercizi
   endDate: string | null; // dt-termine
-  indefiniteDurationFlag: string | null; // f-durata-indeterminata
+  indefiniteDurationFlag: boolean | null; // f-durata-indeterminata
   extensionTypeCode: string | null; // c-tipo-proroga
   extensionType: string | null; // tipo-proroga
-  tacitExtensionYears: string | null; // n-anni-proroga-tacita
+  tacitExtensionYears: number | null; // n-anni-proroga-tacita
 }
 
 /** scadenza-esercizi */
@@ -1032,8 +1043,8 @@ export interface ShareholderListEntry {
   confirmedPracticeNotes: string[]; // note-pratica-riconfermata[]
   shareholdersFromDate: string | null; // dt-soci-titolari-dal
   shareholdersToDate: string | null; // dt-soci-titolari-al
-  consortiumFlag: string | null; // f-consorzio
-  latestShareholdersListFlag: string | null; // f-ultimo-elenco-soci
+  consortiumFlag: boolean | null; // f-consorzio
+  latestShareholdersListFlag: boolean | null; // f-ultimo-elenco-soci
   lawReferenceCode: string | null; // c-riferimento-legge
   lawReference: string | null; // riferimento-legge
 }
@@ -1045,7 +1056,7 @@ export interface DeedDetails {
   notary: string | null; // notaio
   court: string | null; // tribunale
   otherIndications: string | null; // altre-indicazioni
-  registrationNumber: string | null; // n-registrazione
+  registrationNumber: number | null; // n-registrazione
   registrationDate: string | null; // dt-registrazione
   registryOfficeLocality: string | null; // localita-ufficio-registro
   registryOfficeProvince: string | null; // provincia-ufficio-registro
@@ -1055,11 +1066,11 @@ export interface DeedDetails {
 export interface IncorporationDeedDetails {
   typeCode: string | null; // c-tipo
   type: string | null; // tipo
-  repertoryNumber: string | null; // n-repertorio
+  repertoryNumber: number | null; // n-repertorio
   notary: string | null; // notaio
   notaryLocality: string | null; // localita-notaio
   notaryProvince: string | null; // provincia-notaio
-  registrationNumber: string | null; // n-registrazione
+  registrationNumber: number | null; // n-registrazione
   registrationDate: string | null; // dt-registrazione
   registryOfficeLocality: string | null; // localita-ufficio-registro
   registryOfficeProvince: string | null; // provincia-ufficio-registro
@@ -1070,7 +1081,7 @@ export interface CompanyDetails {
   legalForm: string | null; // forma-giuridica (placeholder)
   taxCode: string | null; // c-fiscale
   name: string | null; // denominazione
-  isClosedFlag: string | null; // f-cessata
+  isClosedFlag: boolean | null; // f-cessata
   cancellationDate: string | null; // dt-cancellazione
 }
 
@@ -1089,7 +1100,7 @@ export interface NotaryDetails {
   formCode: string | null; // c-forma
   form: string | null; // forma
   notary: string | null; // notaio
-  repertoryNumber: string | null; // n-repertorio
+  repertoryNumber: number | null; // n-repertorio
   notaryLocality: string | null; // localita-notaio
   notaryProvince: string | null; // provincia-notaio
 }
@@ -1102,10 +1113,10 @@ export interface PracticeDetails {
   deedDate: string | null; // dt-atto
   chamberCode: string | null; // cciaa
   year: string | null; // anno
-  number: string | null; // n
+  number: number | null; // n
   protocolDate: string | null; // dt-protocollo
   filingDate: string | null; // dt-deposito
-  reconfirmationFlag: string | null; // f-riconferma
+  reconfirmationFlag: boolean | null; // f-riconferma
   declarationDate: string | null; // dt-dichiarazione
   listTypeCode: string | null; // c-tipo-elenco
   listType: string | null; // tipo-elenco
@@ -1117,7 +1128,7 @@ export interface PracticeDetails {
 export interface ConfirmedPracticeDetails {
   chamberCode: string | null; // cciaa
   year: string | null; // anno
-  number: string | null; // n
+  number: number | null; // n
 }
 
 /** estremi-udienza */
@@ -1134,7 +1145,7 @@ export interface EuropeanUniqueIdentifier {
   country: string | null; // stato
   registerCode: string | null; // c-registro
   register: string | null; // registro
-  registrationNumber: string | null; // n-registrazione
+  registrationNumber: number | null; // n-registrazione
   legalFormCode: string | null; // c-forma-giuridica
   legalForm: string | null; // forma-giuridica
 }
@@ -1146,24 +1157,24 @@ export interface CorporateEvent {
   taxCode: string | null; // c-fiscale
   city: string | null; // comune
   chamberCode: string | null; // cciaa
-  reaNumber: string | null; // n-rea
-  rdNumber: string | null; // n-rd
-  rsNumber: string | null; // n-rs
+  reaNumber: number | null; // n-rea
+  rdNumber: number | null; // n-rd
+  rsNumber: number | null; // n-rs
   courtCode: string | null; // c-tribunale
   court: string | null; // tribunale
   province: string | null; // provincia
-  riNumber: string | null; // n-ri
+  riNumber: number | null; // n-ri
   euidCode: string | null; // c-euid
 }
 
 /** fallimento-in-proprio / fallimento-per-estensione */
 export interface BankruptcyDetails {
   birthDetails: BirthDetails | null; // estremi-nascita
-  bankruptcyNumber: string | null; // n-fallimento
+  bankruptcyNumber: number | null; // n-fallimento
   bankruptcyDate: string | null; // dt-fallimento
   court: string | null; // tribunale
   courtProvince: string | null; // provincia-tribunale
-  judgmentNumber: string | null; // n-sentenza
+  judgmentNumber: number | null; // n-sentenza
   judgmentDate: string | null; // dt-sentenza
   receiver: string | null; // curatore
   closureDate: string | null; // dt-chiusura
@@ -1182,12 +1193,16 @@ export interface Bankruptcy {
   bankruptcyIndex: string | null; // p-fallimento
 }
 
+export interface ParticipatingFamilyMembers {
+  entries: ParticipatingFamilyMember[]; // familiare-partecipe[]
+}
+
 /** familiare-partecipe */
 export interface ParticipatingFamilyMember {
   lastName: string | null; // cognome
   firstName: string | null; // nome
   taxCode: string | null; // c-fiscale
-  directFarmerFlag: string | null; // f-coltivatore-diretto
+  directFarmerFlag: boolean | null; // f-coltivatore-diretto
 }
 
 /** fondo-consortile */
@@ -1199,21 +1214,34 @@ export interface ConsortiumFund {
   amountInEuros: string | null; // ammontare-convertito-in-euro
 }
 
+export interface GovernanceForms {
+  entries: GovernanceForm[] | null; // forma-amministrativa[]
+}
+
+export interface ActiveGovernanceForms {
+  entries: ActiveGovernanceForm[] | null; // forma-amministrativa-in-carica[]
+}
+
+export interface ControlBodiesInCharge {
+  entries: ActiveGovernanceForm[] | null; // forma-amministrativa-in-carica[]
+}
+
+
 /** forma-amministrativa (simpleContent) */
 export interface GovernanceForm {
   text: string | null; // _text (form name)
   code: string | null; // c
-  activeFlag: string | null; // f-in-carica
-  controlBodyFlag: string | null; // f-organo-controllo
-  minAdministrators: string | null; // n-min-amministratori
-  maxAdministrators: string | null; // n-max-amministratori
+  activeFlag: boolean | null; // f-in-carica
+  controlBodyFlag: boolean | null; // f-organo-controllo
+  minAdministrators: number | null; // n-min-amministratori
+  maxAdministrators: number | null; // n-max-amministratori
 }
 
 /** forma-amministrativa-in-carica (simpleContent) */
 export interface ActiveGovernanceForm {
   text: string | null; // _text (form name)
   code: string | null; // c
-  numActiveAdministrators: string | null; // n-amministratori-in-carica
+  numActiveAdministrators: number | null; // n-amministratori-in-carica
   yearsOfOffice: string | null; // anni-durata
   durationCode: string | null; // c-durata
   duration: string | null; // durata
@@ -1265,9 +1293,9 @@ export interface SuccessorCompany {
   name: string | null; // denominazione
   taxCode: string | null; // c-fiscale
   chamberCode: string | null; // cciaa
-  reaNumber: string | null; // n-rea
-  rdNumber: string | null; // n-rd
-  riNumber: string | null; // n-ri
+  reaNumber: number | null; // n-rea
+  rdNumber: number | null; // n-rd
+  riNumber: number | null; // n-ri
   successionTitleCode: string | null; // c-titolo-subentro
   successionTitle: string | null; // titolo-subentro
 }
@@ -1281,7 +1309,7 @@ export interface FullAddress {
   topographyCode: string | null; // c-toponimo
   topography: string | null; // toponimo
   street: string | null; // via
-  streetNumber: string | null; // n-civico
+  streetNumber: number | null; // n-civico
   postalCode: string | null; // cap
   postalCodeTer: string | null; // cap-ter
   countryCode: string | null; // c-stato
@@ -1308,7 +1336,7 @@ export interface OtherRegisterInfo {
 /** info-attivita */
 export interface CompanyActivityInfo {
   familyWorkInfo: FamilyWorkInfo | null; // lavoro-prestato-familiari-part
-  participatingFamilyMembers: ParticipatingFamilyMember[]; // familiari-partecipi → familiare-partecipe[]
+  participatingFamilyMembers: ParticipatingFamilyMembers | null; // familiari-partecipi → familiare-partecipe[]
   pursuedActivity: string | null; // attivita-esercitata
   secondaryActivity: string | null; // attivita-secondaria-esercitata
   craftsActivityBolzano: CraftsActivityBolzano | null; // attivita-aa-bz
@@ -1342,16 +1370,16 @@ export interface ActivityDetails {
 
 /** lavoro-prestato-familiari-part */
 export interface FamilyWorkInfo {
-  numPermanentWorkers: string | null; // n-lavoratori-tempo-indeter
-  numWorkdays: string | null; // n-giornate
+  numPermanentWorkers: number | null; // n-lavoratori-tempo-indeter
+  numWorkdays: number | null; // n-giornate
 }
 
 /** impresa-sociale */
 export interface SocialEnterprise {
   goodsAndServices: GoodsAndServices | null; // beni-servizi
   activitySectors: ActivitySectors | null; // settori-attivita
-  numDisadvantagedWorkers: string | null; // n-lavoratori-svantaggiati
-  numDisabledWorkers: string | null; // n-lavoratori-disabili
+  numDisadvantagedWorkers: number | null; // n-lavoratori-svantaggiati
+  numDisabledWorkers: number | null; // n-lavoratori-disabili
 }
 
 /** settori-attivita */
@@ -1395,7 +1423,7 @@ export interface FinancialAndAssetInfo {
   specificProjectAssets: SpecificProjectAssets | null; // patrimonio-specifico-affare
   specificProjectFinancing: SpecificProjectFinancing | null; // finanziamento-specifico-affare
   balanceSheetData: BalanceSheetEntries | null; // dati-bilanci
-  hasInfoFlag: string | null; // f-presenza-info
+  hasInfoFlag: boolean | null; // f-presenza-info
 }
 
 /** valore-nominale-conferimenti */
@@ -1446,47 +1474,26 @@ export interface ModificationEntry {
   modificationCodeDescription: string | null; // descrizione-c-modifica
 }
 
-/** info-sede */
-export interface HeadquartersDetails {
-  certifiedEmail: string | null; // indirizzo-posta-certificata (from IndirizzoPosta)
-  website: string | null; // sito-internet
-  email: string | null; // email
-  legalEmail: string | null; // legal-mail
-  otherHqFunctions: string | null; // altre-funzioni-sede
-  reaRdRegistration: ReaRdRegistration | null; // dati-iscrizione-rea-rd
-  privateLegalPersonInfo: PrivateLegalPersonInfo | null; // persona-giuridica-privata
-  outOfProvinceHq: OutOfProvinceHeadquarters | null; // sede-fuori-provincia
-  vatNumber: string | null; // partita-iva
-  vatGroup: VatGroup | null; // gruppo-iva
-  leiCode: LeiCode | null; // codice-lei
-  sign: string | null; // insegna
-  europeanIdentifier: EuropeanUniqueIdentifier | null; // euid
-  secondaryRegisteredOffice: SecondaryRegisteredOffice | null; // sede-secondaria-rs
-  transferOrigin: TransferOrigin | null; // provenienza-trasferimento
-  supplementaryInfo: SupplementaryInfo | null; // informazioni-supplementari
-  accountingRecordsFlag: string | null; // f-scritture-contabili
-}
-
 /** persona-giuridica-privata */
 export interface PrivateLegalPersonInfo {
   register: string | null; // registro
   entity: string | null; // ente
-  number: string | null; // n
+  number: number | null; // n
   enrollmentDate: string | null; // dt-iscrizione
-  requirementsVerifiedFlag: string | null; // f-accertamento-requisiti
+  requirementsVerifiedFlag: boolean | null; // f-accertamento-requisiti
 }
 
 /** sede-fuori-provincia */
 export interface OutOfProvinceHeadquarters {
-  reaNumber: string | null; // n-rea
-  rdNumber: string | null; // n-rd
-  aaNumber: string | null; // n-aa
+  reaNumber: number | null; // n-rea
+  rdNumber: number | null; // n-rd
+  aaNumber: number | null; // n-aa
   chamberCode: string | null; // cciaa
 }
 
 /** sede-secondaria-rs */
 export interface SecondaryRegisteredOffice {
-  secondaryOfficeNumber: string | null; // n-sede-secondaria
+  secondaryOfficeNumber: number | null; // n-sede-secondaria
   courtMunicipalityCode: string | null; // c-comune-tribunale
   courtMunicipality: string | null; // comune-tribunale
   courtProvince: string | null; // provincia-tribunale
@@ -1497,9 +1504,9 @@ export interface SecondaryRegisteredOffice {
 export interface TransferOrigin {
   transferDate: string | null; // dt-trasferimento
   chamberCode: string | null; // cciaa
-  reaNumber: string | null; // n-rea
-  rdNumber: string | null; // n-rd
-  aaNumber: string | null; // n-aa
+  reaNumber: number | null; // n-rea
+  rdNumber: number | null; // n-rd
+  aaNumber: number | null; // n-aa
 }
 
 /** informazioni-supplementari */
@@ -1530,7 +1537,7 @@ export interface BrandEnrollment {
   typeCode: string | null; // c-tipo
   type: string | null; // tipo
   enrollmentDate: string | null; // dt-iscrizione
-  brandNumber: string | null; // n-marchio
+  brandNumber: number | null; // n-marchio
   chamberCode: string | null; // cciaa
   assignmentDate: string | null; // dt-assegnazione
   categoryCode: string | null; // c-categoria
@@ -1543,18 +1550,18 @@ export interface EnrollmentModification {
   enrollmentType: string | null; // tipo-iscrizione
   filingDate: string | null; // dt-deposito
   enrollmentDate: string | null; // dt-iscrizione
-  correctionFlag: string | null; // f-rettifica
+  correctionFlag: boolean | null; // f-rettifica
   correctionDate: string | null; // dt-rettifica
 }
 
 /** iscrizione-ri */
 export interface RegisterEnrollmentDetails {
   sections: Sections | null; // sezioni
-  riAnnotationNumber: string | null; // n-annotazione-ri
-  riEnrollmentNumber: string | null; // n-iscrizione-ri
-  taxCodeNumber: string | null; // n-c-fiscale
-  oldRiAnnotationNumber: string | null; // n-annotazione-ri-old
-  oldRiEnrollmentNumber: string | null; // n-iscrizione-ri-old
+  riAnnotationNumber: number | null; // n-annotazione-ri
+  riEnrollmentNumber: number | null; // n-iscrizione-ri
+  taxCodeNumber: number | null; // n-c-fiscale
+  oldRiAnnotationNumber: number | null; // n-annotazione-ri-old
+  oldRiEnrollmentNumber: number | null; // n-iscrizione-ri-old
   riProvince: string | null; // provincia-ri
   competentChamber: string | null; // cciaa-competente
   oldRiEnrollmentNumberCode: string | null; // c-n-iscrizione-ri-old
@@ -1565,9 +1572,9 @@ export interface RegisterEnrollmentDetails {
 /** iscrizione-rs */
 export interface RegisteredOfficeRegistration {
   enrollmentDate: string | null; // dt-iscrizione
-  rsNumber: string | null; // n-rs
-  volumeNumber: string | null; // n-volume
-  caseFileNumber: string | null; // n-fascicolo
+  rsNumber: number | null; // n-rs
+  volumeNumber: number | null; // n-volume
+  caseFileNumber: number | null; // n-fascicolo
   courtLocality: string | null; // localita-tribunale
   courtProvince: string | null; // provincia-tribunale
 }
@@ -1578,7 +1585,7 @@ export interface BusinessLicense {
   bakeryLicense: BakeryLicense | null; // molini-panificatori
   licenseAuthorization: LicenseAuthorization | null; // licenza-autorizzazione
   licenseIndex: string | null; // p-licenza
-  undocumentedFlag: string | null; // f-non-documentata
+  undocumentedFlag: boolean | null; // f-non-documentata
   undocumentedCode: string | null; // c-non-documentata
 }
 
@@ -1586,7 +1593,7 @@ export interface BusinessLicense {
 export interface LicenseAuthorization {
   issuingAuthorityCode: string | null; // c-autorita-rilascio
   issuingAuthority: string | null; // autorita-rilascio
-  number: string | null; // n
+  number: number | null; // n
   enrollmentDate: string | null; // dt-iscrizione
   code: string | null; // c
   type: string | null; // tipo
@@ -1613,7 +1620,7 @@ export interface CompanyLocation {
   locationTransfer: LocationTransfer | null; // trasferimento-localizzazione
   successorCompany: SuccessorCompany | null; // impresa-subentrante
   index: string | null; // progressivo
-  reducedDataFlag: string | null; // f-dati-ridotti
+  reducedDataFlag: boolean | null; // f-dati-ridotti
   typeCode: string | null; // c-tipo
   type: string | null; // tipo
   enrollmentTypeCode: string | null; // c-tipo-iscrizione
@@ -1621,9 +1628,14 @@ export interface CompanyLocation {
   name: string | null; // denominazione
   sign: string | null; // insegna
   openingDate: string | null; // dt-apertura
-  cessationFlag: string | null; // f-cessazione
+  cessationFlag: boolean | null; // f-cessazione
   euidCode: string | null; // c-euid
-  accountingRecordsFlag: string | null; // f-scritture-contabili
+  accountingRecordsFlag: boolean | null; // f-scritture-contabili
+}
+
+export interface HistoricSupplementaryInfo {
+  memorandumDescription: string | null; // descrizione-atto-costitutivo
+  historicNews: string | null; // notizie-storiche
 }
 
 /** sotto-tipi */
@@ -1673,7 +1685,7 @@ export interface ShareholdersCount {
 /** omologazione */
 export interface Homologation {
   homologationDate: string | null; // dt-omologazione
-  number: string | null; // n
+  number: number | null; // n
 }
 
 /** parametri */
@@ -1692,9 +1704,9 @@ export interface SubsidiaryCompany {
   participationNotes: ParticipationNotes | null; // note-partecipazione
   taxCode: string | null; // c-fiscale
   name: string | null; // denominazione
-  consortiumFlag: string | null; // f-consorzio
-  cooperativeFlag: string | null; // f-cooperativa
-  closedFlag: string | null; // f-cessata
+  consortiumFlag: boolean | null; // f-consorzio
+  cooperativeFlag: boolean | null; // f-cooperativa
+  closedFlag: boolean | null; // f-cessata
   cancellationDate: string | null; // dt-cancellazione
   participationStartDate: string | null; // dt-inizio-partecipazione
   participationEndDate: string | null; // dt-fine-partecipazione
@@ -1706,9 +1718,9 @@ export interface ParticipationEntry {
   practiceDetails: PracticeDetails | null; // estremi-pratica
   shareCapital: ShareCapitalEntry | null; // capitale-sociale
   frames: ShareFrames | null; // riquadri
-  latestShareholdersListFlag: string | null; // f-ultimo-elenco-soci
-  currentParagraphFlag: string | null; // f-paragrafo-attuale
-  incompleteInfoFlag: string | null; // f-info-incompleta
+  latestShareholdersListFlag: boolean | null; // f-ultimo-elenco-soci
+  currentParagraphFlag: boolean | null; // f-paragrafo-attuale
+  incompleteInfoFlag: boolean | null; // f-info-incompleta
 }
 
 /** partecipazione-utili (simpleContent) */
@@ -1748,21 +1760,21 @@ export interface PersonEntry {
   personRoles: PersonRoles | null; // ruoli-persona
   licenses: Licenses | null; // licenze
   index: string | null; // progressivo
-  reaRepresentativeFlag: string | null; // f-rappresentante-rea
-  riRepresentativeFlag: string | null; // f-rappresentante-ri
-  aeRepresentativeFlag: string | null; // f-rappresentante-ae
-  administratorFlag: string | null; // f-amministratore
-  auditorFlag: string | null; // f-sindaco
-  electorFlag: string | null; // f-elettore
+  reaRepresentativeFlag: boolean | null; // f-rappresentante-rea
+  riRepresentativeFlag: boolean | null; // f-rappresentante-ri
+  aeRepresentativeFlag: boolean | null; // f-rappresentante-ae
+  administratorFlag: boolean | null; // f-amministratore
+  auditorFlag: boolean | null; // f-sindaco
+  electorFlag: boolean | null; // f-elettore
   modificationType: string | null; // tipo-modifica
   lastName: string | null; // cognome
   firstName: string | null; // nome
   taxCode: string | null; // c-fiscale
   chamberCode: string | null; // cciaa
-  rdNumber: string | null; // n-rd
-  reaNumber: string | null; // n-rea
-  signatureDepositedFlag: string | null; // f-firma-depositata
-  pcoAuthorizedFlag: string | null; // f-incaricato-pco
+  rdNumber: number | null; // n-rd
+  reaNumber: number | null; // n-rea
+  signatureDepositedFlag: boolean | null; // f-firma-depositata
+  pcoAuthorizedFlag: boolean | null; // f-incaricato-pco
 }
 
 /** persona-fisica */
@@ -1786,8 +1798,8 @@ export interface PhysicalPersonDetails {
 
 /** persona-giuridica */
 export interface LegalPersonDetails {
-  reaNumber: string | null; // n-rea
-  rdNumber: string | null; // n-rd
+  reaNumber: number | null; // n-rea
+  rdNumber: number | null; // n-rd
   chamberCode: string | null; // cciaa
   name: string | null; // denominazione
   riName: string | null; // denominazione-ri
@@ -1801,9 +1813,9 @@ export interface LegalPersonDetails {
 export interface PrivateLegalPerson {
   register: string | null; // registro
   entity: string | null; // ente
-  number: string | null; // n
+  number: number | null; // n
   enrollmentDate: string | null; // dt-iscrizione
-  requirementsVerifiedFlag: string | null; // f-accertamento-requisiti
+  requirementsVerifiedFlag: boolean | null; // f-accertamento-requisiti
 }
 
 /** poteri */
@@ -1833,14 +1845,21 @@ export interface PersonPowers {
 /** limitazioni-responsabilita (simpleContent) */
 export interface LiabilityLimitations {
   text: string | null; // _text
-  inBylawsFlag: string | null; // f-presenza-nello-statuto
+  inBylawsFlag: boolean | null; // f-presenza-nello-statuto
 }
 
 /** ripartizioni-utili-perdite (simpleContent) */
 export interface ProfitLossDistributions {
   text: string | null; // _text
-  inBylawsFlag: string | null; // f-presenza-nello-statuto
+  inBylawsFlag: boolean | null; // f-presenza-nello-statuto
 }
+
+/** pratiche-soggetti-controllanti */
+export interface ControllingSubjectsPractices {
+  practices: ControllingSubjectsPractice[] | null; // pratica-soggetti-controllanti[]
+  flagInfo: boolean | null; // f-presenza-info
+}
+
 
 /** pratica-soggetti-controllanti */
 export interface ControllingSubjectsPractice {
@@ -1852,7 +1871,13 @@ export interface ControllingSubjectsPractice {
 /** presentazione-cciaa */
 export interface ChamberFiling {
   presentationDate: string | null; // dt-presentazione
-  protocolNumber: string | null; // n-protocollo
+  protocolNumber: number | null; // n-protocollo
+}
+
+/** procedure-concorsuali */
+export interface InsolvencyProcedures {
+  procedures: InsolvencyProcedure[]; // procedura-concorsuale[]
+  flagInfo: boolean | null; // f-presenza-info
 }
 
 /** procedura-concorsuale */
@@ -1893,7 +1918,7 @@ export interface FilingProtocolEntry {
   protocolDate: string | null; // dt-protocollo
   lastModificationDate: string | null; // dt-ultima-modifica
   year: string | null; // anno
-  number: string | null; // n
+  number: number | null; // n
   uniqueFilingCompliance: string | null; // adempimento-comunica
   recipientAuthorities: string | null; // enti-destinatari
 }
@@ -1902,17 +1927,17 @@ export interface FilingProtocolEntry {
 export interface RegisterFilingProtocol {
   templatesAndTranscriptions: TemplatesAndTranscriptions | null; // modelli-trascrizioni
   deedTranscriptions: DeedTranscriptions | null; // atti-trascrizioni
-  protocolNumber: string | null; // n-protocollo
-  officeProtocolNumber: string | null; // n-protocollo-ufficio
+  protocolNumber: number | null; // n-protocollo
+  officeProtocolNumber: number | null; // n-protocollo-ufficio
   year: string | null; // anno
   protocolDate: string | null; // dt-protocollo
-  interchamberCommunicationNumber: string | null; // n-comunicazione-intercamerale
-  interchamberProtocolNumber: string | null; // n-protocollo-intercamerale
+  interchamberCommunicationNumber: number | null; // n-comunicazione-intercamerale
+  interchamberProtocolNumber: number | null; // n-protocollo-intercamerale
   interchamberCommunicationYear: string | null; // anno-comunicazione-intercam
   interchamberProtocolYear: string | null; // anno-protocollo-intercam
   companyTaxCode: string | null; // cf-impresa
   chamberName: string | null; // denom-cciaa
-  preEnrollmentDeedFlag: string | null; // f-atto-pre-iscrizione
+  preEnrollmentDeedFlag: boolean | null; // f-atto-pre-iscrizione
   notificationDate: string | null; // dt-denuncia
 }
 
@@ -1920,8 +1945,8 @@ export interface RegisterFilingProtocol {
 export interface RegisteredOfficeFilingProtocol {
   deed: Deed | null; // atto
   registeredOfficeTranscriptions: RegisteredOfficeTranscriptions | null; // trascrizioni-rs
-  referenceNumber: string | null; // n-riferimento
-  orderRegisterNumber: string | null; // n-registro-ordine
+  referenceNumber: number | null; // n-riferimento
+  orderRegisterNumber: number | null; // n-registro-ordine
   orderRegisterYear: string | null; // anno-registro-ordine
   courtMunicipalityCode: string | null; // c-comune-tribunale
   court: string | null; // tribunale
@@ -1946,7 +1971,7 @@ export interface ShareQuota {
 export interface ShareRight {
   rightTypeCode: string | null; // c-tipo-diritto
   rightType: string | null; // tipo-diritto
-  numShares: string | null; // n-azioni
+  numShares: number | null; // n-azioni
   nominalValue: string | null; // valore-nominale
   capitalPercentage: string | null; // percentuale-capitale
 }
@@ -1954,7 +1979,7 @@ export interface ShareRight {
 /** registrazione */
 export interface DeedRegistration {
   registrationDate: string | null; // dt-registrazione
-  number: string | null; // n
+  number: number | null; // n
   registryOffice: string | null; // ufficio-registro
   registryOfficeProvince: string | null; // provincia-ufficio-registro
 }
@@ -1967,21 +1992,26 @@ export interface PreciousMetalsRegister {
   taxStamp: TaxStamp | null; // tassa-cg
   brand: string | null; // marchio
   roleCancellation: RoleCancellation | null; // cancellazione-ruolo
-  number: string | null; // n
+  number: number | null; // n
   applicationDate: string | null; // dt-domanda
 }
 
 /** tassa-cg */
 export interface TaxStamp {
-  number: string | null; // n
+  number: number | null; // n
   date: string | null; // dt
+}
+
+/** reti-imprese */
+export interface BusinessNetworks {
+  networks: BusinessNetwork[] | null; // rete-imprese[]
 }
 
 /** rete-imprese */
 export interface BusinessNetwork {
   referenceCompany: RelatedCompany | null; // impresa-riferimento
-  repertoryNumber: string | null; // n-repertorio
-  registrationNumber: string | null; // n-registrazione
+  repertoryNumber: number | null; // n-repertorio
+  registrationNumber: number | null; // n-registrazione
   networkName: string | null; // denominazione
   taxCode: string | null; // c-fiscale
 }
@@ -2023,14 +2053,14 @@ export interface BylawsClauses {
 /** recesso / esclusione / etc. (simpleContent) */
 export interface BylawsClause {
   text: string | null; // _text
-  inBylawsFlag: string | null; // f-presenza-nello-statuto
+  inBylawsFlag: boolean | null; // f-presenza-nello-statuto
 }
 
 /** riconoscimento-professionale (simpleContent) */
 export interface ProfessionalRecognition {
   text: string | null; // _text
   orderDate: string | null; // dt-provvedimento
-  enrollmentNumber: string | null; // n-iscrizione
+  enrollmentNumber: number | null; // n-iscrizione
 }
 
 /** riquadro */
@@ -2042,7 +2072,7 @@ export interface ShareFrame {
   participationRights: ParticipationRights | null; // diritti-partecipazione
   notes: string[]; // note[]
   code: string | null; // c
-  occurrences: string | null; // n-ricorrenze
+  occurrences: number | null; // n-ricorrenze
   annotationDate: string | null; // dt-annotazione
   eventDate: string | null; // dt-evento
 }
@@ -2099,7 +2129,7 @@ export interface RoleEntry2 {
   qualification: string | null; // qualifica
   formCode: string | null; // c-forma
   form: string | null; // forma
-  number: string | null; // n
+  number: number | null; // n
   enrollmentDate: string | null; // dt-iscrizione
   issuingBodyCode: string | null; // c-ente-rilascio
   issuingBody: string | null; // ente-rilascio
@@ -2117,7 +2147,7 @@ export interface PersonRole {
   qualification: string | null; // qualifica
   formCode: string | null; // c-forma
   form: string | null; // forma
-  number: string | null; // n
+  number: number | null; // n
   enrollmentDate: string | null; // dt-iscrizione
   issuingBodyCode: string | null; // c-ente-rilascio
   issuingBody: string | null; // ente-rilascio
@@ -2168,10 +2198,10 @@ export interface SectionEntry {
   description: string | null; // descrizione
   enrollmentDate: string | null; // dt-iscrizione
   lastCommunicationDate: string | null; // dt-ultima-comunicazione
-  directFarmerFlag: string | null; // f-coltivatore-diretto
+  directFarmerFlag: boolean | null; // f-coltivatore-diretto
   aaChamberdCode: string | null; // cciaa-aa
-  aaNumber: string | null; // n-aa
-  pendingDecisionFlag: string | null; // f-attesa-decisione
+  aaNumber: number | null; // n-aa
+  pendingDecisionFlag: boolean | null; // f-attesa-decisione
   effectDate: string | null; // dt-decorrenza
 }
 
@@ -2201,7 +2231,7 @@ export interface ControllingSubject {
   countryCode: string | null; // c-stato
   country: string | null; // stato
   chamberCode: string | null; // cciaa
-  reaNumber: string | null; // n-rea
+  reaNumber: number | null; // n-rea
   referenceDate: string | null; // dt-riferimento
   declarationTypeCode: string | null; // c-tipo-dichiarazione
   declarationType: string | null; // tipo-dichiarazione
@@ -2223,7 +2253,7 @@ export interface AccountingControlBody {
 /** societa-cooperativa */
 export interface CooperativeSociety {
   presentationDate: string | null; // dt-presentazione
-  enrollmentNumber: string | null; // n-iscrizione
+  enrollmentNumber: number | null; // n-iscrizione
   enrollmentDate: string | null; // dt-iscrizione
   sectionCode: string | null; // c-sezione
   section: string | null; // sezione
@@ -2234,7 +2264,7 @@ export interface CooperativeSociety {
   activityCategoryCode: string | null; // c-categoria-attivita-eserc
   activityCategory: string | null; // categoria-attivita-esercitata
   governanceTypeCode: string | null; // c-tipo-forma-amministrativa
-  numShareholders: string | null; // n-soci
+  numShareholders: number | null; // n-soci
 }
 
 /** societa-quotata */
@@ -2253,7 +2283,7 @@ export interface PreviousHeadquartersRecord {
   changesHistory: ChangesHistoryRecord | null; // mad
   transcriptions: Transcriptions | null; // trascrizioni
   chamberCode: string | null; // cciaa
-  reaNumber?: string | null; // n-rea (only storia-sede-precedente)
+  reaNumber?: number | null; // n-rea (only storia-sede-precedente)
 }
 
 /** storia-attivita */
@@ -2263,7 +2293,7 @@ export interface ActivityHistory {
 }
 
 /** storia-addetti */
-export interface WorkforceHistory2 {
+export interface WorkforceHistory {
   entries: CompanyWorkforce[]; // addetti-impresa[]
 }
 
@@ -2274,8 +2304,8 @@ export interface BusinessSuccession {
   name: string | null; // denominazione
   taxCode: string | null; // c-fiscale
   chamberCode: string | null; // cciaa
-  reaNumber: string | null; // n-rea
-  riNumber: string | null; // n-ri
+  reaNumber: number | null; // n-rea
+  riNumber: number | null; // n-ri
   titleCode: string | null; // c-titolo
   title: string | null; // titolo
 }
@@ -2286,7 +2316,7 @@ export interface CorporateRestructuring {
   mergersAndSplits: MergersAndSplits | null; // fusioni-scissioni
   declarations: Declarations | null; // dichiarazioni
   businessSuccessions: BusinessSuccessions | null; // subentri-impresa
-  hasInfoFlag: string | null; // f-presenza-info
+  hasInfoFlag: boolean | null; // f-presenza-info
 }
 
 /** tabella-elenco-soci */
@@ -2314,7 +2344,7 @@ export interface HolderEntry {
   status: string | null; // situazione
   typeCode: string | null; // c-tipo
   type: string | null; // tipo
-  representativeFlag: string | null; // f-rappresentante
+  representativeFlag: boolean | null; // f-rappresentante
 }
 
 /** titolari */
@@ -2384,7 +2414,7 @@ export interface CompanyTransfer {
   companyDetails: CompanyDetails | null; // estremi-impresa
   practiceDetails: PracticeDetails | null; // estremi-pratica
   frames: ShareFrames | null; // riquadri
-  afterLastFiscalYearFlag: string | null; // f-successivo-ultimo-es
+  afterLastFiscalYearFlag: boolean | null; // f-successivo-ultimo-es
 }
 
 /** trasferimento-azienda */
@@ -2397,7 +2427,7 @@ export interface BusinessTransfer {
 /** informazioni-atto */
 export interface DeedInfo {
   holders: Holders | null; // titolari
-  repertoryNumber: string | null; // n-repertorio
+  repertoryNumber: number | null; // n-repertorio
   notary: string | null; // notaio
   purposeCode: string | null; // c-oggetto
   purpose: string | null; // oggetto
@@ -2408,7 +2438,7 @@ export interface ShareTransfer {
   practiceDetails: PracticeDetails | null; // estremi-pratica
   transferFrames: TransferFrames | null; // riquadri-trasferimento
   notes: string[]; // note[]
-  simultaneousFlag: string | null; // f-contestuale
+  simultaneousFlag: boolean | null; // f-contestuale
 }
 
 /** trasferimento-sede */
@@ -2418,10 +2448,10 @@ export interface HeadquartersTransfer {
   topographyCode: string | null; // c-toponimo
   topography: string | null; // toponimo
   street: string | null; // via
-  streetNumber: string | null; // n-civico
-  reaNumber: string | null; // n-rea
-  rdNumber: string | null; // n-rd
-  aaNumber: string | null; // n-aa
+  streetNumber: number | null; // n-civico
+  reaNumber: number | null; // n-rea
+  rdNumber: number | null; // n-rd
+  aaNumber: number | null; // n-aa
 }
 
 /** trasferimento-sede-ul-attiva */
@@ -2447,6 +2477,11 @@ export interface AdditionalDetail {
 /** ulteriori-dettagli */
 export interface AdditionalDetails {
   details: AdditionalDetail[]; // ulteriore-dettaglio[]
+}
+
+/** variazioni-forma-giuridica */
+export interface LegalFormChanges {
+  changes: LegalFormChange[]; // variazione-forma-giuridica[]
 }
 
 /** variazione-forma-giuridica */
@@ -2499,7 +2534,7 @@ export interface Templates {
 export interface TemplateEntry {
   frames: ShareFrames | null; // riquadri
   code: string | null; // c
-  occurrences: string | null; // n-ricorrenze
+  occurrences: number | null; // n-ricorrenze
 }
 
 export interface ParticipationNotes {
@@ -2638,8 +2673,8 @@ export interface Succession {
   name: string | null; // denominazione
   taxCode: string | null; // c-fiscale
   chamberCode: string | null; // cciaa
-  reaNumber: string | null; // n-rea
-  riNumber: string | null; // n-ri
+  reaNumber: number | null; // n-rea
+  riNumber: number | null; // n-ri
   titleCode: string | null; // c-titolo
   title: string | null; // titolo
 }
@@ -2654,7 +2689,7 @@ export interface BakeryLicense {
   millSection: MillSection | null; // molini
   typeCode: string | null; // c-tipo
   type: string | null; // tipo
-  number: string | null; // n
+  number: number | null; // n
   enrollmentDate: string | null; // dt-iscrizione
   status: string | null; // stato
   management: string | null; // conduzione
@@ -2692,7 +2727,7 @@ export interface Machinery {
   characteristic2: string | null; // caratteristica-2
   characteristic3: string | null; // caratteristica-3
   characteristic4: string | null; // caratteristica-4
-  cleaningMachinesFlag: string | null; // f-apparecchi-pulitura
+  cleaningMachinesFlag: boolean | null; // f-apparecchi-pulitura
 }
 
 export interface Storage {
@@ -2713,7 +2748,7 @@ export interface Recognition {
 /** indirizzo-localizzazione */
 export interface Address {
   street: string | null; // via
-  streetNumber: string | null; // n-civico
+  streetNumber: number | null; // n-civico
   city: string | null; // comune
   province: string | null; // provincia
   postalCode: string | null; // cap
@@ -2750,10 +2785,10 @@ export interface CompanyIdentification {
   companyName: string | null; // denominazione
   taxCode: string | null; // c-fiscale
   vatNumber: string | null; // partita-iva
-  chamberCode: string | null; // c-cciaa-competente
-  chamberName: string | null; // cciaa-competente
-  chamberAbbreviation: string | null; // cciaa
-  reaNumber: string | null; // n-rea
+  cciaaCode: string | null; // c-cciaa-competente
+  cciaaName: string | null; // cciaa-competente
+  cciaaAbbreviation: string | null; // cciaa
+  reaNumber: number | null; // n-rea
 }
 
 export interface ActivitySummary {
@@ -2824,47 +2859,103 @@ export interface OfficePerson {
   roleAssignments: { roleAssignmentGroup: RoleAssignmentGroup[] }; // atti-conferimento-cariche
 }
 
-export interface AdministrationControl {
-  activeGovernanceForms: {
-    governanceForm: { code: string | null; activeAdministratorsCount: string };
-  };
-}
-
 export interface FinancialSummary {
-  numLocalizations: string | null;
-  numAdministrators: string | null;
-  numAuditors: string | null;
-  numOfficeHolders: string | null;
-  numShareholders: string | null;
-  employeesDate: string | null;
-  numEmployees: string | null;
-  numHeadquartersTransfers: string | null;
-  numShareTransfers: string | null;
   yearlyFilings: {
     startDate: string | null;
-    count: string | null;
+    count: number | null;
   } | null;
+  investedCapital: InvestedCapitalInfo | null;
+  consortiumFund: ConsortiumFundInfo | null;
+  nominalValueInjections: NominalValueInjectionInfo | null;
   shareCapital: ShareCapitalInfo | null;
+  balanceSheetData: BalanceSheetDataInfo | null;
+  numLocalizations: number | null;
+  numAdministrators: number | null;
+  numMayors: number | null;
+  numOfficeHolders: number | null;
+  numShareholders: number | null;
+  numEmployees: number | null;
+  employeesDate: string | null;
+  numHeadquartersTransfers: number | null;
+  numShareTransfers: number | null;
+  flagCorporateHoldings: boolean | null;
+  flagHistoricCorporateHoldings: boolean | null;
+  flagControlledCompany: boolean | null;
+  numOpenProtocols: number | null;
+}
+
+export interface BalanceSheetDataInfo {
+  year: string | null;
+  profitLoss: number | null;
+  revenue: number | null;
+  productionValue: number | null;
+}
+
+export interface InvestedCapitalInfo {
+  currencyCode: string | null;
+  currencyName: string | null;
+  amount: number | null;
+  amountInEuro: number | null;
+}
+
+export interface NominalValueInjectionInfo {
+  currencyCode: string | null;
+  currencyName: string | null;
+  amount: number | null;
+  amountInEuro: number | null;
+}
+
+export interface ConsortiumFundInfo {
+  descriptions: {
+    description: string | null;
+  } | null;
+  currencyCode: string | null;
+  currencyName: string | null;
+  amount: number | null;
+  amountInEuro: number | null;
 }
 
 export interface ShareCapitalInfo {
   currencyCode: string | null;
   currencyName: string | null;
-  amount: string | null;
-  subscribedAmount: string | null;
-  paidAmount: string | null;
+  amount: number | null;
+  deliberatedAmount: number | null;
+  subscribedAmount: number | null;
+  paidAmount: number | null;
+  numShares: number | null;
+  numQuotas: number | null;
+  conferimentTypes: {
+    code: string | null;
+    description: string | null;
+  } | null;
 }
 
 export interface HeadquartersInfo {
+  phoneNumber: string | null;
+  faxNumber: string | null;
+  telefaxNumber: string | null;
   certifiedEmail: string | null;
+  website: string | null;
+  email: string | null;
+  legalMail: string | null;
+  otherHeadquarterFunctions: string | null;
   reaRegistration: {
     reaNumber: string | null;
   } | null;
   vatNumber: string | null;
+  legalEntityIdentifierCode: {
+    code: string | null;
+    sourceCode: string | null;
+    source: string | null;
+    expirationDate: string | null;
+  } | null;
+  companySign: string | null;
+  euid: EuropeanUniqueIdentifier | null;
   transferOrigin: {
     chamberCode: string | null;
     reaNumber: string | null;
   } | null;
+  supplementaryInformation: SupplementaryInfo | null;
 }
 
 export interface IncorporationActDetails {
@@ -2931,8 +3022,8 @@ export interface EmployeeInfo {
 
 export interface EmployeeMonthlyDetail {
   monthCode: string | null;
-  numEmployees: string | null;
-  numSelfEmployed: string | null;
+  numEmployees: number | null;
+  numSelfEmployed: number | null;
   total: string | null;
 }
 
@@ -2949,10 +3040,6 @@ export interface MunicipalityEmployeeInfo {
   } | null;
 }
 
-export interface WorkforceHistory {
-  entries: EmployeeInfo[];
-}
-
 export interface LicensesAndRegisters {
   environmentalDeclarations: EnvironmentalDeclaration[];
 }
@@ -2963,7 +3050,7 @@ export interface EnvironmentalDeclaration {
   sourceCode: string | null;
   source: string | null;
   provinceSection: string | null;
-  number: string | null;
+  number: number | null;
   extraFields: Record<string, unknown>;
 }
 
@@ -3006,7 +3093,7 @@ export interface ShareholdersList {
     deedDate: string | null;
     chamberCode: string | null;
     year: string | null;
-    number: string | null;
+    number: number | null;
     protocolDate: string | null;
     filingDate: string | null;
   } | null;
@@ -3106,20 +3193,25 @@ export interface BylawsInfo {
 }
 
 export interface GovernanceAndControl {
+  shareholders?: {
+    shareholders: string | null;
+    generalParterns: string | null;
+    administrators: string | null;
+  }
   administrationSystem: {
     code: string | null;
     text: string | null;
   } | null;
-  administrativeForms: unknown[];
-  activeAdministrativeForms: unknown[];
+  accountingControlBody: AccountingControlBody | null;
+  administrativeForms: GovernanceForms | null;
+  activeAdministrativeForms: ActiveGovernanceForms | null;
+  controlBodiesInCharge: ControlBodiesInCharge | null;
+  auditingBoard: AuditingBoard | null;
+  activeAuditingBoard: ActiveAuditingBoard | null;
 }
 
 export interface FinancialAssetInfo {
   shareCapital: ShareCapitalInfo | null;
-}
-
-export interface InsolvencyProcedures {
-  hasInfo: string | null;
 }
 
 export interface MergersSplitsTransfers {

@@ -1,5 +1,6 @@
 export type { AIWSConfig } from 'src/types/aiws.types';
-export type { CompanySummary } from 'src/types/companies-register/company.types';
+export type { CompanySummary, CompanyBalanceSheet, CompanyBalanceSheetValues } from 'src/types/companies-register/company.types';
+export type { CompanyRegistryBlocksSummary } from 'src/types/companies-register/administrative-data-company.types';
 export type {
   PersonSummary,
   PersonCorporateRole,

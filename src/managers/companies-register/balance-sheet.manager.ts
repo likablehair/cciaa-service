@@ -1,21 +1,259 @@
 import { XMLParser } from 'fast-xml-parser';
-import { CompanyBalanceSheet } from 'src/types/companies-register/company.types';
+import {
+  BalanceSheetContextInfo,
+  BalanceSheetFactValue,
+  balanceSheetValuesXMLText,
+  CompanyBalanceSheet,
+  CompanyBalanceSheetValues,
+} from 'src/types/companies-register/company.types';
 import {
   AIWSError,
   AIWS_ERROR_CODE,
   AIWS_ERROR_MESSAGES,
   pushAIWSError,
 } from 'src/types/aiws-error.type';
+import {
+  BilancioXbrlData,
+  ParsedAIWSResponse,
+  XbrlDocument,
+  XbrlFact,
+} from 'src/types/aiws.types';
 
 export class BalanceSheetManager {
+  private readonly preferredCurrentYearContexts = ['cntxCorr_d', 'cntxCorr'];
+
+  private toArray<T>(value: T | T[] | undefined): T[] {
+    if (!value) return [];
+    return Array.isArray(value) ? value : [value];
+  }
+
+  private toNumber(value: string | number | null | undefined): number | null {
+    if (value === null || value === undefined || value === '') return null;
+    if (typeof value === 'number') {
+      return Number.isFinite(value) ? value : null;
+    }
+
+    const normalized = value
+      .trim()
+      .replace(/\s+/g, '')
+      // Remove thousand separators in formats like 1.234.567,89.
+      .replace(/\.(?=\d{3}(?:\D|$))/g, '')
+      .replace(',', '.');
+
+    if (!normalized) return null;
+
+    const numeric = Number(normalized);
+    return Number.isNaN(numeric) ? null : numeric;
+  }
+
+  private getXmlTextValue(value: XbrlFact | string | undefined): string | null {
+    if (typeof value === 'string') return value;
+    if (!value) return null;
+    return value['#text'] ?? null;
+  }
+
+  private isLikelyFactQName(key: string): key is `${string}:${string}` {
+    if (!key.includes(':')) return false;
+    if (key === 'link:schemaRef') return false;
+    if (key.startsWith('xmlns:')) return false;
+    if (key.startsWith('xlink:')) return false;
+    if (key.startsWith('xml:')) return false;
+    return true;
+  }
+
+  private hasFactPayload(value: unknown): boolean {
+    const first = Array.isArray(value) ? value[0] : value;
+    if (!first) return false;
+
+    if (typeof first === 'string') return true;
+    if (typeof first !== 'object') return false;
+
+    const candidate = first as Record<string, unknown>;
+    return (
+      typeof candidate['#text'] === 'string' ||
+      typeof candidate._text === 'string' ||
+      typeof candidate.contextRef === 'string' ||
+      typeof candidate.unitRef === 'string'
+    );
+  }
+
+  private mapFactValue(node: XbrlFact | string): BalanceSheetFactValue {
+    if (typeof node === 'string') {
+      return {
+        contextRef: null,
+        unitRef: null,
+        decimals: null,
+        valueRaw: node,
+        valueNumber: this.toNumber(node),
+      };
+    }
+
+    const valueRaw = this.getXmlTextValue(node);
+
+    return {
+      contextRef: node.contextRef ?? null,
+      unitRef: node.unitRef ?? null,
+      decimals: node.decimals ?? null,
+      valueRaw,
+      valueNumber: this.toNumber(valueRaw),
+    };
+  }
+
+  private mapContexts(xbrl: XbrlDocument): Record<string, BalanceSheetContextInfo> {
+    const contexts = this.toArray(xbrl.context);
+
+    return contexts.reduce<Record<string, BalanceSheetContextInfo>>((acc, context) => {
+      const contextId = context?.id;
+      if (!contextId) return acc;
+
+      const entityIdentifier = context.entity?.identifier;
+
+      acc[contextId] = {
+        entityIdentifier: entityIdentifier?.['#text'] ?? null,
+        entityIdentifierScheme: entityIdentifier?.scheme ?? null,
+        instant: context.period?.instant ?? null,
+        startDate: context.period?.startDate ?? null,
+        endDate: context.period?.endDate ?? null,
+        scenario: context.scenario?.['itcc-ci-abb:scen'] ?? null,
+      };
+
+      return acc;
+    }, {});
+  }
+
+  private mapAllFacts(
+    xbrl: XbrlDocument,
+  ): Record<string, BalanceSheetFactValue[]> {
+    const factsByQName: Record<string, BalanceSheetFactValue[]> = {};
+
+    for (const [key, rawValue] of Object.entries(xbrl)) {
+      if (!this.isLikelyFactQName(key)) continue;
+      if (!this.hasFactPayload(rawValue)) continue;
+
+      const factNodes = this.toArray(rawValue as XbrlFact | XbrlFact[] | string | string[]);
+      factsByQName[key] = factNodes.map((node) =>
+        this.mapFactValue(node as XbrlFact | string),
+      );
+    }
+
+    return factsByQName;
+  }
+
+  private normalizeContextYear(contextInfo?: BalanceSheetContextInfo): string | null {
+    if (!contextInfo) return null;
+
+    const periodCandidate = contextInfo.instant ?? contextInfo.endDate ?? contextInfo.startDate;
+    if (!periodCandidate) return null;
+
+    const yearMatch = periodCandidate.match(/(\d{4})/);
+    return yearMatch?.[1] ?? null;
+  }
+
+  private getEntryPriority(entry: BalanceSheetFactValue): number {
+    let score = 0;
+
+    if (entry.contextRef && this.preferredCurrentYearContexts.includes(entry.contextRef)) {
+      score += 100;
+    }
+
+    if (entry.valueNumber !== null) score += 20;
+    if (entry.decimals !== null) score += 5;
+
+    return score;
+  }
+
+  private mapFactNameMap(
+    factsByQName: Record<string, BalanceSheetFactValue[]>,
+  ): Record<string, keyof CompanyBalanceSheetValues> {
+    return Object.keys(factsByQName).reduce<
+      Record<string, keyof CompanyBalanceSheetValues>
+    >((acc, factQName) => {
+      const mappedName =
+        balanceSheetValuesXMLText[
+          factQName as keyof typeof balanceSheetValuesXMLText
+        ];
+
+      if (mappedName) {
+        acc[factQName] = mappedName;
+      }
+
+      return acc;
+    }, {});
+  }
+
+  private mapBalanceSheetByYear(
+    factsByQName: Record<string, BalanceSheetFactValue[]>,
+    contexts: Record<string, BalanceSheetContextInfo>,
+    factNameMap: Record<string, keyof CompanyBalanceSheetValues>,
+  ): Record<string, CompanyBalanceSheetValues> {
+    const byYear: Record<string, CompanyBalanceSheetValues> = {};
+    const scoreByYearAndMetric: Record<string, Record<string, number>> = {};
+
+    for (const [factQName, entries] of Object.entries(factsByQName)) {
+      const englishName =
+        factNameMap[factQName] ??
+        balanceSheetValuesXMLText[
+          factQName as keyof typeof balanceSheetValuesXMLText
+        ];
+
+      if (!englishName) continue;
+
+      for (const entry of entries) {
+        if (entry.valueNumber === null) continue;
+        if (!entry.contextRef) continue;
+
+        const year = this.normalizeContextYear(contexts[entry.contextRef]);
+        if (!year) continue;
+
+        if (!byYear[year]) byYear[year] = {} as CompanyBalanceSheetValues;
+        if (!scoreByYearAndMetric[year]) scoreByYearAndMetric[year] = {};
+
+        const entryScore = this.getEntryPriority(entry);
+        const currentScore = scoreByYearAndMetric[year][englishName] ?? -1;
+
+        if (entryScore >= currentScore) {
+          (byYear[year] as Record<string, number | null>)[englishName] =
+            entry.valueNumber;
+          scoreByYearAndMetric[year][englishName] = entryScore;
+        }
+      }
+    }
+
+    return byYear;
+  }
+
+  private toOrderedBalanceSheetByYear(
+    byYear: Record<string, CompanyBalanceSheetValues>,
+    orderedYears: string[],
+  ): Array<{ year: number; values: CompanyBalanceSheetValues }> {
+    return orderedYears.map((year) => ({
+      year: Number(year),
+      values: byYear[year] ?? {},
+    }));
+  }
+
+  private sortYearsDesc(years: string[]): string[] {
+    return [...years].sort((left, right) => {
+      const leftNumber = Number(left);
+      const rightNumber = Number(right);
+
+      const leftIsNumber = Number.isFinite(leftNumber);
+      const rightIsNumber = Number.isFinite(rightNumber);
+
+      if (leftIsNumber && rightIsNumber) return rightNumber - leftNumber;
+      if (leftIsNumber) return -1;
+      if (rightIsNumber) return 1;
+      return right.localeCompare(left);
+    });
+  }
+
   async getBalanceSheetValues(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    xmlBaseResponse: any,
+    xmlBaseResponse: ParsedAIWSResponse<string>,
     errors: AIWSError,
   ): Promise<CompanyBalanceSheet | null> {
     const base64Xbrl = xmlBaseResponse?.Risposta?.dati;
 
-    if (!base64Xbrl) {
+    if (!base64Xbrl || typeof base64Xbrl !== 'string') {
       pushAIWSError(
         errors,
         AIWS_ERROR_CODE.XBRL_EMPTY,
@@ -43,13 +281,13 @@ export class BalanceSheetManager {
     const xbrlParser = new XMLParser({
       ignoreAttributes: false,
       attributeNamePrefix: '',
+      parseTagValue: false,
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let xbrlJson: any;
+    let xbrlJson: BilancioXbrlData;
 
     try {
-      xbrlJson = xbrlParser.parse(xbrlXml);
+      xbrlJson = xbrlParser.parse(xbrlXml) as BilancioXbrlData;
     } catch (err) {
       console.log(err);
       pushAIWSError(
@@ -73,35 +311,25 @@ export class BalanceSheetManager {
 
     const xbrl = xbrlJson.xbrl;
 
-    const profitNode = this.findByContext(
-      xbrl,
-      'itcc-ci:UtilePerditaEsercizio',
-      'cntxCorr_d',
-    );
+    const contexts = this.mapContexts(xbrl);
+    const factsByQName = this.mapAllFacts(xbrl);
+    const factNameMap = this.mapFactNameMap(factsByQName);
 
-    const revenueNode = this.findByContext(
-      xbrl,
-      'itcc-ci:ValoreProduzioneRicaviVenditePrestazioni',
-      'cntxCorr_d',
+    const balanceSheetByYear = this.mapBalanceSheetByYear(
+      factsByQName,
+      contexts,
+      factNameMap,
+    );
+    const balanceSheetYears = this.sortYearsDesc(
+      Object.keys(balanceSheetByYear),
+    );
+    const orderedBalanceSheetByYear = this.toOrderedBalanceSheetByYear(
+      balanceSheetByYear,
+      balanceSheetYears,
     );
 
     return {
-      companyProfit: profitNode ? Number(profitNode['#text']) : 0,
-      companyRevenue: revenueNode ? Number(revenueNode['#text']) : 0,
+      balanceSheetByYear: orderedBalanceSheetByYear,
     };
-  }
-
-  private findByContext(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    xbrl: any,
-    tagName: string,
-    contextRef: string,
-  ) {
-    const node = xbrl[tagName];
-    if (!node) return null;
-
-    const nodes = Array.isArray(node) ? node : [node];
-
-    return nodes.find((n) => n.contextRef === contextRef) ?? null;
   }
 }

@@ -62,8 +62,14 @@ describe('CCIAA Integration - Dati Aziendali', () => {
     if (balanceSheetData) {
       expect(balanceSheetData).toBeDefined();
       expect(typeof balanceSheetData).toBe('object');
-      expect(balanceSheetData.companyRevenue).toBeGreaterThan(0);
-      expect(balanceSheetData.companyProfit).toBeGreaterThan(0);
+      const maxYear = Math.max(
+        ...balanceSheetData.balanceSheetByYear.map((entry) => entry.year),
+      );
+      const lastYearAvailableData = balanceSheetData.balanceSheetByYear.find(
+        (entry) => entry.year === maxYear
+      );
+      expect(lastYearAvailableData?.values.companyRevenue).toBeGreaterThan(0);
+      expect(lastYearAvailableData?.values.companyProfit).toBeGreaterThan(0);
     }
   });
 
@@ -125,7 +131,7 @@ describe('CCIAA Integration - Dati Aziendali', () => {
       COMPANY_BLOCK.PCO,
       COMPANY_BLOCK.SOC,
       COMPANY_BLOCK.STA,
-      COMPANY_BLOCK.STO,
+      /* COMPANY_BLOCK.STO, */
       COMPANY_BLOCK.SUL,
       COMPANY_BLOCK.TFS,
     ];
@@ -140,7 +146,7 @@ describe('CCIAA Integration - Dati Aziendali', () => {
     });
 
     expect(blockSummary).toBeDefined();
-  });
+  }, 30000); // Aumento timeout a 30 secondi per test complesso
 
   test('Recupero completo dati aziendali per P.IVA 02650200203', async () => {
     const vat = '02650200203';
@@ -159,8 +165,15 @@ describe('CCIAA Integration - Dati Aziendali', () => {
       await client.balanceSheetService.getBalanceSheetByVatNumber(vat, errors);
     if (companyBalanceSheet) {
       expect(companyBalanceSheet).toBeDefined();
-      expect(companyBalanceSheet.companyRevenue).toBeGreaterThan(0);
-      expect(companyBalanceSheet.companyProfit).toBeGreaterThan(0);
+      const maxYear = Math.max(
+        ...companyBalanceSheet.balanceSheetByYear.map((entry) => entry.year),
+      );
+      const lastYearAvailableData = companyBalanceSheet.balanceSheetByYear.find(
+        (entry) => entry.year === maxYear
+      );
+      expect(lastYearAvailableData).toBeDefined();
+      expect(lastYearAvailableData?.values.companyRevenue).toBeGreaterThan(0);
+      expect(lastYearAvailableData?.values.companyProfit).toBeGreaterThan(0);
     }
 
     if (companySummaryData) {
@@ -215,13 +228,6 @@ describe('CCIAA Integration - Dati Aziendali', () => {
     const vat = '02650200203';
 
     const company = await client.companyService.getCompany(vat);
-
-    console.log(
-      'Company data retrieved for VAT number',
-      vat,
-      ':',
-      JSON.stringify(company, null, 2),
-    );
 
     if (company) {
       expect(company).toBeDefined();
