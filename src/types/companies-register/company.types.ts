@@ -115,9 +115,13 @@ export type CompanyBalanceSheetValues = {
   incomeTaxCurrentDeferredAndPrepaidCurrentTaxes: number | null;
   totalIncomeTaxCurrentAndDeferred: number | null;
   companyProfit: number | null;
-  productionCostsPersonnelSeverancePayPensionsAndOtherPersonnelCosts: number | null;
-  productionCostsDepreciationAmortizationIntangibleTangibleAndOtherAssetWritedowns: number | null;
-}
+  productionCostsPersonnelSeverancePayPensionsAndOtherPersonnelCosts:
+    | number
+    | null;
+  productionCostsDepreciationAmortizationIntangibleTangibleAndOtherAssetWritedowns:
+    | number
+    | null;
+};
 
 export type CompanyBalanceSheet = {
   balanceSheetByYear: Array<{
@@ -130,16 +134,20 @@ export const balanceSheetValuesXMLText = {
   'itcc-ci:DatiAnagraficiDenominazione': 'personalDataDesignation',
   'itcc-ci:DatiAnagraficiSede': 'personalDataHeadquarters',
   'itcc-ci:DatiAnagraficiCapitaleSociale': 'personalDataShareCapital',
-  'itcc-ci:DatiAnagraficiCapitaleSocialeInteramenteVersato': 'personalDataFullyPaidupShareCapital',
+  'itcc-ci:DatiAnagraficiCapitaleSocialeInteramenteVersato':
+    'personalDataFullyPaidupShareCapital',
   'itcc-ci:DatiAnagraficiCodiceCciaa': 'personalDataCciaa',
   'itcc-ci:DatiAnagraficiPartitaIva': 'personalDataVatNumber',
   'itcc-ci:DatiAnagraficiCodiceFiscale': 'personalDataFiscalCode',
   'itcc-ci:DatiAnagraficiNumeroRea': 'personalDataReaNumber',
   'itcc-ci:DatiAnagraficiFormaGiuridica': 'personalDataLegalForm',
-  'itcc-ci:DatiAnagraficiSettoreAttivitaPrevalenteAteco': 'personalDataMainActivityAteco',
+  'itcc-ci:DatiAnagraficiSettoreAttivitaPrevalenteAteco':
+    'personalDataMainActivityAteco',
   'itcc-ci:DatiAnagraficiSocietaLiquidazione': 'personalDataCompanyLiquidation',
-  'itcc-ci:DatiAnagraficiSocietaSocioUnico': 'personalDataCompanySingleShareholder',
-  'itcc-ci:DatiAnagraficiSocietaSottopostaAltruiAttivitaDirezioneCoordinamento': 'personalDataCompanySubpostedToDirectionAndCoordination',
+  'itcc-ci:DatiAnagraficiSocietaSocioUnico':
+    'personalDataCompanySingleShareholder',
+  'itcc-ci:DatiAnagraficiSocietaSottopostaAltruiAttivitaDirezioneCoordinamento':
+    'personalDataCompanySubpostedToDirectionAndCoordination',
   'itcc-ci:DatiAnagraficiAppartenenzaGruppo': 'personalDataGroupAffiliation',
   'itcc-ci:TotaleImmobilizzazioniImmateriali': 'totalFixedAssetsIntangible',
   'itcc-ci:TotaleImmobilizzazioniMateriali': 'totalFixedAssetsTangible',
@@ -151,43 +159,67 @@ export const balanceSheetValuesXMLText = {
   'itcc-ci:TotaleAttivo': 'totalAssets',
   'itcc-ci:PatrimonioNettoCapitale': 'equityNetCapital',
   'itcc-ci:PatrimonioNettoRiservaLegale': 'equityNetLegalReserves',
-  'itcc-ci:PatrimonioNettoAltreRiserveDistintamenteIndicateTotaleAltreRiserve': 'equityOtherReservesSeparatelyDisclosedTotalOtherReserves',
+  'itcc-ci:PatrimonioNettoAltreRiserveDistintamenteIndicateTotaleAltreRiserve':
+    'equityOtherReservesSeparatelyDisclosedTotalOtherReserves',
   'itcc-ci:PatrimonioNettoUtilePerditaEsercizio': 'equityNetIncomeLoss',
   'itcc-ci:TotalePatrimonioNetto': 'totalEquity',
   'itcc-ci:TrattamentoFineRapportoLavoroSubordinato': 'employeeSeverancePay',
   'itcc-ci:TotaleDebiti': 'totalPayables',
   'itcc-ci:PassivoRateiRisconti': 'liabilitiesAccrualsAndDeferredIncome',
   'itcc-ci:TotalePassivo': 'totalLiabilitiesAndEquity',
-  'itcc-ci:TotaleCreditiVersoSociVersamentiAncoraDovuti': 'totalReceivablesFromShareholdersForUnpaidCapital',
-  'itcc-ci:CreditiEsigibiliEntroEsercizioSuccessivo': 'receivablesDueWithinNextFiscalYear',
-  'itcc-ci:DebitiEsigibiliEntroEsercizioSuccessivo': 'payablesDueWithinNextFiscalYear',
+  'itcc-ci:TotaleCreditiVersoSociVersamentiAncoraDovuti':
+    'totalReceivablesFromShareholdersForUnpaidCapital',
+  'itcc-ci:CreditiEsigibiliEntroEsercizioSuccessivo':
+    'receivablesDueWithinNextFiscalYear',
+  'itcc-ci:DebitiEsigibiliEntroEsercizioSuccessivo':
+    'payablesDueWithinNextFiscalYear',
   'itcc-ci:ValoreProduzioneRicaviVenditePrestazioni': 'companyRevenue',
-  'itcc-ci:ValoreProduzioneAltriRicaviProventiAltri': 'productionValueOtherRevenuesAndIncomeOther',
-  'itcc-ci:ValoreProduzioneAltriRicaviProventiTotaleAltriRicaviProventi': 'productionValueTotalOtherRevenuesAndIncome',
+  'itcc-ci:ValoreProduzioneAltriRicaviProventiAltri':
+    'productionValueOtherRevenuesAndIncomeOther',
+  'itcc-ci:ValoreProduzioneAltriRicaviProventiTotaleAltriRicaviProventi':
+    'productionValueTotalOtherRevenuesAndIncome',
   'itcc-ci:TotaleValoreProduzione': 'totalProductionValue',
-  'itcc-ci:CostiProduzioneMateriePrimeSussidiarieConsumoMerci': 'productionCostsRawMaterialsSubsidiaryAndGoods',
+  'itcc-ci:CostiProduzioneMateriePrimeSussidiarieConsumoMerci':
+    'productionCostsRawMaterialsSubsidiaryAndGoods',
   'itcc-ci:CostiProduzioneServizi': 'productionCostsServices',
-  'itcc-ci:CostiProduzioneGodimentoBeniTerzi': 'productionCostsLeaseAndRentalOfThirdPartyAssets',
-  'itcc-ci:CostiProduzionePersonaleSalariStipendi': 'productionCostsPersonnelWagesAndSalaries',
-  'itcc-ci:CostiProduzionePersonaleOneriSociali': 'productionCostsPersonnelSocialCharges',
-  'itcc-ci:CostiProduzionePersonaleTrattamentoFineRapporto': 'productionCostsPersonnelSeverancePay',
-  'itcc-ci:CostiProduzionePersonaleAltriCosti': 'productionCostsPersonnelOtherCosts',
-  'itcc-ci:CostiProduzionePersonaleTotaleCostiPersonale': 'productionCostsTotalPersonnelCosts',
-  'itcc-ci:CostiProduzioneAmmortamentiSvalutazioniAmmortamentoImmobilizzazioniImmateriali': 'productionCostsDepreciationAmortizationIntangibleAssets',
-  'itcc-ci:CostiProduzioneAmmortamentiSvalutazioniAmmortamentoImmobilizzazioniMateriali': 'productionCostsDepreciationTangibleAssets',
-  'itcc-ci:CostiProduzioneAmmortamentiSvalutazioniTotaleAmmortamentiSvalutazioni': 'productionCostsTotalDepreciationAndWritedowns',
-  'itcc-ci:CostiProduzioneOneriDiversiGestione': 'productionCostsMiscellaneousOperatingExpenses',
+  'itcc-ci:CostiProduzioneGodimentoBeniTerzi':
+    'productionCostsLeaseAndRentalOfThirdPartyAssets',
+  'itcc-ci:CostiProduzionePersonaleSalariStipendi':
+    'productionCostsPersonnelWagesAndSalaries',
+  'itcc-ci:CostiProduzionePersonaleOneriSociali':
+    'productionCostsPersonnelSocialCharges',
+  'itcc-ci:CostiProduzionePersonaleTrattamentoFineRapporto':
+    'productionCostsPersonnelSeverancePay',
+  'itcc-ci:CostiProduzionePersonaleAltriCosti':
+    'productionCostsPersonnelOtherCosts',
+  'itcc-ci:CostiProduzionePersonaleTotaleCostiPersonale':
+    'productionCostsTotalPersonnelCosts',
+  'itcc-ci:CostiProduzioneAmmortamentiSvalutazioniAmmortamentoImmobilizzazioniImmateriali':
+    'productionCostsDepreciationAmortizationIntangibleAssets',
+  'itcc-ci:CostiProduzioneAmmortamentiSvalutazioniAmmortamentoImmobilizzazioniMateriali':
+    'productionCostsDepreciationTangibleAssets',
+  'itcc-ci:CostiProduzioneAmmortamentiSvalutazioniTotaleAmmortamentiSvalutazioni':
+    'productionCostsTotalDepreciationAndWritedowns',
+  'itcc-ci:CostiProduzioneOneriDiversiGestione':
+    'productionCostsMiscellaneousOperatingExpenses',
   'itcc-ci:TotaleCostiProduzione': 'totalProductionCosts',
-  'itcc-ci:DifferenzaValoreCostiProduzione': 'differenceBetweenProductionValueAndCosts',
-  'itcc-ci:ProventiOneriFinanziariInteressiAltriOneriFinanziariAltri': 'financialIncomeExpenseInterestAndOtherFinancialChargesOther',
-  'itcc-ci:ProventiOneriFinanziariInteressiAltriOneriFinanziariTotaleInteressiAltriOneriFinanziari': 'financialIncomeExpenseTotalInterestAndOtherFinancialCharges',
+  'itcc-ci:DifferenzaValoreCostiProduzione':
+    'differenceBetweenProductionValueAndCosts',
+  'itcc-ci:ProventiOneriFinanziariInteressiAltriOneriFinanziariAltri':
+    'financialIncomeExpenseInterestAndOtherFinancialChargesOther',
+  'itcc-ci:ProventiOneriFinanziariInteressiAltriOneriFinanziariTotaleInteressiAltriOneriFinanziari':
+    'financialIncomeExpenseTotalInterestAndOtherFinancialCharges',
   'itcc-ci:TotaleProventiOneriFinanziari': 'totalFinancialIncomeAndExpense',
   'itcc-ci:RisultatoPrimaImposte': 'resultBeforeTaxes',
-  'itcc-ci:ImposteRedditoEsercizioCorrentiDifferiteAnticipateImposteCorrenti': 'incomeTaxCurrentDeferredAndPrepaidCurrentTaxes',
-  'itcc-ci:ImposteRedditoEsercizioCorrentiDifferiteAnticipateTotaleImposteRedditoEsercizioCorrentiDifferiteAnticipate': 'totalIncomeTaxCurrentAndDeferred',
+  'itcc-ci:ImposteRedditoEsercizioCorrentiDifferiteAnticipateImposteCorrenti':
+    'incomeTaxCurrentDeferredAndPrepaidCurrentTaxes',
+  'itcc-ci:ImposteRedditoEsercizioCorrentiDifferiteAnticipateTotaleImposteRedditoEsercizioCorrentiDifferiteAnticipate':
+    'totalIncomeTaxCurrentAndDeferred',
   'itcc-ci:UtilePerditaEsercizio': 'companyProfit',
-  'itcc-ci:CostiProduzionePersonaleTrattamentoFineRapportoTrattamentoQuiescenzaAltriCostiPersonale': 'productionCostsPersonnelSeverancePayPensionsAndOtherPersonnelCosts',
-  'itcc-ci:CostiProduzioneAmmortamentiSvalutazioniAmmortamentoImmobilizzazioniImmaterialiMaterialiAltreSvalutazioniImmobilizzazioni': 'productionCostsDepreciationAmortizationIntangibleTangibleAndOtherAssetWritedowns'
+  'itcc-ci:CostiProduzionePersonaleTrattamentoFineRapportoTrattamentoQuiescenzaAltriCostiPersonale':
+    'productionCostsPersonnelSeverancePayPensionsAndOtherPersonnelCosts',
+  'itcc-ci:CostiProduzioneAmmortamentiSvalutazioniAmmortamentoImmobilizzazioniImmaterialiMaterialiAltreSvalutazioniImmobilizzazioni':
+    'productionCostsDepreciationAmortizationIntangibleTangibleAndOtherAssetWritedowns',
 } as const;
 
 export type BalanceSheetContextInfo = {

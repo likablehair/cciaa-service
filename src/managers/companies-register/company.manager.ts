@@ -297,7 +297,8 @@ export class CompanyManager {
 
     const financialSummaryRaw = blocchiImpresa['sintesi-cifre-impresa'];
     const headquartersInfoRaw = blocchiImpresa['info-sede'];
-    const cancellationOrTransferRaw = blocchiImpresa['cancellazione-trasferimento'];
+    const cancellationOrTransferRaw =
+      blocchiImpresa['cancellazione-trasferimento'];
     const incorporationActRaw = blocchiImpresa['estremi-atto-costituzione'];
     const activityInfoRaw = blocchiImpresa['info-attivita'];
     const activityHistoryRaw = blocchiImpresa['storia-attivita'];
@@ -307,7 +308,8 @@ export class CompanyManager {
     const listedCompanyInfoRaw = blocchiImpresa['societa-quotata'];
     const shareholdersListRaw = blocchiImpresa['elenco-soci'];
     const shareholdersTableRaw = blocchiImpresa['tabella-elenco-soci'];
-    const shareholdersBookAnnotationsRaw = blocchiImpresa['annotazioni-libro-soci'];
+    const shareholdersBookAnnotationsRaw =
+      blocchiImpresa['annotazioni-libro-soci'];
     const controllingSubjectsPracticesRaw =
       blocchiImpresa['pratiche-soggetti-controllanti'];
     const subsidiaryCompaniesTableRaw =
@@ -471,14 +473,12 @@ export class CompanyManager {
             holders: this.toArray(holders.titolare).map((holder: any) => ({
               personalInfo: holder['anagrafica-titolare']
                 ? {
-                    typeCode:
-                      holder['anagrafica-titolare']?.['c-tipo'] ?? null,
+                    typeCode: holder['anagrafica-titolare']?.['c-tipo'] ?? null,
                     type: holder['anagrafica-titolare']?.tipo ?? null,
                     taxCode:
                       holder['anagrafica-titolare']?.['c-fiscale'] ?? null,
                     citizenshipCode:
-                      holder['anagrafica-titolare']?.['c-cittadinanza'] ??
-                      null,
+                      holder['anagrafica-titolare']?.['c-cittadinanza'] ?? null,
                     citizenship:
                       holder['anagrafica-titolare']?.cittadinanza ?? null,
                     name: holder['anagrafica-titolare']?.denominazione ?? null,
@@ -532,7 +532,9 @@ export class CompanyManager {
               participationRight: holder['diritto-partecipazione']
                 ? {
                     participationRoles: this.toArray(
-                      holder['diritto-partecipazione']?.['ruolo-partecipazione'],
+                      holder['diritto-partecipazione']?.[
+                        'ruolo-partecipazione'
+                      ],
                     ).map((role) => ({
                       description: this.getXmlText(role) ?? null,
                       code: role.c ?? null,
@@ -626,7 +628,8 @@ export class CompanyManager {
       ),
       averageValues: entry['valori-medi']
         ? {
-            averageEmployees: entry['valori-medi']['valore-medio-dipendenti'] ?? null,
+            averageEmployees:
+              entry['valori-medi']['valore-medio-dipendenti'] ?? null,
             averageSelfEmployed:
               entry['valori-medi']['valore-medio-indipendenti'] ?? null,
             averageTotal: entry['valori-medi']['valore-medio-totale'] ?? null,
@@ -634,7 +637,9 @@ export class CompanyManager {
               entry['valori-medi']['valore-medio-collaboratori'] ?? null,
           }
         : null,
-      collaborators: entry.collaboratori ? { monthlyDetails: [], averageValues: null } : null,
+      collaborators: entry.collaboratori
+        ? { monthlyDetails: [], averageValues: null }
+        : null,
       employeeDistribution: entry['distribuzione-dipendenti']
         ? {
             contractDistribution: entry['distribuzione-dipendenti']?.[
@@ -655,7 +660,8 @@ export class CompanyManager {
                       numSelfEmployed: this.toNumber(month['n-indipendenti']),
                       total: this.toNumber(month['n-totale']),
                       numCollaborators: this.toNumber(month['n-collaboratori']),
-                      employeePercentage: month['percentuale-dipendenti'] ?? null,
+                      employeePercentage:
+                        month['percentuale-dipendenti'] ?? null,
                       numNonAgriculturalEmployees: this.toNumber(
                         month['n-dip-no-agricoli'],
                       ),
@@ -682,7 +688,8 @@ export class CompanyManager {
                       numSelfEmployed: this.toNumber(month['n-indipendenti']),
                       total: this.toNumber(month['n-totale']),
                       numCollaborators: this.toNumber(month['n-collaboratori']),
-                      employeePercentage: month['percentuale-dipendenti'] ?? null,
+                      employeePercentage:
+                        month['percentuale-dipendenti'] ?? null,
                       numNonAgriculturalEmployees: this.toNumber(
                         month['n-dip-no-agricoli'],
                       ),
@@ -709,7 +716,8 @@ export class CompanyManager {
                       numSelfEmployed: this.toNumber(month['n-indipendenti']),
                       total: this.toNumber(month['n-totale']),
                       numCollaborators: this.toNumber(month['n-collaboratori']),
-                      employeePercentage: month['percentuale-dipendenti'] ?? null,
+                      employeePercentage:
+                        month['percentuale-dipendenti'] ?? null,
                       numNonAgriculturalEmployees: this.toNumber(
                         month['n-dip-no-agricoli'],
                       ),
@@ -834,25 +842,31 @@ export class CompanyManager {
       },
       financialSummary: financialSummaryRaw
         ? {
-            numLocalizations: financialSummaryRaw['n-localizzazioni'] != undefined
-              ? Number(financialSummaryRaw['n-localizzazioni'])
-              : null,
-            numAdministrators: financialSummaryRaw['n-amministratori'] != undefined
-              ? Number(financialSummaryRaw['n-amministratori'])
-              : null,
-            numMayors: financialSummaryRaw['n-sindaci'] != undefined
-              ? Number(financialSummaryRaw['n-sindaci'])
-              : null,
-            numOfficeHolders: financialSummaryRaw['n-titolari-cariche'] != undefined
-              ? Number(financialSummaryRaw['n-titolari-cariche'])
-              : null,
-            numShareholders: financialSummaryRaw['n-soci'] != undefined
-              ? Number(financialSummaryRaw['n-soci'])
-              : null,
+            numLocalizations:
+              financialSummaryRaw['n-localizzazioni'] != undefined
+                ? Number(financialSummaryRaw['n-localizzazioni'])
+                : null,
+            numAdministrators:
+              financialSummaryRaw['n-amministratori'] != undefined
+                ? Number(financialSummaryRaw['n-amministratori'])
+                : null,
+            numMayors:
+              financialSummaryRaw['n-sindaci'] != undefined
+                ? Number(financialSummaryRaw['n-sindaci'])
+                : null,
+            numOfficeHolders:
+              financialSummaryRaw['n-titolari-cariche'] != undefined
+                ? Number(financialSummaryRaw['n-titolari-cariche'])
+                : null,
+            numShareholders:
+              financialSummaryRaw['n-soci'] != undefined
+                ? Number(financialSummaryRaw['n-soci'])
+                : null,
             employeesDate: financialSummaryRaw['dt-addetti'] ?? null,
-            numEmployees: financialSummaryRaw['n-addetti'] != undefined
-              ? Number(financialSummaryRaw['n-addetti'])
-              : null,
+            numEmployees:
+              financialSummaryRaw['n-addetti'] != undefined
+                ? Number(financialSummaryRaw['n-addetti'])
+                : null,
             numHeadquartersTransfers:
               financialSummaryRaw['n-trasferimenti-sede'] != undefined
                 ? Number(financialSummaryRaw['n-trasferimenti-sede'])
@@ -865,9 +879,10 @@ export class CompanyManager {
               ? {
                   startDate:
                     financialSummaryRaw['pratiche-anno']?.['dt-inizio'] ?? null,
-                  count: financialSummaryRaw['pratiche-anno']?.n != undefined
-                    ? Number(financialSummaryRaw['pratiche-anno'].n)
-                    : null,
+                  count:
+                    financialSummaryRaw['pratiche-anno']?.n != undefined
+                      ? Number(financialSummaryRaw['pratiche-anno'].n)
+                      : null,
                 }
               : null,
             shareCapital: this.mapShareCapitalInfo(
@@ -924,24 +939,23 @@ export class CompanyManager {
                   ),
                 }
               : null,
-            flagControlledCompany: this.toYesNoFlag(
-              financialSummaryRaw['f-controllata'],
-            ) ?? null,
-            flagCorporateHoldings: this.toYesNoFlag(
-              financialSummaryRaw['f-partecipazioni'],
-            ) ?? null,
-            flagHistoricCorporateHoldings: this.toYesNoFlag(
-              financialSummaryRaw['f-partecipazioni-sto'],
-            ) ?? null,
+            flagControlledCompany:
+              this.toYesNoFlag(financialSummaryRaw['f-controllata']) ?? null,
+            flagCorporateHoldings:
+              this.toYesNoFlag(financialSummaryRaw['f-partecipazioni']) ?? null,
+            flagHistoricCorporateHoldings:
+              this.toYesNoFlag(financialSummaryRaw['f-partecipazioni-sto']) ??
+              null,
             investedCapital: this.mapAmountInfo(
               financialSummaryRaw['capitale-investito'],
             ),
             nominalValueInjections: this.mapAmountInfo(
               financialSummaryRaw['valore-nominale-conferimenti'],
             ),
-            numOpenProtocols: financialSummaryRaw['n-protocolli-aperti'] != undefined
-              ? Number(financialSummaryRaw['n-protocolli-aperti'])
-              : null,
+            numOpenProtocols:
+              financialSummaryRaw['n-protocolli-aperti'] != undefined
+                ? Number(financialSummaryRaw['n-protocolli-aperti'])
+                : null,
           }
         : null,
       headquartersInfo: headquartersInfoRaw
@@ -983,10 +997,9 @@ export class CompanyManager {
                   registerCode:
                     headquartersInfoRaw.euid?.['c-registro'] ?? null,
                   register: headquartersInfoRaw.euid?.registro ?? null,
-                  registrationNumber:
-                    this.toNumber(
-                      headquartersInfoRaw.euid?.['n-registrazione'],
-                    ),
+                  registrationNumber: this.toNumber(
+                    headquartersInfoRaw.euid?.['n-registrazione'],
+                  ),
                   legalFormCode:
                     headquartersInfoRaw.euid?.['c-forma-giuridica'] ?? null,
                   legalForm:
@@ -1005,100 +1018,211 @@ export class CompanyManager {
                 }
               : null,
             supplementaryInformation: {
-              genericInfo: headquartersInfoRaw['informazioni-supplementari']?.['info-generiche'] ?? null,
-              jointPowers: headquartersInfoRaw['informazioni-supplementari']?.['poteri-congiunti'] ?? null,
-              locationInfo: headquartersInfoRaw['informazioni-supplementari']?.['info-localizzazione'] ?? null,
-              registryInfo: headquartersInfoRaw['informazioni-supplementari']?.['info-visura'] ?? null,
+              genericInfo:
+                headquartersInfoRaw['informazioni-supplementari']?.[
+                  'info-generiche'
+                ] ?? null,
+              jointPowers:
+                headquartersInfoRaw['informazioni-supplementari']?.[
+                  'poteri-congiunti'
+                ] ?? null,
+              locationInfo:
+                headquartersInfoRaw['informazioni-supplementari']?.[
+                  'info-localizzazione'
+                ] ?? null,
+              registryInfo:
+                headquartersInfoRaw['informazioni-supplementari']?.[
+                  'info-visura'
+                ] ?? null,
             },
           }
         : null,
       cancellationOrTransfer: {
         activeLocalUnitTransfer: {
-          reason:  cancellationOrTransferRaw?.['trasferimento-sede-ul-attiva']?.causale ?? null,
-          date: cancellationOrTransferRaw?.['trasferimento-sede-ul-attiva']?.dt ?? null,
-          reasonCode: cancellationOrTransferRaw?.['trasferimento-sede-ul-attiva']?.['c-causale'] ?? null,
+          reason:
+            cancellationOrTransferRaw?.['trasferimento-sede-ul-attiva']
+              ?.causale ?? null,
+          date:
+            cancellationOrTransferRaw?.['trasferimento-sede-ul-attiva']?.dt ??
+            null,
+          reasonCode:
+            cancellationOrTransferRaw?.['trasferimento-sede-ul-attiva']?.[
+              'c-causale'
+            ] ?? null,
         },
         cancellation: {
           reason: cancellationOrTransferRaw?.cancellazione?.causale ?? null,
-          reasonCode: cancellationOrTransferRaw?.cancellazione?.['c-causale'] ?? null,
-          activityCessationDate: cancellationOrTransferRaw?.cancellazione?.['dt-cessazione-attivita'] ?? null,
-          applicationDate: cancellationOrTransferRaw?.cancellazione?.['dt-domanda'] ?? null,
-          cancellationDate: cancellationOrTransferRaw?.cancellazione?.['dt-cancellazione'] ?? null,
-          cessationDate: cancellationOrTransferRaw?.cancellazione?.['dt-cessazione'] ?? null,
-          cessationInfo: cancellationOrTransferRaw?.cancellazione?.['info-cessazione'] ?? null,
+          reasonCode:
+            cancellationOrTransferRaw?.cancellazione?.['c-causale'] ?? null,
+          activityCessationDate:
+            cancellationOrTransferRaw?.cancellazione?.[
+              'dt-cessazione-attivita'
+            ] ?? null,
+          applicationDate:
+            cancellationOrTransferRaw?.cancellazione?.['dt-domanda'] ?? null,
+          cancellationDate:
+            cancellationOrTransferRaw?.cancellazione?.['dt-cancellazione'] ??
+            null,
+          cessationDate:
+            cancellationOrTransferRaw?.cancellazione?.['dt-cessazione'] ?? null,
+          cessationInfo:
+            cancellationOrTransferRaw?.cancellazione?.['info-cessazione'] ??
+            null,
           deedDetails: {
-            court: cancellationOrTransferRaw?.cancellazione?.['estremi-atto']?.tribunale ?? null,
-            notary: cancellationOrTransferRaw?.cancellazione?.['estremi-atto']?.notaio ?? null,
-            otherIndications: cancellationOrTransferRaw?.cancellazione?.['estremi-atto']?.['altre-indicazioni'] ?? null,
-            registrationDate: cancellationOrTransferRaw?.cancellazione?.['estremi-atto']?.['dt-registrazione'] ?? null,
+            court:
+              cancellationOrTransferRaw?.cancellazione?.['estremi-atto']
+                ?.tribunale ?? null,
+            notary:
+              cancellationOrTransferRaw?.cancellazione?.['estremi-atto']
+                ?.notaio ?? null,
+            otherIndications:
+              cancellationOrTransferRaw?.cancellazione?.['estremi-atto']?.[
+                'altre-indicazioni'
+              ] ?? null,
+            registrationDate:
+              cancellationOrTransferRaw?.cancellazione?.['estremi-atto']?.[
+                'dt-registrazione'
+              ] ?? null,
             registrationNumber: this.toNumber(
               cancellationOrTransferRaw?.cancellazione?.['estremi-atto']?.[
                 'n-registrazione'
               ],
             ),
-            registryOfficeLocality: cancellationOrTransferRaw?.cancellazione?.['estremi-atto']?.['localita-ufficio-registro'] ?? null,
-            registryOfficeProvince: cancellationOrTransferRaw?.cancellazione?.['estremi-atto']?.['provincia-ufficio-registro'] ?? null,
-            type: cancellationOrTransferRaw?.cancellazione?.['estremi-atto']?.tipo ?? null,
-            typeCode: cancellationOrTransferRaw?.cancellazione?.['estremi-atto']?.['c-tipo'] ?? null,
+            registryOfficeLocality:
+              cancellationOrTransferRaw?.cancellazione?.['estremi-atto']?.[
+                'localita-ufficio-registro'
+              ] ?? null,
+            registryOfficeProvince:
+              cancellationOrTransferRaw?.cancellazione?.['estremi-atto']?.[
+                'provincia-ufficio-registro'
+              ] ?? null,
+            type:
+              cancellationOrTransferRaw?.cancellazione?.['estremi-atto']
+                ?.tipo ?? null,
+            typeCode:
+              cancellationOrTransferRaw?.cancellazione?.['estremi-atto']?.[
+                'c-tipo'
+              ] ?? null,
           },
-          notificationDate: cancellationOrTransferRaw?.cancellazione?.['dt-denuncia'] ?? null,
+          notificationDate:
+            cancellationOrTransferRaw?.cancellazione?.['dt-denuncia'] ?? null,
         },
         foreignOfficeAddress: {
-          address: cancellationOrTransferRaw?.['indirizzo-sede-estero']?.indirizzo ?? null,
-          country: cancellationOrTransferRaw?.['indirizzo-sede-estero']?.stato ?? null,
-          countryCode: cancellationOrTransferRaw?.['indirizzo-sede-estero']?.['c-stato'] ?? null,
-          transferInfo: cancellationOrTransferRaw?.['indirizzo-sede-estero']?.['info-trasferimento'] ?? null,
+          address:
+            cancellationOrTransferRaw?.['indirizzo-sede-estero']?.indirizzo ??
+            null,
+          country:
+            cancellationOrTransferRaw?.['indirizzo-sede-estero']?.stato ?? null,
+          countryCode:
+            cancellationOrTransferRaw?.['indirizzo-sede-estero']?.['c-stato'] ??
+            null,
+          transferInfo:
+            cancellationOrTransferRaw?.['indirizzo-sede-estero']?.[
+              'info-trasferimento'
+            ] ?? null,
         },
         headquartersTransfer: {
           aaNumber: this.toNumber(
             cancellationOrTransferRaw?.['trasferimento-sede']?.['n-aa'],
           ),
-          city: cancellationOrTransferRaw?.['trasferimento-sede']?.comune ?? null,
-          province: cancellationOrTransferRaw?.['trasferimento-sede']?.provincia ?? null,
+          city:
+            cancellationOrTransferRaw?.['trasferimento-sede']?.comune ?? null,
+          province:
+            cancellationOrTransferRaw?.['trasferimento-sede']?.provincia ??
+            null,
           rdNumber: this.toNumber(
             cancellationOrTransferRaw?.['trasferimento-sede']?.['n-rd'],
           ),
           reaNumber: this.toNumber(
             cancellationOrTransferRaw?.['trasferimento-sede']?.['n-rea'],
           ),
-          street: cancellationOrTransferRaw?.['trasferimento-sede']?.via ?? null,
+          street:
+            cancellationOrTransferRaw?.['trasferimento-sede']?.via ?? null,
           streetNumber: this.toNumber(
             cancellationOrTransferRaw?.['trasferimento-sede']?.['n-civico'],
           ),
-          topography: cancellationOrTransferRaw?.['trasferimento-sede']?.toponimo ?? null,
-          topographyCode: cancellationOrTransferRaw?.['trasferimento-sede']?.['c-toponimo'] ?? null,
+          topography:
+            cancellationOrTransferRaw?.['trasferimento-sede']?.toponimo ?? null,
+          topographyCode:
+            cancellationOrTransferRaw?.['trasferimento-sede']?.['c-toponimo'] ??
+            null,
         },
         otherRegisterInfo: {
           cancellation: {
-            activityCessationDate: cancellationOrTransferRaw?.['info-altro-registro']?.cancellazione?.['dt-cessazione-attivita'] ?? null,
-            cancellationDate: cancellationOrTransferRaw?.['info-altro-registro']?.cancellazione?.['dt-cancellazione'] ?? null,
-            cessationDate: cancellationOrTransferRaw?.['info-altro-registro']?.cancellazione?.['dt-cessazione'] ?? null,
-            cessationInfo: cancellationOrTransferRaw?.['info-altro-registro']?.cancellazione?.['info-cessazione'] ?? null,
-            applicationDate: cancellationOrTransferRaw?.['info-altro-registro']?.cancellazione?.['dt-domanda'] ?? null,
-            reason: cancellationOrTransferRaw?.['info-altro-registro']?.cancellazione?.causale ?? null,
-            reasonCode: cancellationOrTransferRaw?.['info-altro-registro']?.cancellazione?.['c-causale'] ?? null,
-            notificationDate: cancellationOrTransferRaw?.['info-altro-registro']?.cancellazione?.['dt-denuncia'] ?? null,
+            activityCessationDate:
+              cancellationOrTransferRaw?.['info-altro-registro']
+                ?.cancellazione?.['dt-cessazione-attivita'] ?? null,
+            cancellationDate:
+              cancellationOrTransferRaw?.['info-altro-registro']
+                ?.cancellazione?.['dt-cancellazione'] ?? null,
+            cessationDate:
+              cancellationOrTransferRaw?.['info-altro-registro']
+                ?.cancellazione?.['dt-cessazione'] ?? null,
+            cessationInfo:
+              cancellationOrTransferRaw?.['info-altro-registro']
+                ?.cancellazione?.['info-cessazione'] ?? null,
+            applicationDate:
+              cancellationOrTransferRaw?.['info-altro-registro']
+                ?.cancellazione?.['dt-domanda'] ?? null,
+            reason:
+              cancellationOrTransferRaw?.['info-altro-registro']?.cancellazione
+                ?.causale ?? null,
+            reasonCode:
+              cancellationOrTransferRaw?.['info-altro-registro']
+                ?.cancellazione?.['c-causale'] ?? null,
+            notificationDate:
+              cancellationOrTransferRaw?.['info-altro-registro']
+                ?.cancellazione?.['dt-denuncia'] ?? null,
             deedDetails: {
-              court: cancellationOrTransferRaw?.['info-altro-registro']?.cancellazione?.['estremi-atto']?.tribunale ?? null,
-              notary: cancellationOrTransferRaw?.['info-altro-registro']?.cancellazione?.['estremi-atto']?.notaio ?? null,
-              otherIndications: cancellationOrTransferRaw?.['info-altro-registro']?.cancellazione?.['estremi-atto']?.['altre-indicazioni'] ?? null,
-              registrationDate: cancellationOrTransferRaw?.['info-altro-registro']?.cancellazione?.['estremi-atto']?.['dt-registrazione'] ?? null,
+              court:
+                cancellationOrTransferRaw?.['info-altro-registro']
+                  ?.cancellazione?.['estremi-atto']?.tribunale ?? null,
+              notary:
+                cancellationOrTransferRaw?.['info-altro-registro']
+                  ?.cancellazione?.['estremi-atto']?.notaio ?? null,
+              otherIndications:
+                cancellationOrTransferRaw?.['info-altro-registro']
+                  ?.cancellazione?.['estremi-atto']?.['altre-indicazioni'] ??
+                null,
+              registrationDate:
+                cancellationOrTransferRaw?.['info-altro-registro']
+                  ?.cancellazione?.['estremi-atto']?.['dt-registrazione'] ??
+                null,
               registrationNumber: this.toNumber(
-                cancellationOrTransferRaw?.['info-altro-registro']?.
-                  cancellazione?.['estremi-atto']?.['n-registrazione'],
+                cancellationOrTransferRaw?.['info-altro-registro']
+                  ?.cancellazione?.['estremi-atto']?.['n-registrazione'],
               ),
-              registryOfficeLocality: cancellationOrTransferRaw?.['info-altro-registro']?.cancellazione?.['estremi-atto']?.['localita-ufficio-registro'] ?? null,
-              registryOfficeProvince: cancellationOrTransferRaw?.['info-altro-registro']?.cancellazione?.['estremi-atto']?.['provincia-ufficio-registro'] ?? null,
-              type: cancellationOrTransferRaw?.['info-altro-registro']?.cancellazione?.['estremi-atto']?.tipo ?? null,
-              typeCode: cancellationOrTransferRaw?.['info-altro-registro']?.cancellazione?.['estremi-atto']?.['c-tipo'] ?? null,
-            }
+              registryOfficeLocality:
+                cancellationOrTransferRaw?.['info-altro-registro']
+                  ?.cancellazione?.['estremi-atto']?.[
+                  'localita-ufficio-registro'
+                ] ?? null,
+              registryOfficeProvince:
+                cancellationOrTransferRaw?.['info-altro-registro']
+                  ?.cancellazione?.['estremi-atto']?.[
+                  'provincia-ufficio-registro'
+                ] ?? null,
+              type:
+                cancellationOrTransferRaw?.['info-altro-registro']
+                  ?.cancellazione?.['estremi-atto']?.tipo ?? null,
+              typeCode:
+                cancellationOrTransferRaw?.['info-altro-registro']
+                  ?.cancellazione?.['estremi-atto']?.['c-tipo'] ?? null,
+            },
           },
-          chamberCode: cancellationOrTransferRaw?.['info-altro-registro']?.cciaa ?? null,
+          chamberCode:
+            cancellationOrTransferRaw?.['info-altro-registro']?.cciaa ?? null,
           otherRegisterTransfer: {
-            type: cancellationOrTransferRaw?.['info-altro-registro']?.['trasferimento-altro-registro']?.tipo ?? null,
-            typeCode: cancellationOrTransferRaw?.['info-altro-registro']?.['trasferimento-altro-registro']?.['c-tipo'] ?? null,
-          }
-        }
+            type:
+              cancellationOrTransferRaw?.['info-altro-registro']?.[
+                'trasferimento-altro-registro'
+              ]?.tipo ?? null,
+            typeCode:
+              cancellationOrTransferRaw?.['info-altro-registro']?.[
+                'trasferimento-altro-registro'
+              ]?.['c-tipo'] ?? null,
+          },
+        },
       },
       incorporationActDetails: incorporationActRaw
         ? {
@@ -1125,70 +1249,123 @@ export class CompanyManager {
               ),
             },
             participatingFamilyMembers: {
-              entries: this.toArray(activityInfoRaw['familiari-partecipi']?.['familiare-partecipe']).map((item) => ({
-                directFarmerFlag: this.toYesNoFlag(item['f-coltivatore-diretto']) ?? null,
+              entries: this.toArray(
+                activityInfoRaw['familiari-partecipi']?.['familiare-partecipe'],
+              ).map((item) => ({
+                directFarmerFlag:
+                  this.toYesNoFlag(item['f-coltivatore-diretto']) ?? null,
                 firstName: item.nome ?? null,
                 lastName: item.cognome ?? null,
                 taxCode: item['c-fiscale'] ?? null,
-              }))
+              })),
             },
             pursuedActivity: activityInfoRaw['attivita-esercitata'] ?? null,
             secondaryActivity:
               activityInfoRaw['attivita-secondaria-esercitata'] ?? null,
             craftsActivityBolzano: {
               cancellation: {
-                assessmentApplicationDate: activityInfoRaw['attivita-aa-bz']?.['cancellazione-aa-bz']?.['dt-domanda-accertamento'] ?? null,
-                effectDate: activityInfoRaw['attivita-aa-bz']?.['cancellazione-aa-bz']?.['dt-effetto'] ?? null,
-                reason: activityInfoRaw['attivita-aa-bz']?.['cancellazione-aa-bz']?.causale ?? null,
-                reasonCode: activityInfoRaw['attivita-aa-bz']?.['cancellazione-aa-bz']?.['c-causale'] ?? null,
+                assessmentApplicationDate:
+                  activityInfoRaw['attivita-aa-bz']?.['cancellazione-aa-bz']?.[
+                    'dt-domanda-accertamento'
+                  ] ?? null,
+                effectDate:
+                  activityInfoRaw['attivita-aa-bz']?.['cancellazione-aa-bz']?.[
+                    'dt-effetto'
+                  ] ?? null,
+                reason:
+                  activityInfoRaw['attivita-aa-bz']?.['cancellazione-aa-bz']
+                    ?.causale ?? null,
+                reasonCode:
+                  activityInfoRaw['attivita-aa-bz']?.['cancellazione-aa-bz']?.[
+                    'c-causale'
+                  ] ?? null,
               },
-              descriptions: activityInfoRaw['attivita-aa-bz']?.descrizione ?? null,
-              isSecondaryActivityFlag: this.toYesNoFlag(activityInfoRaw['attivita-aa-bz']?.['f-attivita-secondaria']) ?? null,
-              startDate: activityInfoRaw['attivita-aa-bz']?.['dt-inizio'] ?? null,
+              descriptions:
+                activityInfoRaw['attivita-aa-bz']?.descrizione ?? null,
+              isSecondaryActivityFlag:
+                this.toYesNoFlag(
+                  activityInfoRaw['attivita-aa-bz']?.['f-attivita-secondaria'],
+                ) ?? null,
+              startDate:
+                activityInfoRaw['attivita-aa-bz']?.['dt-inizio'] ?? null,
               trades: {
-                trades: this.toArray(activityInfoRaw['attivita-aa-bz']?.['mestieri-aa']?.['mestiere-aa'])?.map((trade) => ({
+                trades: this.toArray(
+                  activityInfoRaw['attivita-aa-bz']?.['mestieri-aa']?.[
+                    'mestiere-aa'
+                  ],
+                )?.map((trade) => ({
                   activityStartDate: trade['dt-inizio-attivita'] ?? null,
                   code: trade.c ?? null,
                   description: trade.descrizione ?? null,
                   furtherDescription: trade['ulteriore-descrizione'] ?? null,
-                  tradeDescription: trade['#text'] ?? null
-                }))
+                  tradeDescription: trade['#text'] ?? null,
+                })),
               },
             },
             nonCraftsActivity: {
               cancellation: {
-                assessmentApplicationDate: activityInfoRaw['attivita-no-aa']?.['cancellazione-aa']?.['dt-domanda-accertamento'] ?? null,
-                cessationDate: activityInfoRaw['attivita-no-aa']?.['cancellazione-aa']?.['dt-cessazione'] ?? null,
-                reason: activityInfoRaw['attivita-no-aa']?.['cancellazione-aa']?.causale ?? null,
-                reasonCode: activityInfoRaw['attivita-no-aa']?.['cancellazione-aa']?.['c-causale'] ?? null,
-                resolutionDate: activityInfoRaw['attivita-no-aa']?.['cancellazione-aa']?.['dt-delibera'] ?? null,
+                assessmentApplicationDate:
+                  activityInfoRaw['attivita-no-aa']?.['cancellazione-aa']?.[
+                    'dt-domanda-accertamento'
+                  ] ?? null,
+                cessationDate:
+                  activityInfoRaw['attivita-no-aa']?.['cancellazione-aa']?.[
+                    'dt-cessazione'
+                  ] ?? null,
+                reason:
+                  activityInfoRaw['attivita-no-aa']?.['cancellazione-aa']
+                    ?.causale ?? null,
+                reasonCode:
+                  activityInfoRaw['attivita-no-aa']?.['cancellazione-aa']?.[
+                    'c-causale'
+                  ] ?? null,
+                resolutionDate:
+                  activityInfoRaw['attivita-no-aa']?.['cancellazione-aa']?.[
+                    'dt-delibera'
+                  ] ?? null,
               },
-              categoryCode: activityInfoRaw['attivita-no-aa']?.['c-categoria'] ?? null,
+              categoryCode:
+                activityInfoRaw['attivita-no-aa']?.['c-categoria'] ?? null,
               category: activityInfoRaw['attivita-no-aa']?.categoria ?? null,
-              descriptions: activityInfoRaw['attivita-no-aa']?.descrizione ?? null,
-              startDate: activityInfoRaw['attivita-no-aa']?.['dt-inizio'] ?? null,
-              supplementaryInfo: activityInfoRaw['attivita-no-aa']?.['informazioni-supplementari-aa'] ?? null,
+              descriptions:
+                activityInfoRaw['attivita-no-aa']?.descrizione ?? null,
+              startDate:
+                activityInfoRaw['attivita-no-aa']?.['dt-inizio'] ?? null,
+              supplementaryInfo:
+                activityInfoRaw['attivita-no-aa']?.[
+                  'informazioni-supplementari-aa'
+                ] ?? null,
             },
             agriculturalActivity: {
-              description: activityInfoRaw['attivita-agricola']?.['#text'] ?? null,
-              startDate: activityInfoRaw['attivita-agricola']?.['dt-inizio'] ?? null,
+              description:
+                activityInfoRaw['attivita-agricola']?.['#text'] ?? null,
+              startDate:
+                activityInfoRaw['attivita-agricola']?.['dt-inizio'] ?? null,
             },
-            activityDetails: this.toArray(activityInfoRaw['dettagli-attivita']).map((item) => ({
+            activityDetails: this.toArray(
+              activityInfoRaw['dettagli-attivita'],
+            ).map((item) => ({
               type: item.tipo ?? null,
               typeCode: item['c-tipo'] ?? null,
-              details: this.toArray(item['dettaglio-attivita']).map((detail) => ({
-                description: detail['#text'] ?? null,
-                detailCode: detail['c-dettaglio'] ?? null,
-              })),
+              details: this.toArray(item['dettaglio-attivita']).map(
+                (detail) => ({
+                  description: detail['#text'] ?? null,
+                  detailCode: detail['c-dettaglio'] ?? null,
+                }),
+              ),
             })),
             atecoClassifications2002: {
-              classifications: this.toArray(activityInfoRaw['classificazioni-ateco-2002']?.['classificazione-ateco-2002']).map((classification) => ({
+              classifications: this.toArray(
+                activityInfoRaw['classificazioni-ateco-2002']?.[
+                  'classificazione-ateco-2002'
+                ],
+              ).map((classification) => ({
                 activityCode: classification['c-attivita'] ?? null,
                 activityDescription: classification.attivita ?? null,
                 relevanceCode: classification['c-importanza'] ?? null,
                 relevanceDescription: classification.importanza ?? null,
                 startDate: classification['dt-inizio'] ?? null,
-              }))
+              })),
             },
             atecoClassifications: this.toArray(
               activityInfoRaw['classificazioni-ateco'],
@@ -1214,69 +1391,69 @@ export class CompanyManager {
                   description:
                     activityInfoRaw['attivita-prevalente']?.['#text'] ?? null,
                   notStartedFlag:
-                    this.toYesNoFlag(activityInfoRaw['attivita-prevalente']?.[
-                      'f-attivita-non-iniziata'
-                    ]) ?? null,
+                    this.toYesNoFlag(
+                      activityInfoRaw['attivita-prevalente']?.[
+                        'f-attivita-non-iniziata'
+                      ],
+                    ) ?? null,
                 }
               : null,
-            qualificationCertifications:
-              activityInfoRaw['attestazioni-qualificazioni']
-                ? {
-                    certifications: this.toArray(
-                      activityInfoRaw['attestazioni-qualificazioni']?.[
-                        'attestazione-qualificazioni'
-                      ],
-                    ).map((item) => ({
-                      workCategories: item['categorie-opere']
-                        ? {
-                            categories: this.toArray(
-                              item['categorie-opere']?.['categoria-opere'],
-                            ).map((category) => ({
-                              categoryCode: category['c-categoria'] ?? null,
-                              category: category.categoria ?? null,
-                              classificationCode:
-                                category['c-classificazione'] ?? null,
-                              classification:
-                                category.classificazione ?? null,
-                            })),
-                            sourceCode:
-                              item['categorie-opere']?.['c-fonte'] ?? null,
-                          }
-                        : null,
-                      soaCertification: item.attestazione
-                        ? {
-                            qualityCertificate:
-                              item.attestazione?.['certificato-qualita']
-                                ? {
-                                    certifierName:
-                                      item.attestazione?.[
-                                        'certificato-qualita'
-                                      ]?.['denominazione-odc'] ?? null,
-                                    expiryDate:
-                                      item.attestazione?.[
-                                        'certificato-qualita'
-                                      ]?.['dt-scadenza'] ?? null,
-                                  }
-                                : null,
-                            sourceCode: item.attestazione?.['c-fonte'] ?? null,
-                            soaIdentifierCode:
-                              item.attestazione?.['c-identificativo-SOA'] ??
-                              null,
-                            name: item.attestazione?.denominazione ?? null,
-                            certificationNumber:
-                              this.toNumber(
-                                item.attestazione?.['n-attestazione'],
-                              ),
-                            issueDate:
-                              item.attestazione?.['dt-rilascio'] ?? null,
-                            expiryDate:
-                              item.attestazione?.['dt-scadenza'] ?? null,
-                            regulation: item.attestazione?.regolamento ?? null,
-                          }
-                        : null,
-                    })),
-                  }
-                : null,
+            qualificationCertifications: activityInfoRaw[
+              'attestazioni-qualificazioni'
+            ]
+              ? {
+                  certifications: this.toArray(
+                    activityInfoRaw['attestazioni-qualificazioni']?.[
+                      'attestazione-qualificazioni'
+                    ],
+                  ).map((item) => ({
+                    workCategories: item['categorie-opere']
+                      ? {
+                          categories: this.toArray(
+                            item['categorie-opere']?.['categoria-opere'],
+                          ).map((category) => ({
+                            categoryCode: category['c-categoria'] ?? null,
+                            category: category.categoria ?? null,
+                            classificationCode:
+                              category['c-classificazione'] ?? null,
+                            classification: category.classificazione ?? null,
+                          })),
+                          sourceCode:
+                            item['categorie-opere']?.['c-fonte'] ?? null,
+                        }
+                      : null,
+                    soaCertification: item.attestazione
+                      ? {
+                          qualityCertificate: item.attestazione?.[
+                            'certificato-qualita'
+                          ]
+                            ? {
+                                certifierName:
+                                  item.attestazione?.['certificato-qualita']?.[
+                                    'denominazione-odc'
+                                  ] ?? null,
+                                expiryDate:
+                                  item.attestazione?.['certificato-qualita']?.[
+                                    'dt-scadenza'
+                                  ] ?? null,
+                              }
+                            : null,
+                          sourceCode: item.attestazione?.['c-fonte'] ?? null,
+                          soaIdentifierCode:
+                            item.attestazione?.['c-identificativo-SOA'] ?? null,
+                          name: item.attestazione?.denominazione ?? null,
+                          certificationNumber: this.toNumber(
+                            item.attestazione?.['n-attestazione'],
+                          ),
+                          issueDate: item.attestazione?.['dt-rilascio'] ?? null,
+                          expiryDate:
+                            item.attestazione?.['dt-scadenza'] ?? null,
+                          regulation: item.attestazione?.regolamento ?? null,
+                        }
+                      : null,
+                  })),
+                }
+              : null,
             organicCertifications: activityInfoRaw['certificazioni-bio']
               ? {
                   certifications: this.toArray(
@@ -1294,8 +1471,9 @@ export class CompanyManager {
                     certifierCode: item['c-odc'] ?? null,
                     certifier: item.odc ?? null,
                     certifiedActivity: item['attivita-certificata'] ?? null,
-                    conformityCertificateNumber:
-                      this.toNumber(item['n-certificato-conformita']),
+                    conformityCertificateNumber: this.toNumber(
+                      item['n-certificato-conformita'],
+                    ),
                     expiryDate: item['dt-scadenza'] ?? null,
                   })),
                 }
@@ -1309,10 +1487,12 @@ export class CompanyManager {
                     activityInfoRaw.certificazioni.certificazione,
                   ).map((item) => ({
                     sectors: {
-                      sectors: this.toArray(item.settori?.settore).map((sector) => ({
-                        code: sector.c ?? null,
-                        description: sector['#text'] ?? null,
-                      })),
+                      sectors: this.toArray(item.settori?.settore).map(
+                        (sector) => ({
+                          code: sector.c ?? null,
+                          description: sector['#text'] ?? null,
+                        }),
+                      ),
                     },
                     schemeCode: item['c-schema-accreditamento'] ?? null,
                     scheme: item['schema-accreditamento'] ?? null,
@@ -1325,70 +1505,69 @@ export class CompanyManager {
                   })),
                 }
               : null,
-            conformityBodyAccreditations:
-              activityInfoRaw['accreditamenti-odc']
-                ? {
-                    accreditations: this.toArray(
-                      activityInfoRaw['accreditamenti-odc']?.[
-                        'accreditamento-odc'
-                      ],
-                    ).map((item) => ({
-                      schemeCode: item['c-schema-accreditamento'] ?? null,
-                      scheme: item['schema-accreditamento'] ?? null,
-                      certificateNumber: this.toNumber(item['n-certificato']),
-                      issueDate: item['dt-emissione'] ?? null,
-                      expiryDate: item['dt-scadenza'] ?? null,
-                      downloadFile: item['file-download'] ?? null,
-                    })),
-                    lastUpdateDate:
-                      activityInfoRaw['accreditamenti-odc']?.[
-                        'dt-ultima-modifica'
-                      ] ?? null,
-                    website:
-                      activityInfoRaw['accreditamenti-odc']?.['sito-internet'] ??
-                      null,
-                  }
-                : null,
+            conformityBodyAccreditations: activityInfoRaw['accreditamenti-odc']
+              ? {
+                  accreditations: this.toArray(
+                    activityInfoRaw['accreditamenti-odc']?.[
+                      'accreditamento-odc'
+                    ],
+                  ).map((item) => ({
+                    schemeCode: item['c-schema-accreditamento'] ?? null,
+                    scheme: item['schema-accreditamento'] ?? null,
+                    certificateNumber: this.toNumber(item['n-certificato']),
+                    issueDate: item['dt-emissione'] ?? null,
+                    expiryDate: item['dt-scadenza'] ?? null,
+                    downloadFile: item['file-download'] ?? null,
+                  })),
+                  lastUpdateDate:
+                    activityInfoRaw['accreditamenti-odc']?.[
+                      'dt-ultima-modifica'
+                    ] ?? null,
+                  website:
+                    activityInfoRaw['accreditamenti-odc']?.['sito-internet'] ??
+                    null,
+                }
+              : null,
             socialEnterprise: activityInfoRaw['impresa-sociale']
               ? {
-                  goodsAndServices:
-                    activityInfoRaw['impresa-sociale']?.['beni-servizi']
-                      ? {
-                          items: this.toArray(
-                            activityInfoRaw['impresa-sociale']?.[
-                              'beni-servizi'
-                            ]?.['bene-servizio'],
-                          ).map((item) => ({
-                            description: item['#text'] ?? null,
-                            code: item.c ?? null,
-                          })),
-                        }
-                      : null,
-                  activitySectors:
-                    activityInfoRaw['impresa-sociale']?.['settori-attivita']
-                      ? {
-                          sectors: this.toArray(
-                            activityInfoRaw['impresa-sociale']?.[
-                              'settori-attivita'
-                            ]?.['settore-attivita'],
-                          ).map((item) => ({
-                            description: item['#text'] ?? null,
-                            code: item.c ?? null,
-                          })),
-                        }
-                      : null,
-                  numDisadvantagedWorkers:
-                    this.toNumber(
-                      activityInfoRaw['impresa-sociale']?.[
-                        'n-lavoratori-svantaggiati'
-                      ],
-                    ),
-                  numDisabledWorkers:
-                    this.toNumber(
-                      activityInfoRaw['impresa-sociale']?.[
-                        'n-lavoratori-disabili'
-                      ],
-                    ),
+                  goodsAndServices: activityInfoRaw['impresa-sociale']?.[
+                    'beni-servizi'
+                  ]
+                    ? {
+                        items: this.toArray(
+                          activityInfoRaw['impresa-sociale']?.[
+                            'beni-servizi'
+                          ]?.['bene-servizio'],
+                        ).map((item) => ({
+                          description: item['#text'] ?? null,
+                          code: item.c ?? null,
+                        })),
+                      }
+                    : null,
+                  activitySectors: activityInfoRaw['impresa-sociale']?.[
+                    'settori-attivita'
+                  ]
+                    ? {
+                        sectors: this.toArray(
+                          activityInfoRaw['impresa-sociale']?.[
+                            'settori-attivita'
+                          ]?.['settore-attivita'],
+                        ).map((item) => ({
+                          description: item['#text'] ?? null,
+                          code: item.c ?? null,
+                        })),
+                      }
+                    : null,
+                  numDisadvantagedWorkers: this.toNumber(
+                    activityInfoRaw['impresa-sociale']?.[
+                      'n-lavoratori-svantaggiati'
+                    ],
+                  ),
+                  numDisabledWorkers: this.toNumber(
+                    activityInfoRaw['impresa-sociale']?.[
+                      'n-lavoratori-disabili'
+                    ],
+                  ),
                 }
               : null,
             runts: activityInfoRaw.runts
@@ -1409,7 +1588,8 @@ export class CompanyManager {
                           aaChamberdCode: item['cciaa-aa'] ?? null,
                           aaNumber: this.toNumber(item['n-aa']),
                           pendingDecisionFlag:
-                            this.toYesNoFlag(item['f-attesa-decisione']) ?? null,
+                            this.toYesNoFlag(item['f-attesa-decisione']) ??
+                            null,
                           effectDate: item['dt-decorrenza'] ?? null,
                         })),
                       }
@@ -1437,48 +1617,47 @@ export class CompanyManager {
             ).map(mapCompanyWorkforce),
             municipalityWorkforce: this.toArray(
               activityInfoRaw['addetti-comuni'],
-            )
-              .map((entry) => ({
-                entries: this.toArray(entry['addetti-comune']).map((item) => ({
-                  localUnits: this.toArray(
-                    item['pro-localizzazioni']?.['pro-localizzazione'],
-                  ).map((value) => String(value)),
-                  monthlyDetails: this.toArray(
-                    item['info-mesi']?.['info-mese'],
-                  ).map((month) => ({
-                    monthCode: month['c-mese'] ?? null,
-                    month: month.mese ?? null,
-                    numEmployees: this.toNumber(month['n-dipendenti']),
-                    numSelfEmployed: this.toNumber(month['n-indipendenti']),
-                    total: this.toNumber(month['n-totale']),
-                    numCollaborators: this.toNumber(month['n-collaboratori']),
-                    employeePercentage:
-                      month['percentuale-dipendenti'] ?? null,
-                    numNonAgriculturalEmployees:
-                      this.toNumber(month['n-dip-no-agricoli']),
-                  })),
-                  averageValues: item['valori-medi']
-                    ? {
-                        averageEmployees:
-                          item['valori-medi']?.['valore-medio-dipendenti'] ??
-                          null,
-                        averageSelfEmployed:
-                          item['valori-medi']?.['valore-medio-indipendenti'] ??
-                          null,
-                        averageTotal:
-                          item['valori-medi']?.['valore-medio-totale'] ?? null,
-                        averageCollaborators:
-                          (item['valori-medi'] as any)?.[
-                            'valore-medio-collaboratori'
-                          ] ?? null,
-                      }
-                    : null,
-                  municipalityCode: item['c-comune'] ?? null,
-                  municipality: item.comune ?? null,
-                  province: item.provincia ?? null,
-                  provinceTer: (item as any)['provincia-ter'] ?? null,
+            ).map((entry) => ({
+              entries: this.toArray(entry['addetti-comune']).map((item) => ({
+                localUnits: this.toArray(
+                  item['pro-localizzazioni']?.['pro-localizzazione'],
+                ).map((value) => String(value)),
+                monthlyDetails: this.toArray(
+                  item['info-mesi']?.['info-mese'],
+                ).map((month) => ({
+                  monthCode: month['c-mese'] ?? null,
+                  month: month.mese ?? null,
+                  numEmployees: this.toNumber(month['n-dipendenti']),
+                  numSelfEmployed: this.toNumber(month['n-indipendenti']),
+                  total: this.toNumber(month['n-totale']),
+                  numCollaborators: this.toNumber(month['n-collaboratori']),
+                  employeePercentage: month['percentuale-dipendenti'] ?? null,
+                  numNonAgriculturalEmployees: this.toNumber(
+                    month['n-dip-no-agricoli'],
+                  ),
                 })),
+                averageValues: item['valori-medi']
+                  ? {
+                      averageEmployees:
+                        item['valori-medi']?.['valore-medio-dipendenti'] ??
+                        null,
+                      averageSelfEmployed:
+                        item['valori-medi']?.['valore-medio-indipendenti'] ??
+                        null,
+                      averageTotal:
+                        item['valori-medi']?.['valore-medio-totale'] ?? null,
+                      averageCollaborators:
+                        (item['valori-medi'] as any)?.[
+                          'valore-medio-collaboratori'
+                        ] ?? null,
+                    }
+                  : null,
+                municipalityCode: item['c-comune'] ?? null,
+                municipality: item.comune ?? null,
+                province: item.provincia ?? null,
+                provinceTer: (item as any)['provincia-ter'] ?? null,
               })),
+            })),
             activityStartDate:
               activityInfoRaw['dt-inizio-attivita-impresa'] ?? null,
             startDate: activityInfoRaw['dt-inizio'] ?? null,
@@ -1537,56 +1716,56 @@ export class CompanyManager {
         ? {
             craftsData: licensesAndRegistersRaw['dati-artigiani']
               ? {
-                  craftsActivity:
-                    licensesAndRegistersRaw['dati-artigiani']?.['attivita-aa']
-                      ? {
-                          description:
-                            this.getXmlText(
-                              licensesAndRegistersRaw['dati-artigiani']?.[
-                                'attivita-aa'
-                              ],
-                            ) ?? null,
-                          enrollmentStartDate:
+                  craftsActivity: licensesAndRegistersRaw['dati-artigiani']?.[
+                    'attivita-aa'
+                  ]
+                    ? {
+                        description:
+                          this.getXmlText(
                             licensesAndRegistersRaw['dati-artigiani']?.[
                               'attivita-aa'
-                            ]?.['dt-iscrizione-inizio'] ?? null,
-                          startDate:
-                            licensesAndRegistersRaw['dati-artigiani']?.[
-                              'attivita-aa'
-                            ]?.['dt-inizio'] ?? null,
-                        }
-                      : null,
+                            ],
+                          ) ?? null,
+                        enrollmentStartDate:
+                          licensesAndRegistersRaw['dati-artigiani']?.[
+                            'attivita-aa'
+                          ]?.['dt-iscrizione-inizio'] ?? null,
+                        startDate:
+                          licensesAndRegistersRaw['dati-artigiani']?.[
+                            'attivita-aa'
+                          ]?.['dt-inizio'] ?? null,
+                      }
+                    : null,
                   supplementaryInfo:
                     licensesAndRegistersRaw['dati-artigiani']?.[
                       'informazioni-supplementari-aa'
                     ] ?? null,
-                  cancellation:
-                    licensesAndRegistersRaw['dati-artigiani']?.[
-                      'cancellazione-aa'
-                    ]
-                      ? {
-                          reasonCode:
-                            licensesAndRegistersRaw['dati-artigiani']?.[
-                              'cancellazione-aa'
-                            ]?.['c-causale'] ?? null,
-                          reason:
-                            licensesAndRegistersRaw['dati-artigiani']?.[
-                              'cancellazione-aa'
-                            ]?.causale ?? null,
-                          assessmentApplicationDate:
-                            licensesAndRegistersRaw['dati-artigiani']?.[
-                              'cancellazione-aa'
-                            ]?.['dt-domanda-accertamento'] ?? null,
-                          resolutionDate:
-                            licensesAndRegistersRaw['dati-artigiani']?.[
-                              'cancellazione-aa'
-                            ]?.['dt-delibera'] ?? null,
-                          cessationDate:
-                            licensesAndRegistersRaw['dati-artigiani']?.[
-                              'cancellazione-aa'
-                            ]?.['dt-cessazione'] ?? null,
-                        }
-                      : null,
+                  cancellation: licensesAndRegistersRaw['dati-artigiani']?.[
+                    'cancellazione-aa'
+                  ]
+                    ? {
+                        reasonCode:
+                          licensesAndRegistersRaw['dati-artigiani']?.[
+                            'cancellazione-aa'
+                          ]?.['c-causale'] ?? null,
+                        reason:
+                          licensesAndRegistersRaw['dati-artigiani']?.[
+                            'cancellazione-aa'
+                          ]?.causale ?? null,
+                        assessmentApplicationDate:
+                          licensesAndRegistersRaw['dati-artigiani']?.[
+                            'cancellazione-aa'
+                          ]?.['dt-domanda-accertamento'] ?? null,
+                        resolutionDate:
+                          licensesAndRegistersRaw['dati-artigiani']?.[
+                            'cancellazione-aa'
+                          ]?.['dt-delibera'] ?? null,
+                        cessationDate:
+                          licensesAndRegistersRaw['dati-artigiani']?.[
+                            'cancellazione-aa'
+                          ]?.['dt-cessazione'] ?? null,
+                      }
+                    : null,
                   suppressedRegisterFlag:
                     this.toYesNoFlag(
                       licensesAndRegistersRaw['dati-artigiani']?.[
@@ -1605,9 +1784,11 @@ export class CompanyManager {
                       'c-categoria'
                     ] ?? null,
                   category:
-                    licensesAndRegistersRaw['dati-artigiani']?.categoria ?? null,
+                    licensesAndRegistersRaw['dati-artigiani']?.categoria ??
+                    null,
                   province:
-                    licensesAndRegistersRaw['dati-artigiani']?.provincia ?? null,
+                    licensesAndRegistersRaw['dati-artigiani']?.provincia ??
+                    null,
                   assessmentEnrollmentDate:
                     licensesAndRegistersRaw['dati-artigiani']?.[
                       'dt-iscrizione-accertamento'
@@ -1624,112 +1805,117 @@ export class CompanyManager {
                       'dt-iscrizione'
                     ] ?? null,
                   resolutionDate:
-                    licensesAndRegistersRaw['dati-artigiani']?.['dt-delibera'] ??
-                    null,
+                    licensesAndRegistersRaw['dati-artigiani']?.[
+                      'dt-delibera'
+                    ] ?? null,
                 }
               : null,
-            professionalRecognitions:
-              licensesAndRegistersRaw['riconoscimenti-professionali']
-                ? {
-                    recognitions: this.toArray(
-                      licensesAndRegistersRaw['riconoscimenti-professionali']?.[
-                        'riconoscimento-professionale'
-                      ],
-                    ).map((item) => ({
-                      text: this.getXmlText(item) ?? null,
-                      orderDate: item['dt-provvedimento'] ?? null,
-                      enrollmentNumber: this.toNumber(item['n-iscrizione']),
-                    })),
-                  }
-                : null,
-            installerAuthorizations:
-              licensesAndRegistersRaw['abilitazioni-impiantisti']
-                ? {
-                    authorizations: this.toArray(
-                      licensesAndRegistersRaw['abilitazioni-impiantisti']?.[
-                        'abilitazione-impiantisti'
-                      ],
-                    ).map((item) => ({
-                      qualificationCode: item['c-qualifica'] ?? null,
-                      qualification: item.qualifica ?? null,
-                      letter: item.lettera ?? null,
-                      letterDescription: item['descrizione-lettera'] ?? null,
-                      letters: item.lettere ?? null,
-                      limitations: item.limitazioni ?? null,
-                      allCompanyActivitiesFlag:
-                        this.toYesNoFlag(item['f-tutte-attivita-impresa']) ??
-                        null,
-                      province: item.provincia ?? null,
-                      number: this.toNumber(item.n),
-                      assessmentDate: item['dt-accertamento'] ?? null,
-                      enrollmentDate: item['dt-iscrizione'] ?? null,
-                      issuingBodyCode: item['c-ente-rilascio'] ?? null,
-                      issuingBody: item['ente-rilascio'] ?? null,
-                    })),
-                    lawReferenceCode:
-                      licensesAndRegistersRaw['abilitazioni-impiantisti']?.[
-                        'c-riferimento-legge'
-                      ] ?? null,
-                    lawReference:
-                      licensesAndRegistersRaw['abilitazioni-impiantisti']?.[
-                        'riferimento-legge'
-                      ] ?? null,
-                  }
-                : null,
-            cleaningAuthorization:
-              licensesAndRegistersRaw['abilitazione-pulizia']
-                ? {
-                    tierCode:
-                      licensesAndRegistersRaw['abilitazione-pulizia']?.[
-                        'c-fascia'
-                      ] ?? null,
-                    tier:
-                      licensesAndRegistersRaw['abilitazione-pulizia']?.fascia ??
+            professionalRecognitions: licensesAndRegistersRaw[
+              'riconoscimenti-professionali'
+            ]
+              ? {
+                  recognitions: this.toArray(
+                    licensesAndRegistersRaw['riconoscimenti-professionali']?.[
+                      'riconoscimento-professionale'
+                    ],
+                  ).map((item) => ({
+                    text: this.getXmlText(item) ?? null,
+                    orderDate: item['dt-provvedimento'] ?? null,
+                    enrollmentNumber: this.toNumber(item['n-iscrizione']),
+                  })),
+                }
+              : null,
+            installerAuthorizations: licensesAndRegistersRaw[
+              'abilitazioni-impiantisti'
+            ]
+              ? {
+                  authorizations: this.toArray(
+                    licensesAndRegistersRaw['abilitazioni-impiantisti']?.[
+                      'abilitazione-impiantisti'
+                    ],
+                  ).map((item) => ({
+                    qualificationCode: item['c-qualifica'] ?? null,
+                    qualification: item.qualifica ?? null,
+                    letter: item.lettera ?? null,
+                    letterDescription: item['descrizione-lettera'] ?? null,
+                    letters: item.lettere ?? null,
+                    limitations: item.limitazioni ?? null,
+                    allCompanyActivitiesFlag:
+                      this.toYesNoFlag(item['f-tutte-attivita-impresa']) ??
                       null,
-                    volumeCode:
-                      licensesAndRegistersRaw['abilitazione-pulizia']?.[
-                        'c-volume'
-                      ] ?? null,
-                    volume:
-                      licensesAndRegistersRaw['abilitazione-pulizia']?.volume ??
-                      null,
-                    notificationDate:
-                      licensesAndRegistersRaw['abilitazione-pulizia']?.[
-                        'dt-denuncia'
-                      ] ?? null,
-                    additionalDetails:
-                      licensesAndRegistersRaw['abilitazione-pulizia']?.[
-                        'ulteriori-specifiche'
-                      ] ?? null,
-                  }
-                : null,
-            porteringAuthorization:
-              licensesAndRegistersRaw['abilitazione-facchinaggio']
-                ? {
-                    tierCode:
-                      licensesAndRegistersRaw['abilitazione-facchinaggio']?.[
-                        'c-fascia'
-                      ] ?? null,
-                    tier:
-                      licensesAndRegistersRaw['abilitazione-facchinaggio']
-                        ?.fascia ?? null,
-                    volumeCode:
-                      licensesAndRegistersRaw['abilitazione-facchinaggio']?.[
-                        'c-volume'
-                      ] ?? null,
-                    volume:
-                      licensesAndRegistersRaw['abilitazione-facchinaggio']
-                        ?.volume ?? null,
-                    notificationDate:
-                      licensesAndRegistersRaw['abilitazione-facchinaggio']?.[
-                        'dt-denuncia'
-                      ] ?? null,
-                    additionalDetails:
-                      licensesAndRegistersRaw['abilitazione-facchinaggio']?.[
-                        'ulteriori-specifiche'
-                      ] ?? null,
-                  }
-                : null,
+                    province: item.provincia ?? null,
+                    number: this.toNumber(item.n),
+                    assessmentDate: item['dt-accertamento'] ?? null,
+                    enrollmentDate: item['dt-iscrizione'] ?? null,
+                    issuingBodyCode: item['c-ente-rilascio'] ?? null,
+                    issuingBody: item['ente-rilascio'] ?? null,
+                  })),
+                  lawReferenceCode:
+                    licensesAndRegistersRaw['abilitazioni-impiantisti']?.[
+                      'c-riferimento-legge'
+                    ] ?? null,
+                  lawReference:
+                    licensesAndRegistersRaw['abilitazioni-impiantisti']?.[
+                      'riferimento-legge'
+                    ] ?? null,
+                }
+              : null,
+            cleaningAuthorization: licensesAndRegistersRaw[
+              'abilitazione-pulizia'
+            ]
+              ? {
+                  tierCode:
+                    licensesAndRegistersRaw['abilitazione-pulizia']?.[
+                      'c-fascia'
+                    ] ?? null,
+                  tier:
+                    licensesAndRegistersRaw['abilitazione-pulizia']?.fascia ??
+                    null,
+                  volumeCode:
+                    licensesAndRegistersRaw['abilitazione-pulizia']?.[
+                      'c-volume'
+                    ] ?? null,
+                  volume:
+                    licensesAndRegistersRaw['abilitazione-pulizia']?.volume ??
+                    null,
+                  notificationDate:
+                    licensesAndRegistersRaw['abilitazione-pulizia']?.[
+                      'dt-denuncia'
+                    ] ?? null,
+                  additionalDetails:
+                    licensesAndRegistersRaw['abilitazione-pulizia']?.[
+                      'ulteriori-specifiche'
+                    ] ?? null,
+                }
+              : null,
+            porteringAuthorization: licensesAndRegistersRaw[
+              'abilitazione-facchinaggio'
+            ]
+              ? {
+                  tierCode:
+                    licensesAndRegistersRaw['abilitazione-facchinaggio']?.[
+                      'c-fascia'
+                    ] ?? null,
+                  tier:
+                    licensesAndRegistersRaw['abilitazione-facchinaggio']
+                      ?.fascia ?? null,
+                  volumeCode:
+                    licensesAndRegistersRaw['abilitazione-facchinaggio']?.[
+                      'c-volume'
+                    ] ?? null,
+                  volume:
+                    licensesAndRegistersRaw['abilitazione-facchinaggio']
+                      ?.volume ?? null,
+                  notificationDate:
+                    licensesAndRegistersRaw['abilitazione-facchinaggio']?.[
+                      'dt-denuncia'
+                    ] ?? null,
+                  additionalDetails:
+                    licensesAndRegistersRaw['abilitazione-facchinaggio']?.[
+                      'ulteriori-specifiche'
+                    ] ?? null,
+                }
+              : null,
             roles: licensesAndRegistersRaw.ruoli
               ? {
                   roles: this.toArray(licensesAndRegistersRaw.ruoli?.ruolo).map(
@@ -1771,45 +1957,43 @@ export class CompanyManager {
               : null,
             preciousMetalsRegister: licensesAndRegistersRaw['registro-preziosi']
               ? {
-                  qualification:
-                    licensesAndRegistersRaw['registro-preziosi']?.qualifica
-                      ? {
-                          code:
-                            licensesAndRegistersRaw['registro-preziosi']
-                              ?.qualifica?.c ?? null,
-                        }
-                      : null,
-                  qualifications:
-                    licensesAndRegistersRaw['registro-preziosi']?.qualifiche
-                      ? {
-                          qualification:
-                            licensesAndRegistersRaw['registro-preziosi']
-                              ?.qualifiche?.qualifica
-                              ? {
-                                  code:
-                                    licensesAndRegistersRaw[
-                                      'registro-preziosi'
-                                    ]?.qualifiche?.qualifica?.c ?? null,
-                                }
-                              : null,
-                        }
-                      : null,
-                  publicSecurityAuthorization:
-                    licensesAndRegistersRaw['registro-preziosi']?.[
-                      'autorizzazione-ps'
-                    ]
-                      ? {
-                          number: this.toNumber(
-                            licensesAndRegistersRaw['registro-preziosi']?.[
-                              'autorizzazione-ps'
-                            ]?.n,
-                          ),
-                          date:
-                            licensesAndRegistersRaw['registro-preziosi']?.[
-                              'autorizzazione-ps'
-                            ]?.dt ?? null,
-                        }
-                      : null,
+                  qualification: licensesAndRegistersRaw['registro-preziosi']
+                    ?.qualifica
+                    ? {
+                        code:
+                          licensesAndRegistersRaw['registro-preziosi']
+                            ?.qualifica?.c ?? null,
+                      }
+                    : null,
+                  qualifications: licensesAndRegistersRaw['registro-preziosi']
+                    ?.qualifiche
+                    ? {
+                        qualification: licensesAndRegistersRaw[
+                          'registro-preziosi'
+                        ]?.qualifiche?.qualifica
+                          ? {
+                              code:
+                                licensesAndRegistersRaw['registro-preziosi']
+                                  ?.qualifiche?.qualifica?.c ?? null,
+                            }
+                          : null,
+                      }
+                    : null,
+                  publicSecurityAuthorization: licensesAndRegistersRaw[
+                    'registro-preziosi'
+                  ]?.['autorizzazione-ps']
+                    ? {
+                        number: this.toNumber(
+                          licensesAndRegistersRaw['registro-preziosi']?.[
+                            'autorizzazione-ps'
+                          ]?.n,
+                        ),
+                        date:
+                          licensesAndRegistersRaw['registro-preziosi']?.[
+                            'autorizzazione-ps'
+                          ]?.dt ?? null,
+                      }
+                    : null,
                   taxStamp: licensesAndRegistersRaw['registro-preziosi']?.[
                     'tassa-cg'
                   ]
@@ -1828,33 +2012,32 @@ export class CompanyManager {
                   brand:
                     licensesAndRegistersRaw['registro-preziosi']?.marchio ??
                     null,
-                  roleCancellation:
-                    licensesAndRegistersRaw['registro-preziosi']?.[
-                      'cancellazione-ruolo'
-                    ]
-                      ? {
-                          reasonCode:
-                            licensesAndRegistersRaw['registro-preziosi']?.[
-                              'cancellazione-ruolo'
-                            ]?.['c-causale'] ?? null,
-                          reason:
-                            licensesAndRegistersRaw['registro-preziosi']?.[
-                              'cancellazione-ruolo'
-                            ]?.causale ?? null,
-                          applicationDate:
-                            licensesAndRegistersRaw['registro-preziosi']?.[
-                              'cancellazione-ruolo'
-                            ]?.['dt-domanda'] ?? null,
-                          resolutionDate:
-                            licensesAndRegistersRaw['registro-preziosi']?.[
-                              'cancellazione-ruolo'
-                            ]?.['dt-delibera'] ?? null,
-                          cessationDate:
-                            licensesAndRegistersRaw['registro-preziosi']?.[
-                              'cancellazione-ruolo'
-                            ]?.['dt-cessazione'] ?? null,
-                        }
-                      : null,
+                  roleCancellation: licensesAndRegistersRaw[
+                    'registro-preziosi'
+                  ]?.['cancellazione-ruolo']
+                    ? {
+                        reasonCode:
+                          licensesAndRegistersRaw['registro-preziosi']?.[
+                            'cancellazione-ruolo'
+                          ]?.['c-causale'] ?? null,
+                        reason:
+                          licensesAndRegistersRaw['registro-preziosi']?.[
+                            'cancellazione-ruolo'
+                          ]?.causale ?? null,
+                        applicationDate:
+                          licensesAndRegistersRaw['registro-preziosi']?.[
+                            'cancellazione-ruolo'
+                          ]?.['dt-domanda'] ?? null,
+                        resolutionDate:
+                          licensesAndRegistersRaw['registro-preziosi']?.[
+                            'cancellazione-ruolo'
+                          ]?.['dt-delibera'] ?? null,
+                        cessationDate:
+                          licensesAndRegistersRaw['registro-preziosi']?.[
+                            'cancellazione-ruolo'
+                          ]?.['dt-cessazione'] ?? null,
+                      }
+                    : null,
                   number: this.toNumber(
                     licensesAndRegistersRaw['registro-preziosi']?.n,
                   ),
@@ -1864,412 +2047,402 @@ export class CompanyManager {
                     ] ?? null,
                 }
               : null,
-            businessStartNotifications:
-              licensesAndRegistersRaw['denunce-inizio-attivita']
-                ? {
-                    notifications: this.toArray(
-                      licensesAndRegistersRaw['denunce-inizio-attivita']?.[
-                        'denuncia-inizio-attivita'
-                      ],
-                    ).map((item) => ({
-                      typeCode: item['c-tipo'] ?? null,
-                      type: item.tipo ?? null,
-                      notificationDate: item['dt-denuncia'] ?? null,
-                      issuingBodyCode: item['c-ente-rilascio'] ?? null,
-                      issuingBody: item['ente-rilascio'] ?? null,
-                    })),
-                  }
-                : null,
-            licenses: licensesAndRegistersRaw.licenze
+            businessStartNotifications: licensesAndRegistersRaw[
+              'denunce-inizio-attivita'
+            ]
               ? {
-                  licenses: this.toArray(licensesAndRegistersRaw.licenze?.licenza).map(
-                    (item) => ({
-                      undocumentedInfo: item['info-non-documentata'] ?? null,
-                      bakeryLicense: item['molini-panificatori']
-                        ? {
-                            bakerySection: item['molini-panificatori']
-                              ?.panificatori
-                              ? {
-                                  plantCharacteristics1:
-                                    item['molini-panificatori']?.panificatori?.[
-                                      'caratteristiche-impianto-1'
-                                    ]
-                                      ? {
-                                          nominalCapacityQuintals:
-                                            item['molini-panificatori']
-                                              ?.panificatori?.[
-                                              'caratteristiche-impianto-1'
-                                            ]?.['quintali-potenza-nominale'] ??
-                                            null,
-                                          heatingType:
-                                            item['molini-panificatori']
-                                              ?.panificatori?.[
-                                              'caratteristiche-impianto-1'
-                                            ]?.['tipo-riscaldamento'] ?? null,
-                                          fuelType:
-                                            item['molini-panificatori']
-                                              ?.panificatori?.[
-                                              'caratteristiche-impianto-1'
-                                            ]?.['tipo-combustibile'] ?? null,
-                                        }
-                                      : null,
-                                  plantCharacteristics2:
-                                    item['molini-panificatori']?.panificatori?.[
-                                      'caratteristiche-impianto-2'
-                                    ]
-                                      ? {
-                                          nominalCapacityQuintals:
-                                            item['molini-panificatori']
-                                              ?.panificatori?.[
-                                              'caratteristiche-impianto-2'
-                                            ]?.['quintali-potenza-nominale'] ??
-                                            null,
-                                          heatingType:
-                                            item['molini-panificatori']
-                                              ?.panificatori?.[
-                                              'caratteristiche-impianto-2'
-                                            ]?.['tipo-riscaldamento'] ?? null,
-                                          fuelType:
-                                            item['molini-panificatori']
-                                              ?.panificatori?.[
-                                              'caratteristiche-impianto-2'
-                                            ]?.['tipo-combustibile'] ?? null,
-                                        }
-                                      : null,
-                                  equipment: item['molini-panificatori']
-                                    ?.panificatori?.apparecchi
-                                    ? {
-                                        kneaders: this.toNumber(
-                                          item['molini-panificatori']
-                                            ?.panificatori?.apparecchi?.[
-                                            'n-impastatrici'
-                                          ],
-                                        ),
-                                        shaping: this.toNumber(
-                                          item['molini-panificatori']
-                                            ?.panificatori?.apparecchi?.[
-                                            'n-formatrici'
-                                          ],
-                                        ),
-                                        breadstickMachines: this.toNumber(
-                                          item['molini-panificatori']
-                                            ?.panificatori?.apparecchi?.[
-                                            'n-grissinatrici'
-                                          ],
-                                        ),
-                                        dividers: this.toNumber(
-                                          item['molini-panificatori']
-                                            ?.panificatori?.apparecchi?.[
-                                            'n-spezzatrici'
-                                          ],
-                                        ),
-                                        laminators: this.toNumber(
-                                          item['molini-panificatori']
-                                            ?.panificatori?.apparecchi?.[
-                                            'n-laminatoi'
-                                          ],
-                                        ),
-                                      }
-                                    : null,
-                                }
-                              : null,
-                            millSection: item['molini-panificatori']?.molini
-                              ? {
-                                  cerealCapacities:
-                                    item['molini-panificatori']?.molini?.[
-                                      'potenze-cereali-macchinari'
-                                    ]
-                                      ? {
-                                          entries: this.toArray(
-                                            item['molini-panificatori']
-                                              ?.molini?.[
-                                              'potenze-cereali-macchinari'
-                                            ]?.['potenza-cereali-macchinari'],
-                                          ).map((capacity) => ({
-                                            machinery: capacity.macchinari
-                                              ? {
-                                                  characteristic1:
-                                                    capacity.macchinari?.[
-                                                      'caratteristica-1'
-                                                    ] ?? null,
-                                                  characteristic2:
-                                                    capacity.macchinari?.[
-                                                      'caratteristica-2'
-                                                    ] ?? null,
-                                                  characteristic3:
-                                                    capacity.macchinari?.[
-                                                      'caratteristica-3'
-                                                    ] ?? null,
-                                                  characteristic4:
-                                                    capacity.macchinari?.[
-                                                      'caratteristica-4'
-                                                    ] ?? null,
-                                                  cleaningMachinesFlag:
-                                                    this.toYesNoFlag(
-                                                      capacity.macchinari?.[
-                                                        'f-apparecchi-pulitura'
-                                                      ],
-                                                    ) ?? null,
-                                                }
-                                              : null,
-                                            nominalCapacityQuintals:
-                                              capacity[
-                                                'quintali-potenza-nominale'
-                                              ] ?? null,
-                                            actualCapacityQuintals:
-                                              capacity[
-                                                'quintali-potenza-reale'
-                                              ] ?? null,
-                                            cerealType:
-                                              capacity['tipo-cereale'] ?? null,
-                                            otherCerealType:
-                                              capacity['altro-tipo-cereale'] ??
-                                              null,
-                                          })),
-                                        }
-                                      : null,
-                                  storage: item['molini-panificatori']?.molini
-                                    ?.stoccaggio
-                                    ? {
-                                        warehouses:
-                                          item['molini-panificatori']?.molini
-                                            ?.stoccaggio?.magazzini ?? null,
-                                        silos:
-                                          item['molini-panificatori']?.molini
-                                            ?.stoccaggio?.silos ?? null,
-                                      }
-                                    : null,
-                                  category:
-                                    item['molini-panificatori']?.molini
-                                      ?.categoria ?? null,
-                                }
-                              : null,
-                            typeCode:
-                              item['molini-panificatori']?.['c-tipo'] ?? null,
-                            type: item['molini-panificatori']?.tipo ?? null,
-                            number: this.toNumber(
-                              item['molini-panificatori']?.n,
-                            ),
-                            enrollmentDate:
-                              item['molini-panificatori']?.['dt-iscrizione'] ??
-                              null,
-                            status: item['molini-panificatori']?.stato ?? null,
-                            management:
-                              item['molini-panificatori']?.conduzione ?? null,
-                            name:
-                              item['molini-panificatori']?.denominazione ??
-                              null,
-                            startDate:
-                              item['molini-panificatori']?.[
-                                'dt-inizio-rapporto'
-                              ] ?? null,
-                            endDate:
-                              item['molini-panificatori']?.['dt-fine-rapporto'] ??
-                              null,
-                          }
-                        : null,
-                      licenseAuthorization: item['licenza-autorizzazione']
-                        ? {
-                            issuingAuthorityCode:
-                              item['licenza-autorizzazione']?.[
-                                'c-autorita-rilascio'
-                              ] ?? null,
-                            issuingAuthority:
-                              item['licenza-autorizzazione']?.[
-                                'autorita-rilascio'
-                              ] ?? null,
-                            number: this.toNumber(
-                              item['licenza-autorizzazione']?.n,
-                            ),
-                            enrollmentDate:
-                              item['licenza-autorizzazione']?.[
-                                'dt-iscrizione'
-                              ] ?? null,
-                            code: item['licenza-autorizzazione']?.c ?? null,
-                            type:
-                              item['licenza-autorizzazione']?.tipo ?? null,
-                          }
-                        : null,
-                      licenseIndex: item['p-licenza'] ?? null,
-                      undocumentedFlag:
-                        this.toYesNoFlag(item['f-non-documentata']) ?? null,
-                      undocumentedCode: item['c-non-documentata'] ?? null,
-                    }),
-                  ),
+                  notifications: this.toArray(
+                    licensesAndRegistersRaw['denunce-inizio-attivita']?.[
+                      'denuncia-inizio-attivita'
+                    ],
+                  ).map((item) => ({
+                    typeCode: item['c-tipo'] ?? null,
+                    type: item.tipo ?? null,
+                    notificationDate: item['dt-denuncia'] ?? null,
+                    issuingBodyCode: item['c-ente-rilascio'] ?? null,
+                    issuingBody: item['ente-rilascio'] ?? null,
+                  })),
                 }
               : null,
-            moralRequirements:
-              licensesAndRegistersRaw['requisiti-morali-professionali']
-                ? {
-                    requirements: this.toArray(
-                      licensesAndRegistersRaw[
-                        'requisiti-morali-professionali'
-                      ]?.['requisito-morale-professionale'],
-                    ).map((item) => ({
-                      typeCode: item['c-tipo'] ?? null,
-                      type: item.tipo ?? null,
-                      statusCode: item['c-stato'] ?? null,
-                      status: item.stato ?? null,
-                      entityCode: item['c-ente'] ?? null,
-                      entity: item.ente ?? null,
-                      notificationDate: item['dt-denuncia'] ?? null,
-                      assessmentDate: item['dt-accertamento'] ?? null,
-                      expiryDate: item['dt-decadenza'] ?? null,
-                      additionalDetails: item['ulteriori-specifiche'] ?? null,
-                    })),
-                  }
-                : null,
-            retailTrade: licensesAndRegistersRaw['commercio-dettaglio']
+            licenses: licensesAndRegistersRaw.licenze
               ? {
-                  additionalInfo:
-                    licensesAndRegistersRaw['commercio-dettaglio']?.[
-                      'integrazione-informazioni'
-                    ]
+                  licenses: this.toArray(
+                    licensesAndRegistersRaw.licenze?.licenza,
+                  ).map((item) => ({
+                    undocumentedInfo: item['info-non-documentata'] ?? null,
+                    bakeryLicense: item['molini-panificatori']
                       ? {
-                          specialTables:
-                            licensesAndRegistersRaw['commercio-dettaglio']?.[
-                              'integrazione-informazioni'
-                            ]?.['tabelle-speciali']
-                              ? {
-                                  text:
-                                    this.getXmlText(
-                                      licensesAndRegistersRaw[
-                                        'commercio-dettaglio'
-                                      ]?.['integrazione-informazioni']?.[
-                                        'tabelle-speciali'
-                                      ],
-                                    ) ?? null,
-                                  pharmacyFlag:
-                                    this.toYesNoFlag(
-                                      licensesAndRegistersRaw[
-                                        'commercio-dettaglio'
-                                      ]?.['integrazione-informazioni']?.[
-                                        'tabelle-speciali'
-                                      ]?.['f-farmacia'],
-                                    ) ?? null,
-                                  tobaccoSalesFlag:
-                                    this.toYesNoFlag(
-                                      licensesAndRegistersRaw[
-                                        'commercio-dettaglio'
-                                      ]?.['integrazione-informazioni']?.[
-                                        'tabelle-speciali'
-                                      ]?.['f-vendita-generi-monopolio'],
-                                    ) ?? null,
-                                  fuelSalesFlag:
-                                    this.toYesNoFlag(
-                                      licensesAndRegistersRaw[
-                                        'commercio-dettaglio'
-                                      ]?.['integrazione-informazioni']?.[
-                                        'tabelle-speciali'
-                                      ]?.['f-vendita-carburanti'],
-                                    ) ?? null,
-                                  squareMeters:
-                                    licensesAndRegistersRaw[
-                                      'commercio-dettaglio'
-                                    ]?.['integrazione-informazioni']?.[
-                                      'tabelle-speciali'
-                                    ]?.mq ?? null,
-                                }
-                              : null,
-                          notes: this.toArray(
-                            licensesAndRegistersRaw['commercio-dettaglio']?.[
-                              'integrazione-informazioni'
-                            ]?.note,
-                          ).map((note) => String(note)),
-                          businessCessation:
-                            licensesAndRegistersRaw['commercio-dettaglio']?.[
-                              'integrazione-informazioni'
-                            ]?.['cessazione-esercizio']
-                              ? {
-                                  notes: this.toArray(
-                                    licensesAndRegistersRaw[
-                                      'commercio-dettaglio'
-                                    ]?.['integrazione-informazioni']?.[
-                                      'cessazione-esercizio'
-                                    ]?.note,
-                                  ).map((note) => String(note)),
-                                  cessationDate:
-                                    licensesAndRegistersRaw[
-                                      'commercio-dettaglio'
-                                    ]?.['integrazione-informazioni']?.[
-                                      'cessazione-esercizio'
-                                    ]?.['dt-cessazione'] ?? null,
-                                  effectDate:
-                                    licensesAndRegistersRaw[
-                                      'commercio-dettaglio'
-                                    ]?.['integrazione-informazioni']?.[
-                                      'cessazione-esercizio'
-                                    ]?.['dt-decorrenza'] ?? null,
-                                }
-                              : null,
-                          insertionDate:
-                            licensesAndRegistersRaw['commercio-dettaglio']?.[
-                              'integrazione-informazioni'
-                            ]?.['dt-inserimento'] ?? null,
-                          effectDate:
-                            licensesAndRegistersRaw['commercio-dettaglio']?.[
-                              'integrazione-informazioni'
-                            ]?.['dt-decorrenza'] ?? null,
-                          requestTypeCode:
-                            licensesAndRegistersRaw['commercio-dettaglio']?.[
-                              'integrazione-informazioni'
-                            ]?.['c-tipo-domanda'] ?? null,
-                          requestType:
-                            licensesAndRegistersRaw['commercio-dettaglio']?.[
-                              'integrazione-informazioni'
-                            ]?.['tipo-domanda'] ?? null,
-                          authorizationNumber: this.toNumber(
-                            licensesAndRegistersRaw['commercio-dettaglio']?.[
-                              'integrazione-informazioni'
-                            ]?.['n-autorizzazione'],
-                          ),
-                          presentationDate:
-                            licensesAndRegistersRaw['commercio-dettaglio']?.[
-                              'integrazione-informazioni'
-                            ]?.['dt-presentazione'] ?? null,
-                          municipalityCode:
-                            licensesAndRegistersRaw['commercio-dettaglio']?.[
-                              'integrazione-informazioni'
-                            ]?.['c-comune-presentazione'] ?? null,
-                          municipality:
-                            licensesAndRegistersRaw['commercio-dettaglio']?.[
-                              'integrazione-informazioni'
-                            ]?.['comune-presentazione'] ?? null,
-                          province:
-                            licensesAndRegistersRaw['commercio-dettaglio']?.[
-                              'integrazione-informazioni'
-                            ]?.['provincia-presentazione'] ?? null,
-                          protocolNumber: this.toNumber(
-                            licensesAndRegistersRaw['commercio-dettaglio']?.[
-                              'integrazione-informazioni'
-                            ]?.['n-protocollo'],
-                          ),
-                          facilityTypeCode:
-                            licensesAndRegistersRaw['commercio-dettaglio']?.[
-                              'integrazione-informazioni'
-                            ]?.['c-struttura-esercizio'] ?? null,
-                          facilityType:
-                            licensesAndRegistersRaw['commercio-dettaglio']?.[
-                              'integrazione-informazioni'
-                            ]?.['struttura-esercizio'] ?? null,
-                          foodSalesAreaSqm:
-                            licensesAndRegistersRaw['commercio-dettaglio']?.[
-                              'integrazione-informazioni'
-                            ]?.['mq-vendita-alimentare'] ?? null,
-                          nonFoodSalesAreaSqm:
-                            licensesAndRegistersRaw['commercio-dettaglio']?.[
-                              'integrazione-informazioni'
-                            ]?.['mq-vendita-non-alimentare'] ?? null,
-                          facilityAreaSqm:
-                            licensesAndRegistersRaw['commercio-dettaglio']?.[
-                              'integrazione-informazioni'
-                            ]?.['mq-esercizio'] ?? null,
-                          shoppingCenter:
-                            licensesAndRegistersRaw['commercio-dettaglio']?.[
-                              'integrazione-informazioni'
-                            ]?.['centro-commerciale'] ?? null,
+                          bakerySection: item['molini-panificatori']
+                            ?.panificatori
+                            ? {
+                                plantCharacteristics1: item[
+                                  'molini-panificatori'
+                                ]?.panificatori?.['caratteristiche-impianto-1']
+                                  ? {
+                                      nominalCapacityQuintals:
+                                        item['molini-panificatori']
+                                          ?.panificatori?.[
+                                          'caratteristiche-impianto-1'
+                                        ]?.['quintali-potenza-nominale'] ??
+                                        null,
+                                      heatingType:
+                                        item['molini-panificatori']
+                                          ?.panificatori?.[
+                                          'caratteristiche-impianto-1'
+                                        ]?.['tipo-riscaldamento'] ?? null,
+                                      fuelType:
+                                        item['molini-panificatori']
+                                          ?.panificatori?.[
+                                          'caratteristiche-impianto-1'
+                                        ]?.['tipo-combustibile'] ?? null,
+                                    }
+                                  : null,
+                                plantCharacteristics2: item[
+                                  'molini-panificatori'
+                                ]?.panificatori?.['caratteristiche-impianto-2']
+                                  ? {
+                                      nominalCapacityQuintals:
+                                        item['molini-panificatori']
+                                          ?.panificatori?.[
+                                          'caratteristiche-impianto-2'
+                                        ]?.['quintali-potenza-nominale'] ??
+                                        null,
+                                      heatingType:
+                                        item['molini-panificatori']
+                                          ?.panificatori?.[
+                                          'caratteristiche-impianto-2'
+                                        ]?.['tipo-riscaldamento'] ?? null,
+                                      fuelType:
+                                        item['molini-panificatori']
+                                          ?.panificatori?.[
+                                          'caratteristiche-impianto-2'
+                                        ]?.['tipo-combustibile'] ?? null,
+                                    }
+                                  : null,
+                                equipment: item['molini-panificatori']
+                                  ?.panificatori?.apparecchi
+                                  ? {
+                                      kneaders: this.toNumber(
+                                        item['molini-panificatori']
+                                          ?.panificatori?.apparecchi?.[
+                                          'n-impastatrici'
+                                        ],
+                                      ),
+                                      shaping: this.toNumber(
+                                        item['molini-panificatori']
+                                          ?.panificatori?.apparecchi?.[
+                                          'n-formatrici'
+                                        ],
+                                      ),
+                                      breadstickMachines: this.toNumber(
+                                        item['molini-panificatori']
+                                          ?.panificatori?.apparecchi?.[
+                                          'n-grissinatrici'
+                                        ],
+                                      ),
+                                      dividers: this.toNumber(
+                                        item['molini-panificatori']
+                                          ?.panificatori?.apparecchi?.[
+                                          'n-spezzatrici'
+                                        ],
+                                      ),
+                                      laminators: this.toNumber(
+                                        item['molini-panificatori']
+                                          ?.panificatori?.apparecchi?.[
+                                          'n-laminatoi'
+                                        ],
+                                      ),
+                                    }
+                                  : null,
+                              }
+                            : null,
+                          millSection: item['molini-panificatori']?.molini
+                            ? {
+                                cerealCapacities: item['molini-panificatori']
+                                  ?.molini?.['potenze-cereali-macchinari']
+                                  ? {
+                                      entries: this.toArray(
+                                        item['molini-panificatori']?.molini?.[
+                                          'potenze-cereali-macchinari'
+                                        ]?.['potenza-cereali-macchinari'],
+                                      ).map((capacity) => ({
+                                        machinery: capacity.macchinari
+                                          ? {
+                                              characteristic1:
+                                                capacity.macchinari?.[
+                                                  'caratteristica-1'
+                                                ] ?? null,
+                                              characteristic2:
+                                                capacity.macchinari?.[
+                                                  'caratteristica-2'
+                                                ] ?? null,
+                                              characteristic3:
+                                                capacity.macchinari?.[
+                                                  'caratteristica-3'
+                                                ] ?? null,
+                                              characteristic4:
+                                                capacity.macchinari?.[
+                                                  'caratteristica-4'
+                                                ] ?? null,
+                                              cleaningMachinesFlag:
+                                                this.toYesNoFlag(
+                                                  capacity.macchinari?.[
+                                                    'f-apparecchi-pulitura'
+                                                  ],
+                                                ) ?? null,
+                                            }
+                                          : null,
+                                        nominalCapacityQuintals:
+                                          capacity[
+                                            'quintali-potenza-nominale'
+                                          ] ?? null,
+                                        actualCapacityQuintals:
+                                          capacity['quintali-potenza-reale'] ??
+                                          null,
+                                        cerealType:
+                                          capacity['tipo-cereale'] ?? null,
+                                        otherCerealType:
+                                          capacity['altro-tipo-cereale'] ??
+                                          null,
+                                      })),
+                                    }
+                                  : null,
+                                storage: item['molini-panificatori']?.molini
+                                  ?.stoccaggio
+                                  ? {
+                                      warehouses:
+                                        item['molini-panificatori']?.molini
+                                          ?.stoccaggio?.magazzini ?? null,
+                                      silos:
+                                        item['molini-panificatori']?.molini
+                                          ?.stoccaggio?.silos ?? null,
+                                    }
+                                  : null,
+                                category:
+                                  item['molini-panificatori']?.molini
+                                    ?.categoria ?? null,
+                              }
+                            : null,
+                          typeCode:
+                            item['molini-panificatori']?.['c-tipo'] ?? null,
+                          type: item['molini-panificatori']?.tipo ?? null,
+                          number: this.toNumber(item['molini-panificatori']?.n),
+                          enrollmentDate:
+                            item['molini-panificatori']?.['dt-iscrizione'] ??
+                            null,
+                          status: item['molini-panificatori']?.stato ?? null,
+                          management:
+                            item['molini-panificatori']?.conduzione ?? null,
+                          name:
+                            item['molini-panificatori']?.denominazione ?? null,
+                          startDate:
+                            item['molini-panificatori']?.[
+                              'dt-inizio-rapporto'
+                            ] ?? null,
+                          endDate:
+                            item['molini-panificatori']?.['dt-fine-rapporto'] ??
+                            null,
                         }
                       : null,
+                    licenseAuthorization: item['licenza-autorizzazione']
+                      ? {
+                          issuingAuthorityCode:
+                            item['licenza-autorizzazione']?.[
+                              'c-autorita-rilascio'
+                            ] ?? null,
+                          issuingAuthority:
+                            item['licenza-autorizzazione']?.[
+                              'autorita-rilascio'
+                            ] ?? null,
+                          number: this.toNumber(
+                            item['licenza-autorizzazione']?.n,
+                          ),
+                          enrollmentDate:
+                            item['licenza-autorizzazione']?.['dt-iscrizione'] ??
+                            null,
+                          code: item['licenza-autorizzazione']?.c ?? null,
+                          type: item['licenza-autorizzazione']?.tipo ?? null,
+                        }
+                      : null,
+                    licenseIndex: item['p-licenza'] ?? null,
+                    undocumentedFlag:
+                      this.toYesNoFlag(item['f-non-documentata']) ?? null,
+                    undocumentedCode: item['c-non-documentata'] ?? null,
+                  })),
+                }
+              : null,
+            moralRequirements: licensesAndRegistersRaw[
+              'requisiti-morali-professionali'
+            ]
+              ? {
+                  requirements: this.toArray(
+                    licensesAndRegistersRaw['requisiti-morali-professionali']?.[
+                      'requisito-morale-professionale'
+                    ],
+                  ).map((item) => ({
+                    typeCode: item['c-tipo'] ?? null,
+                    type: item.tipo ?? null,
+                    statusCode: item['c-stato'] ?? null,
+                    status: item.stato ?? null,
+                    entityCode: item['c-ente'] ?? null,
+                    entity: item.ente ?? null,
+                    notificationDate: item['dt-denuncia'] ?? null,
+                    assessmentDate: item['dt-accertamento'] ?? null,
+                    expiryDate: item['dt-decadenza'] ?? null,
+                    additionalDetails: item['ulteriori-specifiche'] ?? null,
+                  })),
+                }
+              : null,
+            retailTrade: licensesAndRegistersRaw['commercio-dettaglio']
+              ? {
+                  additionalInfo: licensesAndRegistersRaw[
+                    'commercio-dettaglio'
+                  ]?.['integrazione-informazioni']
+                    ? {
+                        specialTables: licensesAndRegistersRaw[
+                          'commercio-dettaglio'
+                        ]?.['integrazione-informazioni']?.['tabelle-speciali']
+                          ? {
+                              text:
+                                this.getXmlText(
+                                  licensesAndRegistersRaw[
+                                    'commercio-dettaglio'
+                                  ]?.['integrazione-informazioni']?.[
+                                    'tabelle-speciali'
+                                  ],
+                                ) ?? null,
+                              pharmacyFlag:
+                                this.toYesNoFlag(
+                                  licensesAndRegistersRaw[
+                                    'commercio-dettaglio'
+                                  ]?.['integrazione-informazioni']?.[
+                                    'tabelle-speciali'
+                                  ]?.['f-farmacia'],
+                                ) ?? null,
+                              tobaccoSalesFlag:
+                                this.toYesNoFlag(
+                                  licensesAndRegistersRaw[
+                                    'commercio-dettaglio'
+                                  ]?.['integrazione-informazioni']?.[
+                                    'tabelle-speciali'
+                                  ]?.['f-vendita-generi-monopolio'],
+                                ) ?? null,
+                              fuelSalesFlag:
+                                this.toYesNoFlag(
+                                  licensesAndRegistersRaw[
+                                    'commercio-dettaglio'
+                                  ]?.['integrazione-informazioni']?.[
+                                    'tabelle-speciali'
+                                  ]?.['f-vendita-carburanti'],
+                                ) ?? null,
+                              squareMeters:
+                                licensesAndRegistersRaw[
+                                  'commercio-dettaglio'
+                                ]?.['integrazione-informazioni']?.[
+                                  'tabelle-speciali'
+                                ]?.mq ?? null,
+                            }
+                          : null,
+                        notes: this.toArray(
+                          licensesAndRegistersRaw['commercio-dettaglio']?.[
+                            'integrazione-informazioni'
+                          ]?.note,
+                        ).map((note) => String(note)),
+                        businessCessation: licensesAndRegistersRaw[
+                          'commercio-dettaglio'
+                        ]?.['integrazione-informazioni']?.[
+                          'cessazione-esercizio'
+                        ]
+                          ? {
+                              notes: this.toArray(
+                                licensesAndRegistersRaw[
+                                  'commercio-dettaglio'
+                                ]?.['integrazione-informazioni']?.[
+                                  'cessazione-esercizio'
+                                ]?.note,
+                              ).map((note) => String(note)),
+                              cessationDate:
+                                licensesAndRegistersRaw[
+                                  'commercio-dettaglio'
+                                ]?.['integrazione-informazioni']?.[
+                                  'cessazione-esercizio'
+                                ]?.['dt-cessazione'] ?? null,
+                              effectDate:
+                                licensesAndRegistersRaw[
+                                  'commercio-dettaglio'
+                                ]?.['integrazione-informazioni']?.[
+                                  'cessazione-esercizio'
+                                ]?.['dt-decorrenza'] ?? null,
+                            }
+                          : null,
+                        insertionDate:
+                          licensesAndRegistersRaw['commercio-dettaglio']?.[
+                            'integrazione-informazioni'
+                          ]?.['dt-inserimento'] ?? null,
+                        effectDate:
+                          licensesAndRegistersRaw['commercio-dettaglio']?.[
+                            'integrazione-informazioni'
+                          ]?.['dt-decorrenza'] ?? null,
+                        requestTypeCode:
+                          licensesAndRegistersRaw['commercio-dettaglio']?.[
+                            'integrazione-informazioni'
+                          ]?.['c-tipo-domanda'] ?? null,
+                        requestType:
+                          licensesAndRegistersRaw['commercio-dettaglio']?.[
+                            'integrazione-informazioni'
+                          ]?.['tipo-domanda'] ?? null,
+                        authorizationNumber: this.toNumber(
+                          licensesAndRegistersRaw['commercio-dettaglio']?.[
+                            'integrazione-informazioni'
+                          ]?.['n-autorizzazione'],
+                        ),
+                        presentationDate:
+                          licensesAndRegistersRaw['commercio-dettaglio']?.[
+                            'integrazione-informazioni'
+                          ]?.['dt-presentazione'] ?? null,
+                        municipalityCode:
+                          licensesAndRegistersRaw['commercio-dettaglio']?.[
+                            'integrazione-informazioni'
+                          ]?.['c-comune-presentazione'] ?? null,
+                        municipality:
+                          licensesAndRegistersRaw['commercio-dettaglio']?.[
+                            'integrazione-informazioni'
+                          ]?.['comune-presentazione'] ?? null,
+                        province:
+                          licensesAndRegistersRaw['commercio-dettaglio']?.[
+                            'integrazione-informazioni'
+                          ]?.['provincia-presentazione'] ?? null,
+                        protocolNumber: this.toNumber(
+                          licensesAndRegistersRaw['commercio-dettaglio']?.[
+                            'integrazione-informazioni'
+                          ]?.['n-protocollo'],
+                        ),
+                        facilityTypeCode:
+                          licensesAndRegistersRaw['commercio-dettaglio']?.[
+                            'integrazione-informazioni'
+                          ]?.['c-struttura-esercizio'] ?? null,
+                        facilityType:
+                          licensesAndRegistersRaw['commercio-dettaglio']?.[
+                            'integrazione-informazioni'
+                          ]?.['struttura-esercizio'] ?? null,
+                        foodSalesAreaSqm:
+                          licensesAndRegistersRaw['commercio-dettaglio']?.[
+                            'integrazione-informazioni'
+                          ]?.['mq-vendita-alimentare'] ?? null,
+                        nonFoodSalesAreaSqm:
+                          licensesAndRegistersRaw['commercio-dettaglio']?.[
+                            'integrazione-informazioni'
+                          ]?.['mq-vendita-non-alimentare'] ?? null,
+                        facilityAreaSqm:
+                          licensesAndRegistersRaw['commercio-dettaglio']?.[
+                            'integrazione-informazioni'
+                          ]?.['mq-esercizio'] ?? null,
+                        shoppingCenter:
+                          licensesAndRegistersRaw['commercio-dettaglio']?.[
+                            'integrazione-informazioni'
+                          ]?.['centro-commerciale'] ?? null,
+                      }
+                    : null,
                   declarationDate:
                     licensesAndRegistersRaw['commercio-dettaglio']?.[
                       'dt-dichiarazione'
@@ -2342,188 +2515,174 @@ export class CompanyManager {
                   ),
                 }
               : null,
-            regionalCooperativeRegister:
-              licensesAndRegistersRaw['albo-regionale-coop-sociali']
-                ? {
-                    sections:
-                      licensesAndRegistersRaw[
-                        'albo-regionale-coop-sociali'
-                      ]?.sezioni
-                        ? {
-                            sections: this.toArray(
-                              licensesAndRegistersRaw[
-                                'albo-regionale-coop-sociali'
-                              ]?.sezioni?.sezione,
-                            ).map((section) => ({
-                              code: section.c ?? null,
-                              description: section.descrizione ?? null,
-                              enrollmentDate: section['dt-iscrizione'] ?? null,
-                              lastCommunicationDate:
-                                section['dt-ultima-comunicazione'] ?? null,
-                              directFarmerFlag:
-                                this.toYesNoFlag(
-                                  section['f-coltivatore-diretto'],
-                                ) ?? null,
-                              aaChamberdCode: section['cciaa-aa'] ?? null,
-                              aaNumber: this.toNumber(section['n-aa']),
-                              pendingDecisionFlag:
-                                this.toYesNoFlag(
-                                  section['f-attesa-decisione'],
-                                ) ?? null,
-                              effectDate: section['dt-decorrenza'] ?? null,
-                            })),
-                          }
-                        : null,
-                    interventionAreas:
-                      licensesAndRegistersRaw[
-                        'albo-regionale-coop-sociali'
-                      ]?.['aree-intervento']
-                        ? {
-                            areas: this.toArray(
-                              licensesAndRegistersRaw[
-                                'albo-regionale-coop-sociali'
-                              ]?.['aree-intervento']?.['area-intervento'],
-                            ).map((area) => ({
-                              description: this.getXmlText(area) ?? null,
-                              code: area.c ?? null,
-                            })),
-                          }
-                        : null,
-                    registerDescription:
-                      licensesAndRegistersRaw['albo-regionale-coop-sociali']?.[
-                        'desc-albo'
-                      ] ?? null,
-                    enrollmentDate:
-                      licensesAndRegistersRaw['albo-regionale-coop-sociali']?.[
-                        'dt-iscrizione'
-                      ] ?? null,
-                    cancellationDate:
-                      licensesAndRegistersRaw['albo-regionale-coop-sociali']?.[
-                        'dt-cancellazione'
-                      ] ?? null,
-                  }
-                : null,
+            regionalCooperativeRegister: licensesAndRegistersRaw[
+              'albo-regionale-coop-sociali'
+            ]
+              ? {
+                  sections: licensesAndRegistersRaw[
+                    'albo-regionale-coop-sociali'
+                  ]?.sezioni
+                    ? {
+                        sections: this.toArray(
+                          licensesAndRegistersRaw['albo-regionale-coop-sociali']
+                            ?.sezioni?.sezione,
+                        ).map((section) => ({
+                          code: section.c ?? null,
+                          description: section.descrizione ?? null,
+                          enrollmentDate: section['dt-iscrizione'] ?? null,
+                          lastCommunicationDate:
+                            section['dt-ultima-comunicazione'] ?? null,
+                          directFarmerFlag:
+                            this.toYesNoFlag(
+                              section['f-coltivatore-diretto'],
+                            ) ?? null,
+                          aaChamberdCode: section['cciaa-aa'] ?? null,
+                          aaNumber: this.toNumber(section['n-aa']),
+                          pendingDecisionFlag:
+                            this.toYesNoFlag(section['f-attesa-decisione']) ??
+                            null,
+                          effectDate: section['dt-decorrenza'] ?? null,
+                        })),
+                      }
+                    : null,
+                  interventionAreas: licensesAndRegistersRaw[
+                    'albo-regionale-coop-sociali'
+                  ]?.['aree-intervento']
+                    ? {
+                        areas: this.toArray(
+                          licensesAndRegistersRaw[
+                            'albo-regionale-coop-sociali'
+                          ]?.['aree-intervento']?.['area-intervento'],
+                        ).map((area) => ({
+                          description: this.getXmlText(area) ?? null,
+                          code: area.c ?? null,
+                        })),
+                      }
+                    : null,
+                  registerDescription:
+                    licensesAndRegistersRaw['albo-regionale-coop-sociali']?.[
+                      'desc-albo'
+                    ] ?? null,
+                  enrollmentDate:
+                    licensesAndRegistersRaw['albo-regionale-coop-sociali']?.[
+                      'dt-iscrizione'
+                    ] ?? null,
+                  cancellationDate:
+                    licensesAndRegistersRaw['albo-regionale-coop-sociali']?.[
+                      'dt-cancellazione'
+                    ] ?? null,
+                }
+              : null,
             brandAssignees: licensesAndRegistersRaw['assegnatari-marchio']
               ? {
-                  enrollment:
-                    licensesAndRegistersRaw['assegnatari-marchio']?.iscrizione
-                      ? {
-                          typeCode:
-                            licensesAndRegistersRaw['assegnatari-marchio']
-                              ?.iscrizione?.['c-tipo'] ?? null,
-                          type:
-                            licensesAndRegistersRaw['assegnatari-marchio']
-                              ?.iscrizione?.tipo ?? null,
-                          enrollmentDate:
-                            licensesAndRegistersRaw['assegnatari-marchio']
-                              ?.iscrizione?.['dt-iscrizione'] ?? null,
-                          brandNumber: this.toNumber(
-                            licensesAndRegistersRaw['assegnatari-marchio']
-                              ?.iscrizione?.['n-marchio'],
-                          ),
-                          chamberCode:
-                            licensesAndRegistersRaw['assegnatari-marchio']
-                              ?.iscrizione?.cciaa ?? null,
-                          assignmentDate:
-                            licensesAndRegistersRaw['assegnatari-marchio']
-                              ?.iscrizione?.['dt-assegnazione'] ?? null,
-                          categoryCode:
-                            licensesAndRegistersRaw['assegnatari-marchio']
-                              ?.iscrizione?.['c-categoria'] ?? null,
-                          category:
-                            licensesAndRegistersRaw['assegnatari-marchio']
-                              ?.iscrizione?.categoria ?? null,
-                        }
-                      : null,
-                  cancellation:
-                    licensesAndRegistersRaw['assegnatari-marchio']
-                      ?.cancellazione
-                      ? {
-                          deedDetails:
-                            licensesAndRegistersRaw['assegnatari-marchio']
-                              ?.cancellazione?.['estremi-atto']
-                              ? {
-                                  court:
-                                    licensesAndRegistersRaw[
-                                      'assegnatari-marchio'
-                                    ]?.cancellazione?.['estremi-atto']
-                                      ?.tribunale ?? null,
-                                  notary:
-                                    licensesAndRegistersRaw[
-                                      'assegnatari-marchio'
-                                    ]?.cancellazione?.['estremi-atto']
-                                      ?.notaio ?? null,
-                                  otherIndications:
-                                    licensesAndRegistersRaw[
-                                      'assegnatari-marchio'
-                                    ]?.cancellazione?.['estremi-atto']?.[
-                                      'altre-indicazioni'
-                                    ] ?? null,
-                                  registrationDate:
-                                    licensesAndRegistersRaw[
-                                      'assegnatari-marchio'
-                                    ]?.cancellazione?.['estremi-atto']?.[
-                                      'dt-registrazione'
-                                    ] ?? null,
-                                  registrationNumber: this.toNumber(
-                                    licensesAndRegistersRaw[
-                                      'assegnatari-marchio'
-                                    ]?.cancellazione?.['estremi-atto']?.[
-                                      'n-registrazione'
-                                    ],
-                                  ),
-                                  registryOfficeLocality:
-                                    licensesAndRegistersRaw[
-                                      'assegnatari-marchio'
-                                    ]?.cancellazione?.['estremi-atto']?.[
-                                      'localita-ufficio-registro'
-                                    ] ?? null,
-                                  registryOfficeProvince:
-                                    licensesAndRegistersRaw[
-                                      'assegnatari-marchio'
-                                    ]?.cancellazione?.['estremi-atto']?.[
-                                      'provincia-ufficio-registro'
-                                    ] ?? null,
-                                  type:
-                                    licensesAndRegistersRaw[
-                                      'assegnatari-marchio'
-                                    ]?.cancellazione?.['estremi-atto']?.tipo ??
-                                    null,
-                                  typeCode:
-                                    licensesAndRegistersRaw[
-                                      'assegnatari-marchio'
-                                    ]?.cancellazione?.['estremi-atto']?.[
-                                      'c-tipo'
-                                    ] ?? null,
-                                }
-                              : null,
-                          cessationInfo:
-                            licensesAndRegistersRaw['assegnatari-marchio']
-                              ?.cancellazione?.['info-cessazione'] ?? null,
-                          cancellationDate:
-                            licensesAndRegistersRaw['assegnatari-marchio']
-                              ?.cancellazione?.['dt-cancellazione'] ?? null,
-                          cessationDate:
-                            licensesAndRegistersRaw['assegnatari-marchio']
-                              ?.cancellazione?.['dt-cessazione'] ?? null,
-                          applicationDate:
-                            licensesAndRegistersRaw['assegnatari-marchio']
-                              ?.cancellazione?.['dt-domanda'] ?? null,
-                          notificationDate:
-                            licensesAndRegistersRaw['assegnatari-marchio']
-                              ?.cancellazione?.['dt-denuncia'] ?? null,
-                          reasonCode:
-                            licensesAndRegistersRaw['assegnatari-marchio']
-                              ?.cancellazione?.['c-causale'] ?? null,
-                          reason:
-                            licensesAndRegistersRaw['assegnatari-marchio']
-                              ?.cancellazione?.causale ?? null,
-                          activityCessationDate:
-                            licensesAndRegistersRaw['assegnatari-marchio']
-                              ?.cancellazione?.['dt-cessazione-attivita'] ??
-                            null,
-                        }
-                      : null,
+                  enrollment: licensesAndRegistersRaw['assegnatari-marchio']
+                    ?.iscrizione
+                    ? {
+                        typeCode:
+                          licensesAndRegistersRaw['assegnatari-marchio']
+                            ?.iscrizione?.['c-tipo'] ?? null,
+                        type:
+                          licensesAndRegistersRaw['assegnatari-marchio']
+                            ?.iscrizione?.tipo ?? null,
+                        enrollmentDate:
+                          licensesAndRegistersRaw['assegnatari-marchio']
+                            ?.iscrizione?.['dt-iscrizione'] ?? null,
+                        brandNumber: this.toNumber(
+                          licensesAndRegistersRaw['assegnatari-marchio']
+                            ?.iscrizione?.['n-marchio'],
+                        ),
+                        chamberCode:
+                          licensesAndRegistersRaw['assegnatari-marchio']
+                            ?.iscrizione?.cciaa ?? null,
+                        assignmentDate:
+                          licensesAndRegistersRaw['assegnatari-marchio']
+                            ?.iscrizione?.['dt-assegnazione'] ?? null,
+                        categoryCode:
+                          licensesAndRegistersRaw['assegnatari-marchio']
+                            ?.iscrizione?.['c-categoria'] ?? null,
+                        category:
+                          licensesAndRegistersRaw['assegnatari-marchio']
+                            ?.iscrizione?.categoria ?? null,
+                      }
+                    : null,
+                  cancellation: licensesAndRegistersRaw['assegnatari-marchio']
+                    ?.cancellazione
+                    ? {
+                        deedDetails: licensesAndRegistersRaw[
+                          'assegnatari-marchio'
+                        ]?.cancellazione?.['estremi-atto']
+                          ? {
+                              court:
+                                licensesAndRegistersRaw['assegnatari-marchio']
+                                  ?.cancellazione?.['estremi-atto']
+                                  ?.tribunale ?? null,
+                              notary:
+                                licensesAndRegistersRaw['assegnatari-marchio']
+                                  ?.cancellazione?.['estremi-atto']?.notaio ??
+                                null,
+                              otherIndications:
+                                licensesAndRegistersRaw['assegnatari-marchio']
+                                  ?.cancellazione?.['estremi-atto']?.[
+                                  'altre-indicazioni'
+                                ] ?? null,
+                              registrationDate:
+                                licensesAndRegistersRaw['assegnatari-marchio']
+                                  ?.cancellazione?.['estremi-atto']?.[
+                                  'dt-registrazione'
+                                ] ?? null,
+                              registrationNumber: this.toNumber(
+                                licensesAndRegistersRaw['assegnatari-marchio']
+                                  ?.cancellazione?.['estremi-atto']?.[
+                                  'n-registrazione'
+                                ],
+                              ),
+                              registryOfficeLocality:
+                                licensesAndRegistersRaw['assegnatari-marchio']
+                                  ?.cancellazione?.['estremi-atto']?.[
+                                  'localita-ufficio-registro'
+                                ] ?? null,
+                              registryOfficeProvince:
+                                licensesAndRegistersRaw['assegnatari-marchio']
+                                  ?.cancellazione?.['estremi-atto']?.[
+                                  'provincia-ufficio-registro'
+                                ] ?? null,
+                              type:
+                                licensesAndRegistersRaw['assegnatari-marchio']
+                                  ?.cancellazione?.['estremi-atto']?.tipo ??
+                                null,
+                              typeCode:
+                                licensesAndRegistersRaw['assegnatari-marchio']
+                                  ?.cancellazione?.['estremi-atto']?.[
+                                  'c-tipo'
+                                ] ?? null,
+                            }
+                          : null,
+                        cessationInfo:
+                          licensesAndRegistersRaw['assegnatari-marchio']
+                            ?.cancellazione?.['info-cessazione'] ?? null,
+                        cancellationDate:
+                          licensesAndRegistersRaw['assegnatari-marchio']
+                            ?.cancellazione?.['dt-cancellazione'] ?? null,
+                        cessationDate:
+                          licensesAndRegistersRaw['assegnatari-marchio']
+                            ?.cancellazione?.['dt-cessazione'] ?? null,
+                        applicationDate:
+                          licensesAndRegistersRaw['assegnatari-marchio']
+                            ?.cancellazione?.['dt-domanda'] ?? null,
+                        notificationDate:
+                          licensesAndRegistersRaw['assegnatari-marchio']
+                            ?.cancellazione?.['dt-denuncia'] ?? null,
+                        reasonCode:
+                          licensesAndRegistersRaw['assegnatari-marchio']
+                            ?.cancellazione?.['c-causale'] ?? null,
+                        reason:
+                          licensesAndRegistersRaw['assegnatari-marchio']
+                            ?.cancellazione?.causale ?? null,
+                        activityCessationDate:
+                          licensesAndRegistersRaw['assegnatari-marchio']
+                            ?.cancellazione?.['dt-cessazione-attivita'] ?? null,
+                      }
+                    : null,
                 }
               : null,
             environmentalDeclarations: {
@@ -2533,25 +2692,25 @@ export class CompanyManager {
                 ],
               ).map((item) => ({
                 registrationDetails: {
-                  details: this.toArray(item['dettagli-iscrizione']?.['dettaglio-iscrizione']).map(
-                    (detail) => ({
-                      startDate: detail['dt-inizio'] ?? null,
-                      issueDate: detail['dt-emissione'] ?? null,
-                      expiryDate: detail['dt-scadenza'] ?? null,
-                      detailStatus: detail['stato-dettaglio'] ?? null,
-                      statusStartDate: detail['dt-inizio-stato'] ?? null,
-                      statusEndDate: detail['dt-fine-stato'] ?? null,
-                      additionalDetails: {
-                        details: this.toArray(detail['ulteriori-dettagli']?.['ulteriore-dettaglio']).map(
-                          (additionalDetail) => ({
-                            text: additionalDetail['#text'] ?? null,
-                            typeCode: additionalDetail['c-tipo'] ?? null,
-                            type: additionalDetail.tipo ?? null,
-                          })
-                        )
-                      }
-                    }
-                  )),
+                  details: this.toArray(
+                    item['dettagli-iscrizione']?.['dettaglio-iscrizione'],
+                  ).map((detail) => ({
+                    startDate: detail['dt-inizio'] ?? null,
+                    issueDate: detail['dt-emissione'] ?? null,
+                    expiryDate: detail['dt-scadenza'] ?? null,
+                    detailStatus: detail['stato-dettaglio'] ?? null,
+                    statusStartDate: detail['dt-inizio-stato'] ?? null,
+                    statusEndDate: detail['dt-fine-stato'] ?? null,
+                    additionalDetails: {
+                      details: this.toArray(
+                        detail['ulteriori-dettagli']?.['ulteriore-dettaglio'],
+                      ).map((additionalDetail) => ({
+                        text: additionalDetail['#text'] ?? null,
+                        typeCode: additionalDetail['c-tipo'] ?? null,
+                        type: additionalDetail.tipo ?? null,
+                      })),
+                    },
+                  })),
                 },
                 typeCode: item['c-tipo'] ?? null,
                 type: item.tipo ?? null,
@@ -2667,9 +2826,9 @@ export class CompanyManager {
                           shareholdersListRaw['capitale-sociale']?.sottoscritto
                             ?.ammontare ?? null,
                         amountInEuros:
-                          shareholdersListRaw['capitale-sociale']?.sottoscritto?.[
-                            'ammontare-convertito-in-euro'
-                          ] ?? null,
+                          shareholdersListRaw['capitale-sociale']
+                            ?.sottoscritto?.['ammontare-convertito-in-euro'] ??
+                          null,
                       }
                     : null,
                   paidAmount: shareholdersListRaw['capitale-sociale']?.versato
@@ -2715,54 +2874,54 @@ export class CompanyManager {
               : null,
             frames: shareholdersListRaw.riquadri
               ? {
-                  frames: this.toArray(shareholdersListRaw.riquadri?.riquadro).map(
-                    (frame) => ({
-                      deedType: frame['tipo-atto']
-                        ? {
-                            description: this.getXmlText(frame['tipo-atto']),
-                            code: frame['tipo-atto']?.c ?? null,
-                          }
-                        : null,
-                      shareComposition: mapShareComposition(
-                        frame['composizione-quote'],
-                      ),
-                      shareRestrictions: this.toArray(
-                        frame['vincoli-quote'],
-                      ).map((item) => String(item)),
-                      holders: mapHolders(frame.titolari),
-                      participationRights: frame['diritti-partecipazione']
-                        ? {
-                            rights: this.toArray(
-                              frame['diritti-partecipazione']?.[
-                                'diritto-partecipazione'
-                              ],
-                            ).map((right) => ({
-                              participationRoles: this.toArray(
-                                right['ruolo-partecipazione'],
-                              ).map((role) => ({
-                                description: this.getXmlText(role) ?? null,
-                                code: role.c ?? null,
-                              })),
-                              typeCode: right['c-tipo'] ?? null,
-                              type: right.tipo ?? null,
-                              fractionNumerator:
-                                right['frazione-numeratore'] ?? null,
-                              fractionDenominator:
-                                right['frazione-denominatore'] ?? null,
-                              percentage: right.percentuale ?? null,
-                              currencyCode: right['c-valuta'] ?? null,
-                              currency: right.valuta ?? null,
-                              value: right.valore ?? null,
+                  frames: this.toArray(
+                    shareholdersListRaw.riquadri?.riquadro,
+                  ).map((frame) => ({
+                    deedType: frame['tipo-atto']
+                      ? {
+                          description: this.getXmlText(frame['tipo-atto']),
+                          code: frame['tipo-atto']?.c ?? null,
+                        }
+                      : null,
+                    shareComposition: mapShareComposition(
+                      frame['composizione-quote'],
+                    ),
+                    shareRestrictions: this.toArray(frame['vincoli-quote']).map(
+                      (item) => String(item),
+                    ),
+                    holders: mapHolders(frame.titolari),
+                    participationRights: frame['diritti-partecipazione']
+                      ? {
+                          rights: this.toArray(
+                            frame['diritti-partecipazione']?.[
+                              'diritto-partecipazione'
+                            ],
+                          ).map((right) => ({
+                            participationRoles: this.toArray(
+                              right['ruolo-partecipazione'],
+                            ).map((role) => ({
+                              description: this.getXmlText(role) ?? null,
+                              code: role.c ?? null,
                             })),
-                          }
-                        : null,
-                      notes: this.toArray(frame.note).map((item) => String(item)),
-                      code: frame.c ?? null,
-                      occurrences: this.toNumber(frame['n-ricorrenze']),
-                      annotationDate: frame['dt-annotazione'] ?? null,
-                      eventDate: frame['dt-evento'] ?? null,
-                    }),
-                  ),
+                            typeCode: right['c-tipo'] ?? null,
+                            type: right.tipo ?? null,
+                            fractionNumerator:
+                              right['frazione-numeratore'] ?? null,
+                            fractionDenominator:
+                              right['frazione-denominatore'] ?? null,
+                            percentage: right.percentuale ?? null,
+                            currencyCode: right['c-valuta'] ?? null,
+                            currency: right.valuta ?? null,
+                            value: right.valore ?? null,
+                          })),
+                        }
+                      : null,
+                    notes: this.toArray(frame.note).map((item) => String(item)),
+                    code: frame.c ?? null,
+                    occurrences: this.toNumber(frame['n-ricorrenze']),
+                    annotationDate: frame['dt-annotazione'] ?? null,
+                    eventDate: frame['dt-evento'] ?? null,
+                  })),
                 }
               : null,
             notes: this.toArray(shareholdersListRaw.note).map((item) =>
@@ -2813,31 +2972,32 @@ export class CompanyManager {
                     isClosed:
                       shareholder['anagrafica-titolare']?.['f-cessata'] ?? null,
                     cancellationDate:
-                      shareholder['anagrafica-titolare']?.['dt-cancellazione'] ??
-                      null,
+                      shareholder['anagrafica-titolare']?.[
+                        'dt-cancellazione'
+                      ] ?? null,
                   }
                 : null,
               sharesAndRights: {
-                rights: this.toArray(shareholder['quote-diritti']?.['quota-diritto']).map(
-                  (right) => ({
-                    rightTypeCode: right['c-tipo-diritto'] ?? null,
-                    rightType: right['tipo-diritto'] ?? null,
-                    numShares: this.toNumber(right['n-azioni']),
-                    nominalValue: right['valore-nominale'] ?? null,
-                    capitalPercentage: right['percentuale-capitale'] ?? null,
-                  }),
-                ),
+                rights: this.toArray(
+                  shareholder['quote-diritti']?.['quota-diritto'],
+                ).map((right) => ({
+                  rightTypeCode: right['c-tipo-diritto'] ?? null,
+                  rightType: right['tipo-diritto'] ?? null,
+                  numShares: this.toNumber(right['n-azioni']),
+                  nominalValue: right['valore-nominale'] ?? null,
+                  capitalPercentage: right['percentuale-capitale'] ?? null,
+                })),
               },
             }),
           ),
         },
         shareholderNotes: {
-          notes: this.toArray(shareholdersTableRaw?.['note-elenco-soci']?.['nota-elenco-soci']).map(
-            (note) => ({
-              text: this.getXmlText(note) ?? null,
-              code: note.c ?? null,
-            }),
-          ),
+          notes: this.toArray(
+            shareholdersTableRaw?.['note-elenco-soci']?.['nota-elenco-soci'],
+          ).map((note) => ({
+            text: this.getXmlText(note) ?? null,
+            code: note.c ?? null,
+          })),
         },
       },
       shareholdersBookAnnotations: shareholdersBookAnnotationsRaw
@@ -2845,7 +3005,9 @@ export class CompanyManager {
             annotations: this.toArray(
               shareholdersBookAnnotationsRaw['annotazione-libro-soci'],
             ).map((annotation) => ({
-              practiceDetails: mapPracticeDetails(annotation['estremi-pratica']),
+              practiceDetails: mapPracticeDetails(
+                annotation['estremi-pratica'],
+              ),
               confirmedPracticeDetails: mapConfirmedPracticeDetails(
                 annotation['estremi-pratica-riconfermata'],
               ),
@@ -2865,11 +3027,13 @@ export class CompanyManager {
                       shareComposition: mapShareComposition(
                         frame['composizione-quote'],
                       ),
-                      shareRestrictions: this.toArray(frame['vincoli-quote']).map(
-                        (item) => String(item),
-                      ),
+                      shareRestrictions: this.toArray(
+                        frame['vincoli-quote'],
+                      ).map((item) => String(item)),
                       holders: mapHolders(frame.titolari),
-                      notes: this.toArray(frame.note).map((item) => String(item)),
+                      notes: this.toArray(frame.note).map((item) =>
+                        String(item),
+                      ),
                       annotationDate: frame['dt-annotazione'] ?? null,
                       eventDate: frame['dt-evento'] ?? null,
                     })),
@@ -2888,9 +3052,13 @@ export class CompanyManager {
               controllingSubjects: practice['soggetti-controllanti']
                 ? {
                     subjects: this.toArray(
-                      practice['soggetti-controllanti']?.['soggetto-controllante'],
+                      practice['soggetti-controllanti']?.[
+                        'soggetto-controllante'
+                      ],
                     ).map((subject) => ({
-                      notes: this.toArray(subject.note).map((item) => String(item)),
+                      notes: this.toArray(subject.note).map((item) =>
+                        String(item),
+                      ),
                       name: subject.denominazione ?? null,
                       taxCode: subject['c-fiscale'] ?? null,
                       incorporationDate: subject['dt-costituzione'] ?? null,
@@ -2910,8 +3078,9 @@ export class CompanyManager {
               notes: this.toArray(practice.note).map((item) => String(item)),
             })),
             flagInfo:
-              this.toYesNoFlag(controllingSubjectsPracticesRaw['f-presenza-info']) ??
-              null,
+              this.toYesNoFlag(
+                controllingSubjectsPracticesRaw['f-presenza-info'],
+              ) ?? null,
           }
         : null,
       subsidiaryCompaniesTable: subsidiaryCompaniesTableRaw
@@ -2919,7 +3088,9 @@ export class CompanyManager {
             subsidiaries: this.toArray(table.partecipata).map((subsidiary) => ({
               sharesAndRights: {
                 rights: this.toArray(
-                  subsidiary['quote-diritti-impresa']?.['quota-diritto-impresa'],
+                  subsidiary['quote-diritti-impresa']?.[
+                    'quota-diritto-impresa'
+                  ],
                 ).map((right) => ({
                   rightTypeCode: right['c-tipo-diritto'] ?? null,
                   rightType: right['tipo-diritto'] ?? null,
@@ -2984,15 +3155,18 @@ export class CompanyManager {
                   notaryDetails: protocol.atto['estremi-notarili']
                     ? {
                         formCode:
-                          protocol.atto['estremi-notarili']?.['c-forma'] ?? null,
+                          protocol.atto['estremi-notarili']?.['c-forma'] ??
+                          null,
                         form: protocol.atto['estremi-notarili']?.forma ?? null,
-                        notary: protocol.atto['estremi-notarili']?.notaio ?? null,
+                        notary:
+                          protocol.atto['estremi-notarili']?.notaio ?? null,
                         repertoryNumber: this.toNumber(
                           protocol.atto['estremi-notarili']?.['n-repertorio'],
                         ),
                         notaryLocality:
-                          protocol.atto['estremi-notarili']?.['localita-notaio'] ??
-                          null,
+                          protocol.atto['estremi-notarili']?.[
+                            'localita-notaio'
+                          ] ?? null,
                         notaryProvince:
                           protocol.atto['estremi-notarili']?.[
                             'provincia-notaio'
@@ -3029,7 +3203,9 @@ export class CompanyManager {
                             'dt-presentazione'
                           ] ?? null,
                         protocolNumber: this.toNumber(
-                          protocol.atto['presentazione-cciaa']?.['n-protocollo'],
+                          protocol.atto['presentazione-cciaa']?.[
+                            'n-protocollo'
+                          ],
                         ),
                       }
                     : null,
@@ -3079,8 +3255,9 @@ export class CompanyManager {
                     transcriptionType: transcription['tipo-trascrizione']
                       ? {
                           text:
-                            this.getXmlText(transcription['tipo-trascrizione']) ??
-                            null,
+                            this.getXmlText(
+                              transcription['tipo-trascrizione'],
+                            ) ?? null,
                           transcriptionTypeCode:
                             transcription['tipo-trascrizione']?.[
                               'c-tipo-trascrizione'
@@ -3130,81 +3307,82 @@ export class CompanyManager {
                       occurrences: this.toNumber(template['n-ricorrenze']),
                     })),
                   },
-                  registerTranscriptions:
-                    protocol['modelli-trascrizioni']?.['trascrizioni-ri']
-                      ? {
-                          transcriptions: this.toArray(
-                            protocol['modelli-trascrizioni']?.[
-                              'trascrizioni-ri'
-                            ]?.['trascrizione-ri'],
-                          ).map((transcription) => ({
-                            person: (transcription.persona as any) ?? null,
-                            transcriptionType:
-                              transcription['tipo-trascrizione']
-                                ? {
-                                    text:
-                                      this.getXmlText(
-                                        transcription['tipo-trascrizione'],
-                                      ) ?? null,
-                                    transcriptionTypeCode:
-                                      transcription['tipo-trascrizione']?.[
-                                        'c-tipo-trascrizione'
-                                      ] ?? null,
-                                    modificationTypeCode:
-                                      transcription['tipo-trascrizione']?.[
-                                        'c-tipo-modifica'
-                                      ] ?? null,
-                                    modificationType:
-                                      transcription['tipo-trascrizione']?.[
-                                        'tipo-modifica'
-                                      ] ?? null,
-                                  }
-                                : null,
-                            descriptions: {
-                              descriptions: this.toArray(
-                                transcription.descrizioni?.descrizione,
-                              ).map((item) => String(item)),
-                            },
-                            enrollmentModification:
-                              transcription['iscrizione-modifica']
-                                ? {
-                                    enrollmentTypeCode:
-                                      transcription['iscrizione-modifica']?.[
-                                        'c-tipo-iscrizione'
-                                      ] ?? null,
-                                    enrollmentType:
-                                      transcription['iscrizione-modifica']?.[
-                                        'tipo-iscrizione'
-                                      ] ?? null,
-                                    filingDate:
-                                      transcription['iscrizione-modifica']?.[
-                                        'dt-deposito'
-                                      ] ?? null,
-                                    enrollmentDate:
-                                      transcription['iscrizione-modifica']?.[
-                                        'dt-iscrizione'
-                                      ] ?? null,
-                                    correctionFlag:
-                                      this.toYesNoFlag(
-                                        transcription['iscrizione-modifica']?.[
-                                          'f-rettifica'
-                                        ],
-                                      ) ?? null,
-                                    correctionDate:
-                                      transcription['iscrizione-modifica']?.[
-                                        'dt-rettifica'
-                                      ] ?? null,
-                                  }
-                                : null,
-                            transcriptionIndex:
-                              transcription['p-trascrizione'] ?? null,
-                            modificationTypeCode:
-                              transcription['c-tipo-modifica'] ?? null,
-                            modificationType:
-                              transcription['tipo-modifica'] ?? null,
-                          })),
-                        }
-                      : null,
+                  registerTranscriptions: protocol['modelli-trascrizioni']?.[
+                    'trascrizioni-ri'
+                  ]
+                    ? {
+                        transcriptions: this.toArray(
+                          protocol['modelli-trascrizioni']?.[
+                            'trascrizioni-ri'
+                          ]?.['trascrizione-ri'],
+                        ).map((transcription) => ({
+                          person: (transcription.persona as any) ?? null,
+                          transcriptionType: transcription['tipo-trascrizione']
+                            ? {
+                                text:
+                                  this.getXmlText(
+                                    transcription['tipo-trascrizione'],
+                                  ) ?? null,
+                                transcriptionTypeCode:
+                                  transcription['tipo-trascrizione']?.[
+                                    'c-tipo-trascrizione'
+                                  ] ?? null,
+                                modificationTypeCode:
+                                  transcription['tipo-trascrizione']?.[
+                                    'c-tipo-modifica'
+                                  ] ?? null,
+                                modificationType:
+                                  transcription['tipo-trascrizione']?.[
+                                    'tipo-modifica'
+                                  ] ?? null,
+                              }
+                            : null,
+                          descriptions: {
+                            descriptions: this.toArray(
+                              transcription.descrizioni?.descrizione,
+                            ).map((item) => String(item)),
+                          },
+                          enrollmentModification: transcription[
+                            'iscrizione-modifica'
+                          ]
+                            ? {
+                                enrollmentTypeCode:
+                                  transcription['iscrizione-modifica']?.[
+                                    'c-tipo-iscrizione'
+                                  ] ?? null,
+                                enrollmentType:
+                                  transcription['iscrizione-modifica']?.[
+                                    'tipo-iscrizione'
+                                  ] ?? null,
+                                filingDate:
+                                  transcription['iscrizione-modifica']?.[
+                                    'dt-deposito'
+                                  ] ?? null,
+                                enrollmentDate:
+                                  transcription['iscrizione-modifica']?.[
+                                    'dt-iscrizione'
+                                  ] ?? null,
+                                correctionFlag:
+                                  this.toYesNoFlag(
+                                    transcription['iscrizione-modifica']?.[
+                                      'f-rettifica'
+                                    ],
+                                  ) ?? null,
+                                correctionDate:
+                                  transcription['iscrizione-modifica']?.[
+                                    'dt-rettifica'
+                                  ] ?? null,
+                              }
+                            : null,
+                          transcriptionIndex:
+                            transcription['p-trascrizione'] ?? null,
+                          modificationTypeCode:
+                            transcription['c-tipo-modifica'] ?? null,
+                          modificationType:
+                            transcription['tipo-modifica'] ?? null,
+                        })),
+                      }
+                    : null,
                 }
               : null,
             deedTranscriptions: protocol['atti-trascrizioni']
@@ -3219,7 +3397,8 @@ export class CompanyManager {
                                 formCode:
                                   item.atto['estremi-notarili']?.['c-forma'] ??
                                   null,
-                                form: item.atto['estremi-notarili']?.forma ?? null,
+                                form:
+                                  item.atto['estremi-notarili']?.forma ?? null,
                                 notary:
                                   item.atto['estremi-notarili']?.notaio ?? null,
                                 repertoryNumber: this.toNumber(
@@ -3242,18 +3421,24 @@ export class CompanyManager {
                                 homologationDate:
                                   item.atto.omologazione?.['dt-omologazione'] ??
                                   null,
-                                number: this.toNumber(item.atto.omologazione?.n),
+                                number: this.toNumber(
+                                  item.atto.omologazione?.n,
+                                ),
                               }
                             : null,
                           registration: item.atto.registrazione
                             ? {
                                 registrationDate:
-                                  item.atto.registrazione?.['dt-registrazione'] ??
-                                  null,
-                                number: this.toNumber(item.atto.registrazione?.n),
+                                  item.atto.registrazione?.[
+                                    'dt-registrazione'
+                                  ] ?? null,
+                                number: this.toNumber(
+                                  item.atto.registrazione?.n,
+                                ),
                                 registryOffice:
-                                  item.atto.registrazione?.['ufficio-registro'] ??
-                                  null,
+                                  item.atto.registrazione?.[
+                                    'ufficio-registro'
+                                  ] ?? null,
                                 registryOfficeProvince:
                                   item.atto.registrazione?.[
                                     'provincia-ufficio-registro'
@@ -3273,7 +3458,9 @@ export class CompanyManager {
                                 ),
                               }
                             : null,
-                          enrollmentModification: item.atto['iscrizione-modifica']
+                          enrollmentModification: item.atto[
+                            'iscrizione-modifica'
+                          ]
                             ? {
                                 enrollmentTypeCode:
                                   item.atto['iscrizione-modifica']?.[
@@ -3306,7 +3493,8 @@ export class CompanyManager {
                           code: item.atto.c ?? null,
                           typeCode: item.atto['c-tipo'] ?? null,
                           type: item.atto.tipo ?? null,
-                          typeDescription: item.atto['descrizione-tipo'] ?? null,
+                          typeDescription:
+                            item.atto['descrizione-tipo'] ?? null,
                           deedDate: item.atto['dt-atto'] ?? null,
                         }
                       : null,
@@ -3316,63 +3504,65 @@ export class CompanyManager {
                             item['trascrizioni-ri']?.['trascrizione-ri'],
                           ).map((transcription) => ({
                             person: (transcription.persona as any) ?? null,
-                            transcriptionType:
-                              transcription['tipo-trascrizione']
-                                ? {
-                                    text:
-                                      this.getXmlText(
-                                        transcription['tipo-trascrizione'],
-                                      ) ?? null,
-                                    transcriptionTypeCode:
-                                      transcription['tipo-trascrizione']?.[
-                                        'c-tipo-trascrizione'
-                                      ] ?? null,
-                                    modificationTypeCode:
-                                      transcription['tipo-trascrizione']?.[
-                                        'c-tipo-modifica'
-                                      ] ?? null,
-                                    modificationType:
-                                      transcription['tipo-trascrizione']?.[
-                                        'tipo-modifica'
-                                      ] ?? null,
-                                  }
-                                : null,
+                            transcriptionType: transcription[
+                              'tipo-trascrizione'
+                            ]
+                              ? {
+                                  text:
+                                    this.getXmlText(
+                                      transcription['tipo-trascrizione'],
+                                    ) ?? null,
+                                  transcriptionTypeCode:
+                                    transcription['tipo-trascrizione']?.[
+                                      'c-tipo-trascrizione'
+                                    ] ?? null,
+                                  modificationTypeCode:
+                                    transcription['tipo-trascrizione']?.[
+                                      'c-tipo-modifica'
+                                    ] ?? null,
+                                  modificationType:
+                                    transcription['tipo-trascrizione']?.[
+                                      'tipo-modifica'
+                                    ] ?? null,
+                                }
+                              : null,
                             descriptions: {
                               descriptions: this.toArray(
                                 transcription.descrizioni?.descrizione,
                               ).map((desc) => String(desc)),
                             },
-                            enrollmentModification:
-                              transcription['iscrizione-modifica']
-                                ? {
-                                    enrollmentTypeCode:
+                            enrollmentModification: transcription[
+                              'iscrizione-modifica'
+                            ]
+                              ? {
+                                  enrollmentTypeCode:
+                                    transcription['iscrizione-modifica']?.[
+                                      'c-tipo-iscrizione'
+                                    ] ?? null,
+                                  enrollmentType:
+                                    transcription['iscrizione-modifica']?.[
+                                      'tipo-iscrizione'
+                                    ] ?? null,
+                                  filingDate:
+                                    transcription['iscrizione-modifica']?.[
+                                      'dt-deposito'
+                                    ] ?? null,
+                                  enrollmentDate:
+                                    transcription['iscrizione-modifica']?.[
+                                      'dt-iscrizione'
+                                    ] ?? null,
+                                  correctionFlag:
+                                    this.toYesNoFlag(
                                       transcription['iscrizione-modifica']?.[
-                                        'c-tipo-iscrizione'
-                                      ] ?? null,
-                                    enrollmentType:
-                                      transcription['iscrizione-modifica']?.[
-                                        'tipo-iscrizione'
-                                      ] ?? null,
-                                    filingDate:
-                                      transcription['iscrizione-modifica']?.[
-                                        'dt-deposito'
-                                      ] ?? null,
-                                    enrollmentDate:
-                                      transcription['iscrizione-modifica']?.[
-                                        'dt-iscrizione'
-                                      ] ?? null,
-                                    correctionFlag:
-                                      this.toYesNoFlag(
-                                        transcription['iscrizione-modifica']?.[
-                                          'f-rettifica'
-                                        ],
-                                      ) ?? null,
-                                    correctionDate:
-                                      transcription['iscrizione-modifica']?.[
-                                        'dt-rettifica'
-                                      ] ?? null,
-                                  }
-                                : null,
+                                        'f-rettifica'
+                                      ],
+                                    ) ?? null,
+                                  correctionDate:
+                                    transcription['iscrizione-modifica']?.[
+                                      'dt-rettifica'
+                                    ] ?? null,
+                                }
+                              : null,
                             transcriptionIndex:
                               transcription['p-trascrizione'] ?? null,
                             modificationTypeCode:
@@ -3391,10 +3581,12 @@ export class CompanyManager {
             ),
             year: protocol.anno ?? null,
             protocolDate: protocol['dt-protocollo'] ?? null,
-            interchamberCommunicationNumber:
-              this.toNumber(protocol['n-comunicazione-intercamerale']),
-            interchamberProtocolNumber:
-              this.toNumber(protocol['n-protocollo-intercamerale']),
+            interchamberCommunicationNumber: this.toNumber(
+              protocol['n-comunicazione-intercamerale'],
+            ),
+            interchamberProtocolNumber: this.toNumber(
+              protocol['n-protocollo-intercamerale'],
+            ),
             interchamberCommunicationYear:
               protocol['anno-comunicazione-intercam'] ?? null,
             interchamberProtocolYear:
@@ -3465,24 +3657,23 @@ export class CompanyManager {
         ? {
             sections: registerEnrollmentRaw.sezioni
               ? {
-                  sections: this.toArray(registerEnrollmentRaw.sezioni?.sezione).map(
-                    (section) => ({
-                      code: section.c ?? null,
-                      description: section.descrizione ?? null,
-                      enrollmentDate: section['dt-iscrizione'] ?? null,
-                      lastCommunicationDate:
-                        section['dt-ultima-comunicazione'] ?? null,
-                      directFarmerFlag:
-                        this.toYesNoFlag(section['f-coltivatore-diretto']) ??
-                        null,
-                      aaChamberdCode: section['cciaa-aa'] ?? null,
-                      aaNumber: this.toNumber(section['n-aa']),
-                      pendingDecisionFlag:
-                        this.toYesNoFlag(section['f-attesa-decisione']) ??
-                        null,
-                      effectDate: section['dt-decorrenza'] ?? null,
-                    }),
-                  ),
+                  sections: this.toArray(
+                    registerEnrollmentRaw.sezioni?.sezione,
+                  ).map((section) => ({
+                    code: section.c ?? null,
+                    description: section.descrizione ?? null,
+                    enrollmentDate: section['dt-iscrizione'] ?? null,
+                    lastCommunicationDate:
+                      section['dt-ultima-comunicazione'] ?? null,
+                    directFarmerFlag:
+                      this.toYesNoFlag(section['f-coltivatore-diretto']) ??
+                      null,
+                    aaChamberdCode: section['cciaa-aa'] ?? null,
+                    aaNumber: this.toNumber(section['n-aa']),
+                    pendingDecisionFlag:
+                      this.toYesNoFlag(section['f-attesa-decisione']) ?? null,
+                    effectDate: section['dt-decorrenza'] ?? null,
+                  })),
                 }
               : null,
             riAnnotationNumber: this.toNumber(
@@ -3492,10 +3683,12 @@ export class CompanyManager {
               registerEnrollmentRaw['n-iscrizione-ri'],
             ),
             taxCodeNumber: this.toNumber(registerEnrollmentRaw['n-c-fiscale']),
-            oldRiAnnotationNumber:
-              this.toNumber(registerEnrollmentRaw['n-annotazione-ri-old']),
-            oldRiEnrollmentNumber:
-              this.toNumber(registerEnrollmentRaw['n-iscrizione-ri-old']),
+            oldRiAnnotationNumber: this.toNumber(
+              registerEnrollmentRaw['n-annotazione-ri-old'],
+            ),
+            oldRiEnrollmentNumber: this.toNumber(
+              registerEnrollmentRaw['n-iscrizione-ri-old'],
+            ),
             riProvince: registerEnrollmentRaw['provincia-ri'] ?? null,
             competentChamber: registerEnrollmentRaw['cciaa-competente'] ?? null,
             oldRiEnrollmentNumberCode:
@@ -3530,7 +3723,8 @@ export class CompanyManager {
                           ]?.['giorni-proroga-bilancio'] ?? null,
                       }
                     : null,
-                  endDate: bylawsInfoRaw['durata-societa']?.['dt-termine'] ?? null,
+                  endDate:
+                    bylawsInfoRaw['durata-societa']?.['dt-termine'] ?? null,
                   indefiniteDurationFlag:
                     this.toYesNoFlag(
                       bylawsInfoRaw['durata-societa']?.[
@@ -3550,7 +3744,9 @@ export class CompanyManager {
               ? {
                   enrollmentDate:
                     bylawsInfoRaw['iscrizione-rs']?.['dt-iscrizione'] ?? null,
-                  rsNumber: this.toNumber(bylawsInfoRaw['iscrizione-rs']?.['n-rs']),
+                  rsNumber: this.toNumber(
+                    bylawsInfoRaw['iscrizione-rs']?.['n-rs'],
+                  ),
                   volumeNumber: this.toNumber(
                     bylawsInfoRaw['iscrizione-rs']?.['n-volume'],
                   ),
@@ -3568,7 +3764,8 @@ export class CompanyManager {
             corporatePurpose: bylawsInfoRaw['oggetto-sociale'] ?? null,
             powers: bylawsInfoRaw.poteri
               ? {
-                  bylawsPowers: bylawsInfoRaw.poteri?.['poteri-statuto'] ?? null,
+                  bylawsPowers:
+                    bylawsInfoRaw.poteri?.['poteri-statuto'] ?? null,
                   rolePowers: this.toArray(
                     bylawsInfoRaw.poteri?.['poteri-carica'],
                   ).map((role) => ({
@@ -3579,41 +3776,44 @@ export class CompanyManager {
                   partnershipAgreementPowers:
                     bylawsInfoRaw.poteri?.['poteri-patti-sociali'] ?? null,
                   partnerPowers: bylawsInfoRaw.poteri?.['poteri-soci'] ?? null,
-                  jointPowers: bylawsInfoRaw.poteri?.['poteri-congiunti'] ?? null,
-                  liabilityLimitations:
-                    bylawsInfoRaw.poteri?.['limitazioni-responsabilita']
-                      ? {
-                          text:
-                            this.getXmlText(
-                              bylawsInfoRaw.poteri?.[
-                                'limitazioni-responsabilita'
-                              ],
-                            ) ?? null,
-                          inBylawsFlag:
-                            this.toYesNoFlag(
-                              bylawsInfoRaw.poteri?.[
-                                'limitazioni-responsabilita'
-                              ]?.['f-presenza-nello-statuto'],
-                            ) ?? null,
-                        }
-                      : null,
-                  profitLossDistributions:
-                    bylawsInfoRaw.poteri?.['ripartizioni-utili-perdite']
-                      ? {
-                          text:
-                            this.getXmlText(
-                              bylawsInfoRaw.poteri?.[
-                                'ripartizioni-utili-perdite'
-                              ],
-                            ) ?? null,
-                          inBylawsFlag:
-                            this.toYesNoFlag(
-                              bylawsInfoRaw.poteri?.[
-                                'ripartizioni-utili-perdite'
-                              ]?.['f-presenza-nello-statuto'],
-                            ) ?? null,
-                        }
-                      : null,
+                  jointPowers:
+                    bylawsInfoRaw.poteri?.['poteri-congiunti'] ?? null,
+                  liabilityLimitations: bylawsInfoRaw.poteri?.[
+                    'limitazioni-responsabilita'
+                  ]
+                    ? {
+                        text:
+                          this.getXmlText(
+                            bylawsInfoRaw.poteri?.[
+                              'limitazioni-responsabilita'
+                            ],
+                          ) ?? null,
+                        inBylawsFlag:
+                          this.toYesNoFlag(
+                            bylawsInfoRaw.poteri?.[
+                              'limitazioni-responsabilita'
+                            ]?.['f-presenza-nello-statuto'],
+                          ) ?? null,
+                      }
+                    : null,
+                  profitLossDistributions: bylawsInfoRaw.poteri?.[
+                    'ripartizioni-utili-perdite'
+                  ]
+                    ? {
+                        text:
+                          this.getXmlText(
+                            bylawsInfoRaw.poteri?.[
+                              'ripartizioni-utili-perdite'
+                            ],
+                          ) ?? null,
+                        inBylawsFlag:
+                          this.toYesNoFlag(
+                            bylawsInfoRaw.poteri?.[
+                              'ripartizioni-utili-perdite'
+                            ]?.['f-presenza-nello-statuto'],
+                          ) ?? null,
+                      }
+                    : null,
                 }
               : null,
             references: bylawsInfoRaw.riferimenti
@@ -3628,9 +3828,8 @@ export class CompanyManager {
                                 ) ?? null,
                               inBylawsFlag:
                                 this.toYesNoFlag(
-                                  bylawsInfoRaw.riferimenti?.clausole?.recesso?.[
-                                    'f-presenza-nello-statuto'
-                                  ],
+                                  bylawsInfoRaw.riferimenti?.clausole
+                                    ?.recesso?.['f-presenza-nello-statuto'],
                                 ) ?? null,
                             }
                           : null,
@@ -3706,8 +3905,8 @@ export class CompanyManager {
                                 this.toYesNoFlag(
                                   bylawsInfoRaw.riferimenti?.clausole
                                     ?.compromissorie?.[
-                                      'f-presenza-nello-statuto'
-                                    ],
+                                    'f-presenza-nello-statuto'
+                                  ],
                                 ) ?? null,
                             }
                           : null,
@@ -3736,22 +3935,25 @@ export class CompanyManager {
                   companyAggregation:
                     bylawsInfoRaw.riferimenti?.['aggregazione-imprese'] ?? null,
                   courtOrders:
-                    bylawsInfoRaw.riferimenti?.['provvedimenti-giudice'] ?? null,
+                    bylawsInfoRaw.riferimenti?.['provvedimenti-giudice'] ??
+                    null,
                   deferredEffects:
                     bylawsInfoRaw.riferimenti?.['effetti-differiti'] ?? null,
                   arbitration: bylawsInfoRaw.riferimenti?.arbitrato ?? null,
                   suspensiveConditions:
-                    bylawsInfoRaw.riferimenti?.['condizioni-sospensive'] ?? null,
+                    bylawsInfoRaw.riferimenti?.['condizioni-sospensive'] ??
+                    null,
                   conservatorOrders:
-                    bylawsInfoRaw.riferimenti?.[
-                      'provvedimenti-conservatore'
-                    ] ?? null,
+                    bylawsInfoRaw.riferimenti?.['provvedimenti-conservatore'] ??
+                    null,
                   authorityOrders:
-                    bylawsInfoRaw.riferimenti?.['provvedimenti-autorita'] ?? null,
+                    bylawsInfoRaw.riferimenti?.['provvedimenti-autorita'] ??
+                    null,
                   corporateGroups:
                     bylawsInfoRaw.riferimenti?.['gruppi-societari'] ?? null,
                   participationAgreements:
-                    bylawsInfoRaw.riferimenti?.['accordi-partecipazione'] ?? null,
+                    bylawsInfoRaw.riferimenti?.['accordi-partecipazione'] ??
+                    null,
                   networkContract:
                     bylawsInfoRaw.riferimenti?.['contratto-rete'] ?? null,
                   translatedDeeds:
@@ -3761,9 +3963,9 @@ export class CompanyManager {
                   ]
                     ? {
                         declarations: this.toArray(
-                          bylawsInfoRaw.riferimenti?.['dichiarazioni-start-up']?.[
-                            'dichiarazione-start-up'
-                          ],
+                          bylawsInfoRaw.riferimenti?.[
+                            'dichiarazioni-start-up'
+                          ]?.['dichiarazione-start-up'],
                         ).map((item) => ({
                           text: this.getXmlText(item) ?? null,
                           typeCode: item['c-tipo'] ?? null,
@@ -3823,7 +4025,8 @@ export class CompanyManager {
             foundationDate: bylawsInfoRaw['dt-fondazione'] ?? null,
             uniqueCommunicationDate:
               bylawsInfoRaw['dt-comunicazione-unica'] ?? null,
-            incorporationDeedDate: bylawsInfoRaw['dt-atto-costituzione'] ?? null,
+            incorporationDeedDate:
+              bylawsInfoRaw['dt-atto-costituzione'] ?? null,
             incorporationDate:
               bylawsInfoRaw['dt-costituzione'] ??
               bylawsInfoRaw['dt-atto-costituzione'] ??
@@ -3869,8 +4072,8 @@ export class CompanyManager {
             ]
               ? {
                   code:
-                    governanceAndControlRaw['soggetto-controllo-contabile']?.c ??
-                    null,
+                    governanceAndControlRaw['soggetto-controllo-contabile']
+                      ?.c ?? null,
                   text: this.getXmlText(
                     governanceAndControlRaw['soggetto-controllo-contabile'],
                   ),
@@ -3899,8 +4102,9 @@ export class CompanyManager {
               ).map((entry) => ({
                 text: this.getXmlText(entry),
                 code: entry.c ?? null,
-                numActiveAdministrators:
-                  this.toNumber(entry['n-amministratori-in-carica']),
+                numActiveAdministrators: this.toNumber(
+                  entry['n-amministratori-in-carica'],
+                ),
                 yearsOfOffice: entry['anni-durata'] ?? null,
                 durationCode: entry['c-durata'] ?? null,
                 duration: entry.durata ?? null,
@@ -3916,8 +4120,9 @@ export class CompanyManager {
               ).map((entry) => ({
                 text: this.getXmlText(entry),
                 code: entry.c ?? null,
-                numActiveAdministrators:
-                  this.toNumber(entry['n-amministratori-in-carica']),
+                numActiveAdministrators: this.toNumber(
+                  entry['n-amministratori-in-carica'],
+                ),
                 yearsOfOffice: entry['anni-durata'] ?? null,
                 durationCode: entry['c-durata'] ?? null,
                 duration: entry.durata ?? null,
@@ -3945,36 +4150,36 @@ export class CompanyManager {
                   ),
                 }
               : null,
-            activeAuditingBoard:
-              governanceAndControlRaw['collegio-sindacale-in-carica']
-                ? {
-                    numActiveMembers: this.toNumber(
-                      governanceAndControlRaw[
-                        'collegio-sindacale-in-carica'
-                      ]?.['n-in-carica'],
-                    ),
-                    yearsOfOffice:
-                      governanceAndControlRaw[
-                        'collegio-sindacale-in-carica'
-                      ]?.['anni-durata'] ?? null,
-                    durationCode:
-                      governanceAndControlRaw[
-                        'collegio-sindacale-in-carica'
-                      ]?.['c-durata'] ?? null,
-                    duration:
-                      governanceAndControlRaw[
-                        'collegio-sindacale-in-carica'
-                      ]?.durata ?? null,
-                    officeStartDate:
-                      governanceAndControlRaw[
-                        'collegio-sindacale-in-carica'
-                      ]?.['dt-inizio-carica'] ?? null,
-                    officeEndDate:
-                      governanceAndControlRaw[
-                        'collegio-sindacale-in-carica'
-                      ]?.['dt-fine-carica'] ?? null,
-                  }
-                : null,
+            activeAuditingBoard: governanceAndControlRaw[
+              'collegio-sindacale-in-carica'
+            ]
+              ? {
+                  numActiveMembers: this.toNumber(
+                    governanceAndControlRaw['collegio-sindacale-in-carica']?.[
+                      'n-in-carica'
+                    ],
+                  ),
+                  yearsOfOffice:
+                    governanceAndControlRaw['collegio-sindacale-in-carica']?.[
+                      'anni-durata'
+                    ] ?? null,
+                  durationCode:
+                    governanceAndControlRaw['collegio-sindacale-in-carica']?.[
+                      'c-durata'
+                    ] ?? null,
+                  duration:
+                    governanceAndControlRaw['collegio-sindacale-in-carica']
+                      ?.durata ?? null,
+                  officeStartDate:
+                    governanceAndControlRaw['collegio-sindacale-in-carica']?.[
+                      'dt-inizio-carica'
+                    ] ?? null,
+                  officeEndDate:
+                    governanceAndControlRaw['collegio-sindacale-in-carica']?.[
+                      'dt-fine-carica'
+                    ] ?? null,
+                }
+              : null,
           }
         : null,
       financialAndAssetInfo: financialAssetInfoRaw
@@ -4014,32 +4219,34 @@ export class CompanyManager {
                   currency:
                     financialAssetInfoRaw['fondo-consortile']?.valuta ?? null,
                   amount:
-                    financialAssetInfoRaw['fondo-consortile']?.ammontare ?? null,
+                    financialAssetInfoRaw['fondo-consortile']?.ammontare ??
+                    null,
                   amountInEuros:
                     financialAssetInfoRaw['fondo-consortile']?.[
                       'ammontare-convertito-in-euro'
                     ] ?? null,
                 }
               : null,
-            contributionNominalValue:
-              financialAssetInfoRaw['valore-nominale-conferimenti']
-                ? {
-                    currencyCode:
-                      financialAssetInfoRaw['valore-nominale-conferimenti']?.[
-                        'c-valuta'
-                      ] ?? null,
-                    currency:
-                      financialAssetInfoRaw['valore-nominale-conferimenti']
-                        ?.valuta ?? null,
-                    amount:
-                      financialAssetInfoRaw['valore-nominale-conferimenti']
-                        ?.ammontare ?? null,
-                    amountInEuros:
-                      financialAssetInfoRaw['valore-nominale-conferimenti']?.[
-                        'ammontare-convertito-in-euro'
-                      ] ?? null,
-                  }
-                : null,
+            contributionNominalValue: financialAssetInfoRaw[
+              'valore-nominale-conferimenti'
+            ]
+              ? {
+                  currencyCode:
+                    financialAssetInfoRaw['valore-nominale-conferimenti']?.[
+                      'c-valuta'
+                    ] ?? null,
+                  currency:
+                    financialAssetInfoRaw['valore-nominale-conferimenti']
+                      ?.valuta ?? null,
+                  amount:
+                    financialAssetInfoRaw['valore-nominale-conferimenti']
+                      ?.ammontare ?? null,
+                  amountInEuros:
+                    financialAssetInfoRaw['valore-nominale-conferimenti']?.[
+                      'ammontare-convertito-in-euro'
+                    ] ?? null,
+                }
+              : null,
             shareCapital: financialAssetInfoRaw['capitale-sociale']
               ? {
                   authorizedAmount: financialAssetInfoRaw['capitale-sociale']
@@ -4049,21 +4256,21 @@ export class CompanyManager {
                           financialAssetInfoRaw['capitale-sociale']?.deliberato
                             ?.ammontare ?? null,
                         amountInEuros:
-                          financialAssetInfoRaw['capitale-sociale']?.deliberato?.[
-                            'ammontare-convertito-in-euro'
-                          ] ?? null,
+                          financialAssetInfoRaw['capitale-sociale']
+                            ?.deliberato?.['ammontare-convertito-in-euro'] ??
+                          null,
                       }
                     : null,
                   subscribedAmount: financialAssetInfoRaw['capitale-sociale']
                     ?.sottoscritto
                     ? {
                         amount:
-                          financialAssetInfoRaw['capitale-sociale']?.sottoscritto
-                            ?.ammontare ?? null,
+                          financialAssetInfoRaw['capitale-sociale']
+                            ?.sottoscritto?.ammontare ?? null,
                         amountInEuros:
-                          financialAssetInfoRaw['capitale-sociale']?.sottoscritto?.[
-                            'ammontare-convertito-in-euro'
-                          ] ?? null,
+                          financialAssetInfoRaw['capitale-sociale']
+                            ?.sottoscritto?.['ammontare-convertito-in-euro'] ??
+                          null,
                       }
                     : null,
                   paidAmount: financialAssetInfoRaw['capitale-sociale']?.versato
@@ -4098,7 +4305,8 @@ export class CompanyManager {
                   currency:
                     financialAssetInfoRaw['capitale-sociale']?.valuta ?? null,
                   amount:
-                    financialAssetInfoRaw['capitale-sociale']?.ammontare ?? null,
+                    financialAssetInfoRaw['capitale-sociale']?.ammontare ??
+                    null,
                   numShares: this.toNumber(
                     financialAssetInfoRaw['capitale-sociale']?.['n-azioni'],
                   ),
@@ -4110,21 +4318,20 @@ export class CompanyManager {
             shareComposition: mapShareComposition(
               financialAssetInfoRaw['composizione-quote'],
             ),
-            benefitContributions:
-              financialAssetInfoRaw['conferimenti-benefici']
-                ? {
-                    text:
-                      this.getXmlText(
-                        financialAssetInfoRaw['conferimenti-benefici'],
-                      ) ?? null,
-                    inBylawsFlag:
-                      this.toYesNoFlag(
-                        financialAssetInfoRaw['conferimenti-benefici']?.[
-                          'f-presenza-nello-statuto'
-                        ],
-                      ) ?? null,
-                  }
-                : null,
+            benefitContributions: financialAssetInfoRaw['conferimenti-benefici']
+              ? {
+                  text:
+                    this.getXmlText(
+                      financialAssetInfoRaw['conferimenti-benefici'],
+                    ) ?? null,
+                  inBylawsFlag:
+                    this.toYesNoFlag(
+                      financialAssetInfoRaw['conferimenti-benefici']?.[
+                        'f-presenza-nello-statuto'
+                      ],
+                    ) ?? null,
+                }
+              : null,
             financialInstruments: financialAssetInfoRaw['strumenti-finanziari']
               ? {
                   ordinaryShares:
@@ -4172,34 +4379,27 @@ export class CompanyManager {
                     ? {
                         text:
                           this.getXmlText(
-                            financialAssetInfoRaw[
-                              'patrimonio-specifico-affare'
-                            ]?.modifica,
+                            financialAssetInfoRaw['patrimonio-specifico-affare']
+                              ?.modifica,
                           ) ?? null,
                         modificationIndex:
-                          financialAssetInfoRaw[
-                            'patrimonio-specifico-affare'
-                          ]?.modifica?.['p-modifica'] ?? null,
+                          financialAssetInfoRaw['patrimonio-specifico-affare']
+                            ?.modifica?.['p-modifica'] ?? null,
                         typeCode:
-                          financialAssetInfoRaw[
-                            'patrimonio-specifico-affare'
-                          ]?.modifica?.['c-tipo'] ?? null,
+                          financialAssetInfoRaw['patrimonio-specifico-affare']
+                            ?.modifica?.['c-tipo'] ?? null,
                         type:
-                          financialAssetInfoRaw[
-                            'patrimonio-specifico-affare'
-                          ]?.modifica?.tipo ?? null,
+                          financialAssetInfoRaw['patrimonio-specifico-affare']
+                            ?.modifica?.tipo ?? null,
                         effectDate:
-                          financialAssetInfoRaw[
-                            'patrimonio-specifico-affare'
-                          ]?.modifica?.['dt-effetto'] ?? null,
+                          financialAssetInfoRaw['patrimonio-specifico-affare']
+                            ?.modifica?.['dt-effetto'] ?? null,
                         modificationCode:
-                          financialAssetInfoRaw[
-                            'patrimonio-specifico-affare'
-                          ]?.modifica?.['c-modifica'] ?? null,
+                          financialAssetInfoRaw['patrimonio-specifico-affare']
+                            ?.modifica?.['c-modifica'] ?? null,
                         modificationCodeDescription:
-                          financialAssetInfoRaw[
-                            'patrimonio-specifico-affare'
-                          ]?.modifica?.['descrizione-c-modifica'] ?? null,
+                          financialAssetInfoRaw['patrimonio-specifico-affare']
+                            ?.modifica?.['descrizione-c-modifica'] ?? null,
                       }
                     : null,
                   cessationDeed:
@@ -4277,11 +4477,14 @@ export class CompanyManager {
         : null,
       shareholdersAgreements: shareholdersAgreementsRaw
         ? {
-            votingRights: shareholdersAgreementsRaw['esercizio-diritto-voto'] ?? null,
+            votingRights:
+              shareholdersAgreementsRaw['esercizio-diritto-voto'] ?? null,
             shareTransfer:
-              shareholdersAgreementsRaw['trasferimento-azioni-partecip'] ?? null,
+              shareholdersAgreementsRaw['trasferimento-azioni-partecip'] ??
+              null,
             dominantInfluence:
-              shareholdersAgreementsRaw['esercizio-influenza-dominante'] ?? null,
+              shareholdersAgreementsRaw['esercizio-influenza-dominante'] ??
+              null,
             other: shareholdersAgreementsRaw.altro ?? null,
           }
         : null,
@@ -4302,11 +4505,13 @@ export class CompanyManager {
                       hearingDetails: communication['estremi-udienza']
                         ? {
                             hearingDate:
-                              communication['estremi-udienza']?.['dt-udienza'] ??
-                              null,
+                              communication['estremi-udienza']?.[
+                                'dt-udienza'
+                              ] ?? null,
                             deadlineDate:
-                              communication['estremi-udienza']?.['dt-termine'] ??
-                              null,
+                              communication['estremi-udienza']?.[
+                                'dt-termine'
+                              ] ?? null,
                             location:
                               communication['estremi-udienza']?.luogo ?? null,
                           }
@@ -4360,7 +4565,8 @@ export class CompanyManager {
             memorandumDescription:
               historicSupplementaryInfoRaw['descrizioni-atto-costitutivo'] ??
               null,
-            historicNews: historicSupplementaryInfoRaw['notizie-storiche'] ?? null,
+            historicNews:
+              historicSupplementaryInfoRaw['notizie-storiche'] ?? null,
           }
         : null,
       corporateRestructuring: {
@@ -4371,7 +4577,9 @@ export class CompanyManager {
                   'trasferimento-azienda'
                 ],
               ).map((transfer) => ({
-                practiceDetails: mapPracticeDetails(transfer['estremi-pratica']),
+                practiceDetails: mapPracticeDetails(
+                  transfer['estremi-pratica'],
+                ),
                 deedInfo: transfer['informazioni-atto']
                   ? {
                       holders: transfer['informazioni-atto']?.titolari
@@ -4404,21 +4612,23 @@ export class CompanyManager {
               ).map((entry) => ({
                 events: entry.eventi
                   ? {
-                      events: this.toArray(entry.eventi?.evento).map((event) => ({
-                        companyIndex: event['p-societa'] ?? null,
-                        name: event.denominazione ?? null,
-                        taxCode: event['c-fiscale'] ?? null,
-                        city: event.comune ?? null,
-                        chamberCode: event.cciaa ?? null,
-                        reaNumber: this.toNumber(event['n-rea']),
-                        rdNumber: this.toNumber(event['n-rd']),
-                        rsNumber: this.toNumber(event['n-rs']),
-                        courtCode: event['c-tribunale'] ?? null,
-                        court: event.tribunale ?? null,
-                        province: event.provincia ?? null,
-                        riNumber: this.toNumber(event['n-ri']),
-                        euidCode: event['c-euid'] ?? null,
-                      })),
+                      events: this.toArray(entry.eventi?.evento).map(
+                        (event) => ({
+                          companyIndex: event['p-societa'] ?? null,
+                          name: event.denominazione ?? null,
+                          taxCode: event['c-fiscale'] ?? null,
+                          city: event.comune ?? null,
+                          chamberCode: event.cciaa ?? null,
+                          reaNumber: this.toNumber(event['n-rea']),
+                          rdNumber: this.toNumber(event['n-rd']),
+                          rsNumber: this.toNumber(event['n-rs']),
+                          courtCode: event['c-tribunale'] ?? null,
+                          court: event.tribunale ?? null,
+                          province: event.provincia ?? null,
+                          riNumber: this.toNumber(event['n-ri']),
+                          euidCode: event['c-euid'] ?? null,
+                        }),
+                      ),
                     }
                   : null,
                 declarations: mapDeclarations(entry.dichiarazioni),

@@ -66,7 +66,7 @@ describe('CCIAA Integration - Dati Aziendali', () => {
         ...balanceSheetData.balanceSheetByYear.map((entry) => entry.year),
       );
       const lastYearAvailableData = balanceSheetData.balanceSheetByYear.find(
-        (entry) => entry.year === maxYear
+        (entry) => entry.year === maxYear,
       );
       expect(lastYearAvailableData?.values.companyRevenue).toBeGreaterThan(0);
       expect(lastYearAvailableData?.values.companyProfit).toBeGreaterThan(0);
@@ -169,7 +169,7 @@ describe('CCIAA Integration - Dati Aziendali', () => {
         ...companyBalanceSheet.balanceSheetByYear.map((entry) => entry.year),
       );
       const lastYearAvailableData = companyBalanceSheet.balanceSheetByYear.find(
-        (entry) => entry.year === maxYear
+        (entry) => entry.year === maxYear,
       );
       expect(lastYearAvailableData).toBeDefined();
       expect(lastYearAvailableData?.values.companyRevenue).toBeGreaterThan(0);

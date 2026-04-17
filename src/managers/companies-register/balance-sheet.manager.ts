@@ -99,26 +99,31 @@ export class BalanceSheetManager {
     };
   }
 
-  private mapContexts(xbrl: XbrlDocument): Record<string, BalanceSheetContextInfo> {
+  private mapContexts(
+    xbrl: XbrlDocument,
+  ): Record<string, BalanceSheetContextInfo> {
     const contexts = this.toArray(xbrl.context);
 
-    return contexts.reduce<Record<string, BalanceSheetContextInfo>>((acc, context) => {
-      const contextId = context?.id;
-      if (!contextId) return acc;
+    return contexts.reduce<Record<string, BalanceSheetContextInfo>>(
+      (acc, context) => {
+        const contextId = context?.id;
+        if (!contextId) return acc;
 
-      const entityIdentifier = context.entity?.identifier;
+        const entityIdentifier = context.entity?.identifier;
 
-      acc[contextId] = {
-        entityIdentifier: entityIdentifier?.['#text'] ?? null,
-        entityIdentifierScheme: entityIdentifier?.scheme ?? null,
-        instant: context.period?.instant ?? null,
-        startDate: context.period?.startDate ?? null,
-        endDate: context.period?.endDate ?? null,
-        scenario: context.scenario?.['itcc-ci-abb:scen'] ?? null,
-      };
+        acc[contextId] = {
+          entityIdentifier: entityIdentifier?.['#text'] ?? null,
+          entityIdentifierScheme: entityIdentifier?.scheme ?? null,
+          instant: context.period?.instant ?? null,
+          startDate: context.period?.startDate ?? null,
+          endDate: context.period?.endDate ?? null,
+          scenario: context.scenario?.['itcc-ci-abb:scen'] ?? null,
+        };
 
-      return acc;
-    }, {});
+        return acc;
+      },
+      {},
+    );
   }
 
   private mapAllFacts(
@@ -130,7 +135,9 @@ export class BalanceSheetManager {
       if (!this.isLikelyFactQName(key)) continue;
       if (!this.hasFactPayload(rawValue)) continue;
 
-      const factNodes = this.toArray(rawValue as XbrlFact | XbrlFact[] | string | string[]);
+      const factNodes = this.toArray(
+        rawValue as XbrlFact | XbrlFact[] | string | string[],
+      );
       factsByQName[key] = factNodes.map((node) =>
         this.mapFactValue(node as XbrlFact | string),
       );
@@ -139,10 +146,13 @@ export class BalanceSheetManager {
     return factsByQName;
   }
 
-  private normalizeContextYear(contextInfo?: BalanceSheetContextInfo): string | null {
+  private normalizeContextYear(
+    contextInfo?: BalanceSheetContextInfo,
+  ): string | null {
     if (!contextInfo) return null;
 
-    const periodCandidate = contextInfo.instant ?? contextInfo.endDate ?? contextInfo.startDate;
+    const periodCandidate =
+      contextInfo.instant ?? contextInfo.endDate ?? contextInfo.startDate;
     if (!periodCandidate) return null;
 
     const yearMatch = periodCandidate.match(/(\d{4})/);
@@ -152,7 +162,10 @@ export class BalanceSheetManager {
   private getEntryPriority(entry: BalanceSheetFactValue): number {
     let score = 0;
 
-    if (entry.contextRef && this.preferredCurrentYearContexts.includes(entry.contextRef)) {
+    if (
+      entry.contextRef &&
+      this.preferredCurrentYearContexts.includes(entry.contextRef)
+    ) {
       score += 100;
     }
 

@@ -1226,7 +1226,6 @@ export interface ControlBodiesInCharge {
   entries: ActiveGovernanceForm[] | null; // forma-amministrativa-in-carica[]
 }
 
-
 /** forma-amministrativa (simpleContent) */
 export interface GovernanceForm {
   text: string | null; // _text (form name)
@@ -1859,7 +1858,6 @@ export interface ControllingSubjectsPractices {
   practices: ControllingSubjectsPractice[] | null; // pratica-soggetti-controllanti[]
   flagInfo: boolean | null; // f-presenza-info
 }
-
 
 /** pratica-soggetti-controllanti */
 export interface ControllingSubjectsPractice {
@@ -3197,7 +3195,7 @@ export interface GovernanceAndControl {
     shareholders: string | null;
     generalParterns: string | null;
     administrators: string | null;
-  }
+  };
   administrationSystem: {
     code: string | null;
     text: string | null;

@@ -264,7 +264,7 @@ export class CompanyService extends BaseService {
       ) {
         return;
       }
-      
+
       const rawJson = this.parseXml<ParsedBlocchiImpresaResponse>(
         response.data,
         errors,
@@ -293,17 +293,18 @@ export class CompanyService extends BaseService {
     if (!summary) return null;
 
     const balanceSheetService = new BalanceSheetService(this.client);
-    const fullBalanceSheet = await balanceSheetService.getBalanceSheetByVatNumber(
-      vatNumber,
-      errors,
+    const fullBalanceSheet =
+      await balanceSheetService.getBalanceSheetByVatNumber(vatNumber, errors);
+
+    const maxYear = fullBalanceSheet?.balanceSheetByYear.reduce(
+      (max, entry) => {
+        return entry.year > max ? entry.year : max;
+      },
+      0,
     );
 
-    const maxYear = fullBalanceSheet?.balanceSheetByYear.reduce((max, entry) => {
-      return entry.year > max ? entry.year : max;
-    }, 0);
-
     const lastYearAvailableData = fullBalanceSheet?.balanceSheetByYear.find(
-      (entry) => entry.year === maxYear
+      (entry) => entry.year === maxYear,
     );
 
     const balanceSheet: { companyRevenue: number; companyProfit: number } = {
