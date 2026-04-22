@@ -1,4 +1,5 @@
 import { XMLParser } from 'fast-xml-parser';
+import { decode } from 'html-entities';
 import { ParsedAIWSResponse } from 'src/types/aiws.types';
 import {
   AIWS_ERROR_CODE,
@@ -11,6 +12,18 @@ export abstract class BaseService {
   protected parser = new XMLParser({
     ignoreAttributes: false,
     attributeNamePrefix: '',
+    tagValueProcessor: (_, tagValue) => {
+      if (typeof tagValue === 'string') {
+        return decode(tagValue);
+      }
+      return tagValue;
+    },
+    attributeValueProcessor: (_, attrValue) => {
+      if (typeof attrValue === 'string') {
+        return decode(attrValue);
+      }
+      return attrValue;
+    }
   });
 
   constructor() {}

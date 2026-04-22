@@ -49,6 +49,7 @@
   "dependencies": {
     "axios": "^1.13.5",
     "fast-xml-parser": "^5.3.7",
+    "html-entities": "^2.6.0",
     "luxon": "^3.7.2"
   },
   "description": "CCIAA service for CCIAA API",

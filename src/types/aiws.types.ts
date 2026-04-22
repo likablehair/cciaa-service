@@ -1037,8 +1037,8 @@ export interface BlocchiImpresa {
   'storia-attivita'?: StoriaAttivita;
   'storia-addetti'?: StoriaAddetti;
   'albi-ruoli-licenze'?: AlbiRuoliLicenze;
-  'persone-sede'?: PersoneSede; // da modificare
-  localizzazioni?: Localizzazioni; // da fare
+  'persone-sede'?: PersoneSede;
+  localizzazioni?: Localizzazioni;
   'protocolli-aperti'?: ProtocolliAperti; // da fare
   'protocolli-completi'?: ProtocolliCompleti; // da fare
   'societa-quotata'?: SocietaQuotata;

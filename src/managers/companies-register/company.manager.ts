@@ -305,6 +305,7 @@ export class CompanyManager {
     const workforceHistoryRaw = blocchiImpresa['storia-addetti'];
     const licensesAndRegistersRaw = blocchiImpresa['albi-ruoli-licenze'];
     const officePeopleRaw = blocchiImpresa['persone-sede'];
+    const localizationsRaw = blocchiImpresa.localizzazioni;
     const listedCompanyInfoRaw = blocchiImpresa['societa-quotata'];
     const shareholdersListRaw = blocchiImpresa['elenco-soci'];
     const shareholdersTableRaw = blocchiImpresa['tabella-elenco-soci'];
@@ -464,6 +465,41 @@ export class CompanyManager {
             unitValue: composition['valore-unitario'] ?? null,
             amountInEuros: composition['ammontare-convertito-in-euro'] ?? null,
             paidValue: composition['valore-versato'] ?? null,
+          }
+        : null;
+
+    const mapFullAddress = (address?: {
+      'c-comune'?: string;
+      comune?: string;
+      provincia?: string;
+      'provincia-ter'?: string;
+      'c-toponimo'?: string;
+      toponimo?: string;
+      via?: string;
+      'n-civico'?: string;
+      cap?: string;
+      'cap-ter'?: string;
+      'c-stato'?: string;
+      stato?: string;
+      frazione?: string;
+      'altre-indicazioni'?: string;
+    }) =>
+      address
+        ? {
+            municipalityCode: address['c-comune'] ?? null,
+            city: address.comune ?? null,
+            province: address.provincia ?? null,
+            provinceTer: address['provincia-ter'] ?? null,
+            topographyCode: address['c-toponimo'] ?? null,
+            topography: address.toponimo ?? null,
+            street: address.via ?? null,
+            streetNumber: this.toNumber(address['n-civico']),
+            postalCode: address.cap ?? null,
+            postalCodeTer: address['cap-ter'] ?? null,
+            countryCode: address['c-stato'] ?? null,
+            country: address.stato ?? null,
+            hamlet: address.frazione ?? null,
+            otherIndications: address['altre-indicazioni'] ?? null,
           }
         : null;
 
@@ -2784,6 +2820,675 @@ export class CompanyManager {
           })),
         })),
       },
+      localizations: localizationsRaw
+        ? {
+            locations: this.toArray(localizationsRaw.localizzazione).map(
+              (location) => ({
+                subTypes: location['sotto-tipi']
+                  ? {
+                      subTypes: this.toArray(
+                        location['sotto-tipi']?.['sotto-tipo'],
+                      ).map((subType) => ({
+                        description: this.getXmlText(subType) ?? null,
+                        code: subType.c ?? null,
+                      })),
+                    }
+                  : null,
+                address: location['indirizzo-localizzazione']
+                  ? {
+                      municipalityCode:
+                        location['indirizzo-localizzazione']?.['c-comune'] ??
+                        null,
+                      city:
+                        location['indirizzo-localizzazione']?.comune ?? null,
+                      province:
+                        location['indirizzo-localizzazione']?.provincia ??
+                        null,
+                      provinceTer:
+                        location['indirizzo-localizzazione']?.[
+                          'provincia-ter'
+                        ] ?? null,
+                      topographyCode:
+                        location['indirizzo-localizzazione']?.['c-toponimo'] ??
+                        null,
+                      topography:
+                        location['indirizzo-localizzazione']?.toponimo ?? null,
+                      street: location['indirizzo-localizzazione']?.via ?? null,
+                      streetNumber: this.toNumber(
+                        location['indirizzo-localizzazione']?.['n-civico'],
+                      ),
+                      postalCode:
+                        location['indirizzo-localizzazione']?.cap ?? null,
+                      postalCodeTer:
+                        location['indirizzo-localizzazione']?.['cap-ter'] ??
+                        null,
+                      countryCode:
+                        location['indirizzo-localizzazione']?.['c-stato'] ??
+                        null,
+                      country:
+                        location['indirizzo-localizzazione']?.stato ?? null,
+                      hamlet:
+                        location['indirizzo-localizzazione']?.frazione ?? null,
+                      otherIndications:
+                        location['indirizzo-localizzazione']?.[
+                          'altre-indicazioni'
+                        ] ?? null,
+                      roadRegistryCode:
+                        location['indirizzo-localizzazione']?.['c-stradario'] ??
+                        null,
+                      zoneCode:
+                        location['indirizzo-localizzazione']?.['c-zona'] ??
+                        null,
+                      thirdPartyHeadquartersFlag:
+                        this.toYesNoFlag(
+                          location['indirizzo-localizzazione']?.[
+                            'f-sede-presso-terzi'
+                          ],
+                        ) ?? null,
+                    }
+                  : null,
+                phoneNumber: location.telefono?.n ?? null,
+                telex: location.telex ?? null,
+                telefaxNumber: location.telefax?.n ?? null,
+                outOfProvinceHq: location['sede-fuori-provincia']
+                  ? {
+                      reaNumber: this.toNumber(
+                        location['sede-fuori-provincia']?.['n-rea'],
+                      ),
+                      rdNumber: this.toNumber(
+                        location['sede-fuori-provincia']?.['n-rd'],
+                      ),
+                      aaNumber: this.toNumber(
+                        location['sede-fuori-provincia']?.['n-aa'],
+                      ),
+                      chamberCode:
+                        location['sede-fuori-provincia']?.cciaa ?? null,
+                    }
+                  : null,
+                secondaryRegisteredOffice: location['sede-secondaria-rs']
+                  ? {
+                      secondaryOfficeNumber: this.toNumber(
+                        location['sede-secondaria-rs']?.['n-sede-secondaria'],
+                      ),
+                      courtMunicipalityCode:
+                        location['sede-secondaria-rs']?.[
+                          'c-comune-tribunale'
+                        ] ?? null,
+                      courtMunicipality:
+                        location['sede-secondaria-rs']?.[
+                          'comune-tribunale'
+                        ] ?? null,
+                      courtProvince:
+                        location['sede-secondaria-rs']?.[
+                          'provincia-tribunale'
+                        ] ?? null,
+                      enrollmentDate:
+                        location['sede-secondaria-rs']?.['dt-iscrizione'] ??
+                        null,
+                    }
+                  : null,
+                predecessorCompany: location['impresa-subentrata']
+                  ? {
+                      name: location['impresa-subentrata']?.denominazione ?? null,
+                      taxCode:
+                        location['impresa-subentrata']?.['c-fiscale'] ?? null,
+                      chamberCode:
+                        location['impresa-subentrata']?.cciaa ?? null,
+                      reaNumber: this.toNumber(
+                        location['impresa-subentrata']?.['n-rea'],
+                      ),
+                      rdNumber: this.toNumber(
+                        location['impresa-subentrata']?.['n-rd'],
+                      ),
+                      riNumber: this.toNumber(
+                        location['impresa-subentrata']?.['n-ri'],
+                      ),
+                      successionTitleCode:
+                        location['impresa-subentrata']?.['c-titolo-subentro'] ??
+                        null,
+                      successionTitle:
+                        location['impresa-subentrata']?.['titolo-subentro'] ??
+                        null,
+                    }
+                  : null,
+                pursuedActivity: location['attivita-esercitata'] ?? null,
+                secondaryActivity:
+                  location['attivita-secondaria-esercitata'] ?? null,
+                craftsActivityBolzano: location['attivita-aa-bz']
+                  ? {
+                      trades: location['attivita-aa-bz']?.['mestieri-aa']
+                        ? {
+                            trades: this.toArray(
+                              location['attivita-aa-bz']?.['mestieri-aa']?.[
+                                'mestiere-aa'
+                              ],
+                            ).map((trade) => ({
+                              description: this.getXmlText(trade) ?? null,
+                              code: trade.c ?? null,
+                              tradeDescription: trade.descrizione ?? null,
+                              furtherDescription:
+                                trade['ulteriore-descrizione'] ?? null,
+                              activityStartDate:
+                                trade['dt-inizio-attivita'] ?? null,
+                            })),
+                          }
+                        : null,
+                      descriptions:
+                        location['attivita-aa-bz']?.descrizione ?? null,
+                      cancellation: location['attivita-aa-bz']?.[
+                        'cancellazione-aa-bz'
+                      ]
+                        ? {
+                            reasonCode:
+                              location['attivita-aa-bz']?.[
+                                'cancellazione-aa-bz'
+                              ]?.['c-causale'] ?? null,
+                            reason:
+                              location['attivita-aa-bz']?.[
+                                'cancellazione-aa-bz'
+                              ]?.causale ?? null,
+                            assessmentApplicationDate:
+                              location['attivita-aa-bz']?.[
+                                'cancellazione-aa-bz'
+                              ]?.['dt-domanda-accertamento'] ?? null,
+                            effectDate:
+                              location['attivita-aa-bz']?.[
+                                'cancellazione-aa-bz'
+                              ]?.['dt-effetto'] ?? null,
+                          }
+                        : null,
+                      startDate: location['attivita-aa-bz']?.['dt-inizio'] ?? null,
+                      isSecondaryActivityFlag:
+                        this.toYesNoFlag(
+                          location['attivita-aa-bz']?.[
+                            'f-attivita-secondaria'
+                          ],
+                        ) ?? null,
+                    }
+                  : null,
+                nonCraftsActivity: location['attivita-no-aa']
+                  ? {
+                      cancellation: location['attivita-no-aa']?.[
+                        'cancellazione-aa'
+                      ]
+                        ? {
+                            reasonCode:
+                              location['attivita-no-aa']?.['cancellazione-aa']?.[
+                                'c-causale'
+                              ] ?? null,
+                            reason:
+                              location['attivita-no-aa']?.['cancellazione-aa']
+                                ?.causale ?? null,
+                            assessmentApplicationDate:
+                              location['attivita-no-aa']?.['cancellazione-aa']?.[
+                                'dt-domanda-accertamento'
+                              ] ?? null,
+                            resolutionDate:
+                              location['attivita-no-aa']?.['cancellazione-aa']?.[
+                                'dt-delibera'
+                              ] ?? null,
+                            cessationDate:
+                              location['attivita-no-aa']?.['cancellazione-aa']?.[
+                                'dt-cessazione'
+                              ] ?? null,
+                          }
+                        : null,
+                      categoryCode:
+                        location['attivita-no-aa']?.['c-categoria'] ?? null,
+                      category: location['attivita-no-aa']?.categoria ?? null,
+                      descriptions:
+                        location['attivita-no-aa']?.descrizione ?? null,
+                      startDate: location['attivita-no-aa']?.['dt-inizio'] ?? null,
+                      supplementaryInfo:
+                        location['attivita-no-aa']?.[
+                          'informazioni-supplementari-aa'
+                        ] ?? null,
+                    }
+                  : null,
+                activityDetails: this.toArray(
+                  location['dettagli-attivita'],
+                ).map((item) => ({
+                  typeCode: item['c-tipo'] ?? null,
+                  type: item.tipo ?? null,
+                  details: this.toArray(item['dettaglio-attivita']).map(
+                    (detail) => ({
+                      description: this.getXmlText(detail) ?? null,
+                      detailCode: detail['c-dettaglio'] ?? null,
+                    }),
+                  ),
+                })),
+                atecoClassifications2002: location[
+                  'classificazioni-ateco-2002'
+                ]
+                  ? {
+                      classifications: this.toArray(
+                        location['classificazioni-ateco-2002']?.[
+                          'classificazione-ateco-2002'
+                        ],
+                      ).map((classification) => ({
+                        activityCode: classification['c-attivita'] ?? null,
+                        activityDescription: classification.attivita ?? null,
+                        relevanceCode: classification['c-importanza'] ?? null,
+                        relevanceDescription: classification.importanza ?? null,
+                        startDate: classification['dt-inizio'] ?? null,
+                      })),
+                    }
+                  : null,
+                atecoClassifications: this.toArray(
+                  location['classificazioni-ateco'],
+                ).map((classificationGroup) => ({
+                  classifications: this.toArray(
+                    classificationGroup['classificazione-ateco'],
+                  ).map((classification) => ({
+                    activityCode: classification['c-attivita'] ?? null,
+                    activityDescription: classification.attivita ?? null,
+                    relevanceCode: classification['c-importanza'] ?? null,
+                    relevanceDescription: classification.importanza ?? null,
+                    naceCode: classification['c-nace'] ?? null,
+                    startDate: classification['dt-inizio'] ?? null,
+                    referenceDate: classification['dt-riferimento'] ?? null,
+                    sourceCode: classification['c-fonte'] ?? null,
+                    sourceDescription: classification.fonte ?? null,
+                  })),
+                  codingCode: classificationGroup['c-codifica'] ?? null,
+                  coding: classificationGroup.codifica ?? null,
+                })),
+                licensesAndRegisters: location['albi-ruoli-licenze']
+                  ? {
+                      craftsData: null,
+                      professionalRecognitions: null,
+                      installerAuthorizations: null,
+                      cleaningAuthorization: null,
+                      porteringAuthorization: null,
+                      roles: null,
+                      preciousMetalsRegister: null,
+                      businessStartNotifications: null,
+                      licenses: null,
+                      moralRequirements: null,
+                      retailTrade: null,
+                      cooperativeSociety: null,
+                      regionalCooperativeRegister: null,
+                      brandAssignees: null,
+                      environmentalDeclarations: location[
+                        'albi-ruoli-licenze'
+                      ]?.['dichiarazioni-ambientali']
+                        ? {
+                            declarations: this.toArray(
+                              location['albi-ruoli-licenze']?.[
+                                'dichiarazioni-ambientali'
+                              ]?.['dichiarazione-ambientale'],
+                            ).map((item) => ({
+                              registrationDetails: {
+                                details: this.toArray(
+                                  item['dettagli-iscrizione']?.[
+                                    'dettaglio-iscrizione'
+                                  ],
+                                ).map((detail) => ({
+                                  startDate: detail['dt-inizio'] ?? null,
+                                  issueDate: detail['dt-emissione'] ?? null,
+                                  expiryDate: detail['dt-scadenza'] ?? null,
+                                  detailStatus: detail['stato-dettaglio'] ?? null,
+                                  statusStartDate:
+                                    detail['dt-inizio-stato'] ?? null,
+                                  statusEndDate: detail['dt-fine-stato'] ?? null,
+                                  additionalDetails: {
+                                    details: this.toArray(
+                                      detail['ulteriori-dettagli']?.[
+                                        'ulteriore-dettaglio'
+                                      ],
+                                    ).map((additionalDetail) => ({
+                                      text:
+                                        this.getXmlText(additionalDetail) ??
+                                        null,
+                                      typeCode:
+                                        additionalDetail['c-tipo'] ?? null,
+                                      type: additionalDetail.tipo ?? null,
+                                    })),
+                                  },
+                                })),
+                              },
+                              typeCode: item['c-tipo'] ?? null,
+                              type: item.tipo ?? null,
+                              sourceCode: item['c-fonte'] ?? null,
+                              source: item.fonte ?? null,
+                              provinceSection: item['provincia-sezione'] ?? null,
+                              province: item.provincia ?? null,
+                              number: this.toNumber(item.n),
+                              year: item.anno ?? null,
+                              firstEnrollmentDate:
+                                item['dt-prima-iscrizione'] ?? null,
+                              enrollmentDate: item['dt-iscrizione'] ?? null,
+                              cancellationDate: item['dt-cancellazione'] ?? null,
+                              enrollmentStatus: item['stato-iscrizione'] ?? null,
+                              statusStartDate: item['dt-inizio-stato'] ?? null,
+                              statusEndDate: item['dt-fine-stato'] ?? null,
+                            })),
+                          }
+                        : null,
+                    }
+                  : null,
+                people: location.persone
+                  ? {
+                      people: this.toArray(location.persone?.persona).map(
+                        (persona) => ({
+                          physicalPerson: persona['persona-fisica']
+                            ? {
+                                birthDetails: persona['persona-fisica']?.[
+                                  'estremi-nascita'
+                                ]
+                                  ? {
+                                      date:
+                                        persona['persona-fisica']?.[
+                                          'estremi-nascita'
+                                        ]?.dt ?? null,
+                                      municipalityCode:
+                                        persona['persona-fisica']?.[
+                                          'estremi-nascita'
+                                        ]?.['c-comune'] ?? null,
+                                      city:
+                                        persona['persona-fisica']?.[
+                                          'estremi-nascita'
+                                        ]?.comune ?? null,
+                                      province:
+                                        persona['persona-fisica']?.[
+                                          'estremi-nascita'
+                                        ]?.provincia ?? null,
+                                      countryCode:
+                                        persona['persona-fisica']?.[
+                                          'estremi-nascita'
+                                        ]?.['c-stato'] ?? null,
+                                      country:
+                                        persona['persona-fisica']?.[
+                                          'estremi-nascita'
+                                        ]?.stato ?? null,
+                                    }
+                                  : null,
+                                fiscalDomicile: mapFullAddress(
+                                  persona['persona-fisica']?.[
+                                    'domicilio-fiscale'
+                                  ],
+                                ),
+                                honoraryTitles: persona['persona-fisica']?.[
+                                  'titoli-onorifici'
+                                ]
+                                  ? {
+                                      titles: this.toArray(
+                                        persona['persona-fisica']?.[
+                                          'titoli-onorifici'
+                                        ]?.['titolo-onorifico'],
+                                      ).map((title) => ({
+                                        text: this.getXmlText(title) ?? null,
+                                        code: title.c ?? null,
+                                      })),
+                                    }
+                                  : null,
+                                lastName:
+                                  persona['persona-fisica']?.cognome ?? null,
+                                firstName:
+                                  persona['persona-fisica']?.nome ?? null,
+                                taxCode:
+                                  persona['persona-fisica']?.['c-fiscale'] ??
+                                  null,
+                                gender: persona['persona-fisica']?.sesso ?? null,
+                                citizenshipCode:
+                                  persona['persona-fisica']?.[
+                                    'c-cittadinanza'
+                                  ] ?? null,
+                                citizenship:
+                                  persona['persona-fisica']?.cittadinanza ??
+                                  null,
+                                legalCapacityCode:
+                                  persona['persona-fisica']?.[
+                                    'c-capacita-di-agire'
+                                  ] ?? null,
+                                legalCapacity:
+                                  persona['persona-fisica']?.[
+                                    'capacita-di-agire'
+                                  ] ?? null,
+                                educationTitleCode:
+                                  persona['persona-fisica']?.[
+                                    'c-titolo-studio'
+                                  ] ?? null,
+                                educationTitle:
+                                  persona['persona-fisica']?.[
+                                    'titolo-studio'
+                                  ] ?? null,
+                                previousOccupationCode:
+                                  persona['persona-fisica']?.[
+                                    'c-precedente-occupazione'
+                                  ] ?? null,
+                                previousOccupation:
+                                  persona['persona-fisica']?.[
+                                    'precedente-occupazione'
+                                  ] ?? null,
+                              }
+                            : null,
+                          legalPerson: persona['persona-giuridica']
+                            ? {
+                                reaNumber: this.toNumber(
+                                  persona['persona-giuridica']?.['n-rea'],
+                                ),
+                                rdNumber: this.toNumber(
+                                  persona['persona-giuridica']?.['n-rd'],
+                                ),
+                                chamberCode:
+                                  persona['persona-giuridica']?.cciaa ?? null,
+                                name:
+                                  persona['persona-giuridica']?.denominazione ??
+                                  null,
+                                riName:
+                                  persona['persona-giuridica']?.[
+                                    'denominazione-ri'
+                                  ] ?? null,
+                                taxCode:
+                                  persona['persona-giuridica']?.['c-fiscale'] ??
+                                  null,
+                                incorporationDate:
+                                  persona['persona-giuridica']?.[
+                                    'dt-costituzione'
+                                  ] ?? null,
+                                incorporationStatusCode:
+                                  persona['persona-giuridica']?.[
+                                    'c-stato-costituzione'
+                                  ] ?? null,
+                                incorporationStatus:
+                                  persona['persona-giuridica']?.[
+                                    'stato-costituzione'
+                                  ] ?? null,
+                              }
+                            : null,
+                          shareholderInfo: persona['informazioni-socio']
+                            ? {
+                                info: this.toArray(
+                                  persona['informazioni-socio']?.[
+                                    'informazione-socio'
+                                  ],
+                                ).map((info) => ({
+                                  text: this.getXmlText(info) ?? null,
+                                  typeCode: info['c-tipo'] ?? null,
+                                  type: info.tipo ?? null,
+                                })),
+                              }
+                            : null,
+                          certifiedEmail:
+                            persona['indirizzo-posta-certificata'] ?? null,
+                          address: mapFullAddress(persona.indirizzo),
+                          riAddress: mapFullAddress(persona['indirizzo-ri']),
+                          quota: persona.quota
+                            ? {
+                                currencyCode: persona.quota?.['c-valuta'] ?? null,
+                                currency: persona.quota?.valuta ?? null,
+                                value: persona.quota?.valore ?? null,
+                                amountInEuros:
+                                  persona.quota?.[
+                                    'ammontare-convertito-in-euro'
+                                  ] ?? null,
+                                percentage: persona.quota?.percentuale ?? null,
+                              }
+                            : null,
+                          roleAppointmentDeeds: null,
+                          bankruptcy: null,
+                          installerAuthorizations: null,
+                          personRoles: persona['ruoli-persona']
+                            ? {
+                                roles: this.toArray(
+                                  persona['ruoli-persona']?.['ruolo-persona'],
+                                ).map((role) => ({
+                                  reaSection: role['f-sezione-rea'] ?? null,
+                                  typeCode: role['c-tipo'] ?? null,
+                                  type: role.tipo ?? null,
+                                  categoryCode: role['c-categoria'] ?? null,
+                                  category: role.categoria ?? null,
+                                  qualificationCode:
+                                    role['c-qualifica'] ?? null,
+                                  qualification: role.qualifica ?? null,
+                                  formCode: role['c-forma'] ?? null,
+                                  form: role.forma ?? null,
+                                  number: this.toNumber(role.n),
+                                  enrollmentDate:
+                                    role['dt-iscrizione'] ?? null,
+                                  issuingBodyCode:
+                                    role['c-ente-rilascio'] ?? null,
+                                  issuingBody: role['ente-rilascio'] ?? null,
+                                  province: role.provincia ?? null,
+                                })),
+                              }
+                            : null,
+                          licenses: null,
+                          index: persona.progressivo ?? null,
+                          reaRepresentativeFlag:
+                            this.toYesNoFlag(persona['f-rappresentante-rea']) ??
+                            null,
+                          riRepresentativeFlag:
+                            this.toYesNoFlag(persona['f-rappresentante-ri']) ??
+                            null,
+                          aeRepresentativeFlag:
+                            this.toYesNoFlag(persona['f-rappresentante-ae']) ??
+                            null,
+                          administratorFlag:
+                            this.toYesNoFlag(persona['f-amministratore']) ??
+                            null,
+                          auditorFlag:
+                            this.toYesNoFlag(persona['f-sindaco']) ?? null,
+                          electorFlag:
+                            this.toYesNoFlag(persona['f-elettore']) ?? null,
+                          modificationType: persona['tipo-modifica'] ?? null,
+                          lastName: persona.cognome ?? null,
+                          firstName: persona.nome ?? null,
+                          taxCode: persona['c-fiscale'] ?? null,
+                          chamberCode: persona.cciaa ?? null,
+                          rdNumber: this.toNumber(persona['n-rd']),
+                          reaNumber: this.toNumber(persona['n-rea']),
+                          signatureDepositedFlag:
+                            this.toYesNoFlag(persona['f-firma-depositata']) ??
+                            null,
+                          pcoAuthorizedFlag:
+                            this.toYesNoFlag(persona['f-incaricato-pco']) ??
+                            null,
+                        }),
+                      ),
+                    }
+                  : null,
+                supplementaryInfo: location['informazioni-supplementari']
+                  ? {
+                      jointPowers:
+                        location['informazioni-supplementari']?.[
+                          'poteri-congiunti'
+                        ] ?? null,
+                      registryInfo:
+                        location['informazioni-supplementari']?.[
+                          'info-visura'
+                        ] ?? null,
+                      genericInfo:
+                        location['informazioni-supplementari']?.[
+                          'info-generiche'
+                        ] ?? null,
+                      locationInfo:
+                        location['informazioni-supplementari']?.[
+                          'info-localizzazione'
+                        ] ?? null,
+                    }
+                  : null,
+                locationCessation: location['cessazione-localizzazione']
+                  ? {
+                      deedDetails: mapDeedDetails(
+                        location['cessazione-localizzazione']?.['estremi-atto'],
+                      ),
+                      cessationInfo:
+                        location['cessazione-localizzazione']?.[
+                          'info-cessazione'
+                        ] ?? null,
+                      cessationDate:
+                        location['cessazione-localizzazione']?.[
+                          'dt-cessazione'
+                        ] ?? null,
+                      applicationDate:
+                        location['cessazione-localizzazione']?.['dt-domanda'] ??
+                        null,
+                      notificationDate:
+                        location['cessazione-localizzazione']?.['dt-denuncia'] ??
+                        null,
+                      reasonCode:
+                        location['cessazione-localizzazione']?.['c-causale'] ??
+                        null,
+                      reason:
+                        location['cessazione-localizzazione']?.causale ?? null,
+                    }
+                  : null,
+                locationTransfer: location['trasferimento-localizzazione']
+                  ? {
+                      city:
+                        location['trasferimento-localizzazione']?.comune ??
+                        null,
+                      province:
+                        location['trasferimento-localizzazione']?.provincia ??
+                        null,
+                    }
+                  : null,
+                successorCompany: location['impresa-subentrante']
+                  ? {
+                      name:
+                        location['impresa-subentrante']?.denominazione ?? null,
+                      taxCode:
+                        location['impresa-subentrante']?.['c-fiscale'] ?? null,
+                      chamberCode:
+                        location['impresa-subentrante']?.cciaa ?? null,
+                      reaNumber: this.toNumber(
+                        location['impresa-subentrante']?.['n-rea'],
+                      ),
+                      rdNumber: this.toNumber(
+                        location['impresa-subentrante']?.['n-rd'],
+                      ),
+                      riNumber: this.toNumber(
+                        location['impresa-subentrante']?.['n-ri'],
+                      ),
+                      successionTitleCode:
+                        location['impresa-subentrante']?.[
+                          'c-titolo-subentro'
+                        ] ?? null,
+                      successionTitle:
+                        location['impresa-subentrante']?.['titolo-subentro'] ??
+                        null,
+                    }
+                  : null,
+                index: location.progressivo ?? null,
+                reducedDataFlag:
+                  this.toYesNoFlag(location['f-dati-ridotti']) ?? null,
+                typeCode: location['c-tipo'] ?? null,
+                type: location.tipo ?? null,
+                enrollmentTypeCode: location['c-tipo-iscrizione'] ?? null,
+                enrollmentType: location['tipo-iscrizione'] ?? null,
+                name: location.denominazione ?? null,
+                sign: location.insegna ?? null,
+                openingDate: location['dt-apertura'] ?? null,
+                cessationFlag: this.toYesNoFlag(location['f-cessazione']) ?? null,
+                euidCode: location['c-euid'] ?? null,
+                accountingRecordsFlag:
+                  this.toYesNoFlag(location['f-scritture-contabili']) ?? null,
+              }),
+            ),
+          }
+        : null,
       listedCompanyInfo: listedCompanyInfoRaw
         ? {
             fromYear: listedCompanyInfoRaw['anno-dal'] ?? null,

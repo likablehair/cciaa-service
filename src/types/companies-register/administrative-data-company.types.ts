@@ -122,7 +122,6 @@ export interface BloccoImpresa {
 // English mapped types — top-level profile
 // =============================================================================
 
-// testone
 export interface CompanyRegistryProfile {
   recognition: Recognition;
   identification: CompanyIdentification; // dati-identificativi
@@ -136,6 +135,7 @@ export interface CompanyRegistryProfile {
   workforceHistory: WorkforceHistory | null; // storia-addetti
   licensesAndRegisters: BusinessLicensesAndRegisters | null; // albi-ruoli-licenze
   officePeople: OfficePeople | null; // persone-sede
+  localizations: Localizations | null; // localizzazioni
   listedCompanyInfo: ListedCompany | null; // societa-quotata
   shareholdersList: ShareholderListEntry | null; // elenco-soci
   shareholdersTable: ShareholdersTableEntry | null; // tabella-elenco-soci
@@ -1601,7 +1601,10 @@ export interface LicenseAuthorization {
 /** localizzazione */
 export interface CompanyLocation {
   subTypes: LocationSubTypes | null; // sotto-tipi
-  address: FullAddress | null; // indirizzo-localizzazione (placeholder)
+  address: LocalizationAddress | null; // indirizzo-localizzazione
+  phoneNumber: string | null; // telefono (prefisso + n)
+  telex: string | null; // telex
+  telefaxNumber: string | null; // telefax (prefisso + n)
   outOfProvinceHq: OutOfProvinceHeadquarters | null; // sede-fuori-provincia
   secondaryRegisteredOffice: SecondaryRegisteredOffice | null; // sede-secondaria-rs
   predecessorCompany: SuccessorCompany | null; // impresa-subentrata
@@ -1630,6 +1633,32 @@ export interface CompanyLocation {
   cessationFlag: boolean | null; // f-cessazione
   euidCode: string | null; // c-euid
   accountingRecordsFlag: boolean | null; // f-scritture-contabili
+}
+
+/** localizzazioni */
+export interface Localizations {
+  locations: CompanyLocation[]; // localizzazione[]
+}
+
+/** indirizzo-localizzazione */
+export interface LocalizationAddress {
+  municipalityCode: string | null; // c-comune
+  city: string | null; // comune
+  province: string | null; // provincia
+  provinceTer: string | null; // provincia-ter
+  topographyCode: string | null; // c-toponimo
+  topography: string | null; // toponimo
+  street: string | null; // via
+  streetNumber: number | null; // n-civico
+  postalCode: string | null; // cap
+  postalCodeTer: string | null; // cap-ter
+  countryCode: string | null; // c-stato
+  country: string | null; // stato
+  hamlet: string | null; // frazione
+  otherIndications: string | null; // altre-indicazioni
+  roadRegistryCode: string | null; // c-stradario
+  zoneCode: string | null; // c-zona
+  thirdPartyHeadquartersFlag: boolean | null; // f-sede-presso-terzi
 }
 
 export interface HistoricSupplementaryInfo {

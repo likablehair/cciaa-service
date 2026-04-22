@@ -19,8 +19,67 @@ import {
   XbrlFact,
 } from 'src/types/aiws.types';
 
+type NumericBalanceSheetMetric = {
+  [K in keyof CompanyBalanceSheetValues]: CompanyBalanceSheetValues[K] extends
+    | number
+    | null
+    ? K
+    : never;
+}[keyof CompanyBalanceSheetValues];
+
 export class BalanceSheetManager {
   private readonly preferredCurrentYearContexts = ['cntxCorr_d', 'cntxCorr'];
+
+  private readonly numericBalanceSheetMetrics = new Set<NumericBalanceSheetMetric>([
+    'personalDataShareCapital',
+    'totalFixedAssetsIntangible',
+    'totalFixedAssetsTangible',
+    'totalFixedAssetsFinancial',
+    'totalFixedAssets',
+    'totalReceivables',
+    'totalCashLiquid',
+    'totalAssetsCurrent',
+    'totalAssets',
+    'equityNetCapital',
+    'equityNetLegalReserves',
+    'equityOtherReservesSeparatelyDisclosedTotalOtherReserves',
+    'equityNetIncomeLoss',
+    'totalEquity',
+    'employeeSeverancePay',
+    'totalPayables',
+    'liabilitiesAccrualsAndDeferredIncome',
+    'totalLiabilitiesAndEquity',
+    'totalReceivablesFromShareholdersForUnpaidCapital',
+    'receivablesDueWithinNextFiscalYear',
+    'payablesDueWithinNextFiscalYear',
+    'companyRevenue',
+    'productionValueOtherRevenuesAndIncomeOther',
+    'productionValueTotalOtherRevenuesAndIncome',
+    'totalProductionValue',
+    'productionCostsRawMaterialsSubsidiaryAndGoods',
+    'productionCostsServices',
+    'productionCostsLeaseAndRentalOfThirdPartyAssets',
+    'productionCostsPersonnelWagesAndSalaries',
+    'productionCostsPersonnelSocialCharges',
+    'productionCostsPersonnelSeverancePay',
+    'productionCostsPersonnelOtherCosts',
+    'productionCostsTotalPersonnelCosts',
+    'productionCostsDepreciationAmortizationIntangibleAssets',
+    'productionCostsDepreciationTangibleAssets',
+    'productionCostsTotalDepreciationAndWritedowns',
+    'productionCostsMiscellaneousOperatingExpenses',
+    'totalProductionCosts',
+    'differenceBetweenProductionValueAndCosts',
+    'financialIncomeExpenseInterestAndOtherFinancialChargesOther',
+    'financialIncomeExpenseTotalInterestAndOtherFinancialCharges',
+    'totalFinancialIncomeAndExpense',
+    'resultBeforeTaxes',
+    'incomeTaxCurrentDeferredAndPrepaidCurrentTaxes',
+    'totalIncomeTaxCurrentAndDeferred',
+    'companyProfit',
+    'productionCostsPersonnelSeverancePayPensionsAndOtherPersonnelCosts',
+    'productionCostsDepreciationAmortizationIntangibleTangibleAndOtherAssetWritedowns',
+  ]);
 
   private toArray<T>(value: T | T[] | undefined): T[] {
     if (!value) return [];
@@ -194,6 +253,79 @@ export class BalanceSheetManager {
     }, {});
   }
 
+  private createEmptyBalanceSheetValues(): CompanyBalanceSheetValues {
+    return {
+      personalDataDesignation: null,
+      personalDataHeadquarters: null,
+      personalDataShareCapital: null,
+      personalDataFullyPaidupShareCapital: null,
+      personalDataCciaa: null,
+      personalDataVatNumber: null,
+      personalDataFiscalCode: null,
+      personalDataReaNumber: null,
+      personalDataLegalForm: null,
+      personalDataMainActivityAteco: null,
+      personalDataCompanyLiquidation: null,
+      personalDataCompanySingleShareholder: null,
+      personalDataCompanySubpostedToDirectionAndCoordination: null,
+      personalDataGroupAffiliation: null,
+      totalFixedAssetsIntangible: null,
+      totalFixedAssetsTangible: null,
+      totalFixedAssetsFinancial: null,
+      totalFixedAssets: null,
+      totalReceivables: null,
+      totalCashLiquid: null,
+      totalAssetsCurrent: null,
+      totalAssets: null,
+      equityNetCapital: null,
+      equityNetLegalReserves: null,
+      equityOtherReservesSeparatelyDisclosedTotalOtherReserves: null,
+      equityNetIncomeLoss: null,
+      totalEquity: null,
+      employeeSeverancePay: null,
+      totalPayables: null,
+      liabilitiesAccrualsAndDeferredIncome: null,
+      totalLiabilitiesAndEquity: null,
+      totalReceivablesFromShareholdersForUnpaidCapital: null,
+      receivablesDueWithinNextFiscalYear: null,
+      payablesDueWithinNextFiscalYear: null,
+      companyRevenue: null,
+      productionValueOtherRevenuesAndIncomeOther: null,
+      productionValueTotalOtherRevenuesAndIncome: null,
+      totalProductionValue: null,
+      productionCostsRawMaterialsSubsidiaryAndGoods: null,
+      productionCostsServices: null,
+      productionCostsLeaseAndRentalOfThirdPartyAssets: null,
+      productionCostsPersonnelWagesAndSalaries: null,
+      productionCostsPersonnelSocialCharges: null,
+      productionCostsPersonnelSeverancePay: null,
+      productionCostsPersonnelOtherCosts: null,
+      productionCostsTotalPersonnelCosts: null,
+      productionCostsDepreciationAmortizationIntangibleAssets: null,
+      productionCostsDepreciationTangibleAssets: null,
+      productionCostsTotalDepreciationAndWritedowns: null,
+      productionCostsMiscellaneousOperatingExpenses: null,
+      totalProductionCosts: null,
+      differenceBetweenProductionValueAndCosts: null,
+      financialIncomeExpenseInterestAndOtherFinancialChargesOther: null,
+      financialIncomeExpenseTotalInterestAndOtherFinancialCharges: null,
+      totalFinancialIncomeAndExpense: null,
+      resultBeforeTaxes: null,
+      incomeTaxCurrentDeferredAndPrepaidCurrentTaxes: null,
+      totalIncomeTaxCurrentAndDeferred: null,
+      companyProfit: null,
+      productionCostsPersonnelSeverancePayPensionsAndOtherPersonnelCosts: null,
+      productionCostsDepreciationAmortizationIntangibleTangibleAndOtherAssetWritedowns:
+        null,
+    };
+  }
+
+  private isNumericBalanceSheetMetric(
+    metric: keyof CompanyBalanceSheetValues,
+  ): metric is NumericBalanceSheetMetric {
+    return this.numericBalanceSheetMetrics.has(metric as NumericBalanceSheetMetric);
+  }
+
   private mapBalanceSheetByYear(
     factsByQName: Record<string, BalanceSheetFactValue[]>,
     contexts: Record<string, BalanceSheetContextInfo>,
@@ -210,6 +342,7 @@ export class BalanceSheetManager {
         ];
 
       if (!englishName) continue;
+      if (!this.isNumericBalanceSheetMetric(englishName)) continue;
 
       for (const entry of entries) {
         if (entry.valueNumber === null) continue;
@@ -218,15 +351,16 @@ export class BalanceSheetManager {
         const year = this.normalizeContextYear(contexts[entry.contextRef]);
         if (!year) continue;
 
-        if (!byYear[year]) byYear[year] = {} as CompanyBalanceSheetValues;
+        if (!byYear[year]) {
+          byYear[year] = this.createEmptyBalanceSheetValues();
+        }
         if (!scoreByYearAndMetric[year]) scoreByYearAndMetric[year] = {};
 
         const entryScore = this.getEntryPriority(entry);
         const currentScore = scoreByYearAndMetric[year][englishName] ?? -1;
 
         if (entryScore >= currentScore) {
-          (byYear[year] as Record<string, number | null>)[englishName] =
-            entry.valueNumber;
+          byYear[year][englishName] = entry.valueNumber;
           scoreByYearAndMetric[year][englishName] = entryScore;
         }
       }
