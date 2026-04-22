@@ -2842,8 +2842,7 @@ export class CompanyManager {
                       city:
                         location['indirizzo-localizzazione']?.comune ?? null,
                       province:
-                        location['indirizzo-localizzazione']?.provincia ??
-                        null,
+                        location['indirizzo-localizzazione']?.provincia ?? null,
                       provinceTer:
                         location['indirizzo-localizzazione']?.[
                           'provincia-ter'
@@ -2915,9 +2914,8 @@ export class CompanyManager {
                           'c-comune-tribunale'
                         ] ?? null,
                       courtMunicipality:
-                        location['sede-secondaria-rs']?.[
-                          'comune-tribunale'
-                        ] ?? null,
+                        location['sede-secondaria-rs']?.['comune-tribunale'] ??
+                        null,
                       courtProvince:
                         location['sede-secondaria-rs']?.[
                           'provincia-tribunale'
@@ -2929,7 +2927,8 @@ export class CompanyManager {
                   : null,
                 predecessorCompany: location['impresa-subentrata']
                   ? {
-                      name: location['impresa-subentrata']?.denominazione ?? null,
+                      name:
+                        location['impresa-subentrata']?.denominazione ?? null,
                       taxCode:
                         location['impresa-subentrata']?.['c-fiscale'] ?? null,
                       chamberCode:
@@ -2997,12 +2996,11 @@ export class CompanyManager {
                               ]?.['dt-effetto'] ?? null,
                           }
                         : null,
-                      startDate: location['attivita-aa-bz']?.['dt-inizio'] ?? null,
+                      startDate:
+                        location['attivita-aa-bz']?.['dt-inizio'] ?? null,
                       isSecondaryActivityFlag:
                         this.toYesNoFlag(
-                          location['attivita-aa-bz']?.[
-                            'f-attivita-secondaria'
-                          ],
+                          location['attivita-aa-bz']?.['f-attivita-secondaria'],
                         ) ?? null,
                     }
                   : null,
@@ -3013,24 +3011,24 @@ export class CompanyManager {
                       ]
                         ? {
                             reasonCode:
-                              location['attivita-no-aa']?.['cancellazione-aa']?.[
-                                'c-causale'
-                              ] ?? null,
+                              location['attivita-no-aa']?.[
+                                'cancellazione-aa'
+                              ]?.['c-causale'] ?? null,
                             reason:
                               location['attivita-no-aa']?.['cancellazione-aa']
                                 ?.causale ?? null,
                             assessmentApplicationDate:
-                              location['attivita-no-aa']?.['cancellazione-aa']?.[
-                                'dt-domanda-accertamento'
-                              ] ?? null,
+                              location['attivita-no-aa']?.[
+                                'cancellazione-aa'
+                              ]?.['dt-domanda-accertamento'] ?? null,
                             resolutionDate:
-                              location['attivita-no-aa']?.['cancellazione-aa']?.[
-                                'dt-delibera'
-                              ] ?? null,
+                              location['attivita-no-aa']?.[
+                                'cancellazione-aa'
+                              ]?.['dt-delibera'] ?? null,
                             cessationDate:
-                              location['attivita-no-aa']?.['cancellazione-aa']?.[
-                                'dt-cessazione'
-                              ] ?? null,
+                              location['attivita-no-aa']?.[
+                                'cancellazione-aa'
+                              ]?.['dt-cessazione'] ?? null,
                           }
                         : null,
                       categoryCode:
@@ -3038,7 +3036,8 @@ export class CompanyManager {
                       category: location['attivita-no-aa']?.categoria ?? null,
                       descriptions:
                         location['attivita-no-aa']?.descrizione ?? null,
-                      startDate: location['attivita-no-aa']?.['dt-inizio'] ?? null,
+                      startDate:
+                        location['attivita-no-aa']?.['dt-inizio'] ?? null,
                       supplementaryInfo:
                         location['attivita-no-aa']?.[
                           'informazioni-supplementari-aa'
@@ -3057,9 +3056,7 @@ export class CompanyManager {
                     }),
                   ),
                 })),
-                atecoClassifications2002: location[
-                  'classificazioni-ateco-2002'
-                ]
+                atecoClassifications2002: location['classificazioni-ateco-2002']
                   ? {
                       classifications: this.toArray(
                         location['classificazioni-ateco-2002']?.[
@@ -3127,10 +3124,12 @@ export class CompanyManager {
                                   startDate: detail['dt-inizio'] ?? null,
                                   issueDate: detail['dt-emissione'] ?? null,
                                   expiryDate: detail['dt-scadenza'] ?? null,
-                                  detailStatus: detail['stato-dettaglio'] ?? null,
+                                  detailStatus:
+                                    detail['stato-dettaglio'] ?? null,
                                   statusStartDate:
                                     detail['dt-inizio-stato'] ?? null,
-                                  statusEndDate: detail['dt-fine-stato'] ?? null,
+                                  statusEndDate:
+                                    detail['dt-fine-stato'] ?? null,
                                   additionalDetails: {
                                     details: this.toArray(
                                       detail['ulteriori-dettagli']?.[
@@ -3151,15 +3150,18 @@ export class CompanyManager {
                               type: item.tipo ?? null,
                               sourceCode: item['c-fonte'] ?? null,
                               source: item.fonte ?? null,
-                              provinceSection: item['provincia-sezione'] ?? null,
+                              provinceSection:
+                                item['provincia-sezione'] ?? null,
                               province: item.provincia ?? null,
                               number: this.toNumber(item.n),
                               year: item.anno ?? null,
                               firstEnrollmentDate:
                                 item['dt-prima-iscrizione'] ?? null,
                               enrollmentDate: item['dt-iscrizione'] ?? null,
-                              cancellationDate: item['dt-cancellazione'] ?? null,
-                              enrollmentStatus: item['stato-iscrizione'] ?? null,
+                              cancellationDate:
+                                item['dt-cancellazione'] ?? null,
+                              enrollmentStatus:
+                                item['stato-iscrizione'] ?? null,
                               statusStartDate: item['dt-inizio-stato'] ?? null,
                               statusEndDate: item['dt-fine-stato'] ?? null,
                             })),
@@ -3229,7 +3231,8 @@ export class CompanyManager {
                                 taxCode:
                                   persona['persona-fisica']?.['c-fiscale'] ??
                                   null,
-                                gender: persona['persona-fisica']?.sesso ?? null,
+                                gender:
+                                  persona['persona-fisica']?.sesso ?? null,
                                 citizenshipCode:
                                   persona['persona-fisica']?.[
                                     'c-cittadinanza'
@@ -3316,7 +3319,8 @@ export class CompanyManager {
                           riAddress: mapFullAddress(persona['indirizzo-ri']),
                           quota: persona.quota
                             ? {
-                                currencyCode: persona.quota?.['c-valuta'] ?? null,
+                                currencyCode:
+                                  persona.quota?.['c-valuta'] ?? null,
                                 currency: persona.quota?.valuta ?? null,
                                 value: persona.quota?.valore ?? null,
                                 amountInEuros:
@@ -3345,8 +3349,7 @@ export class CompanyManager {
                                   formCode: role['c-forma'] ?? null,
                                   form: role.forma ?? null,
                                   number: this.toNumber(role.n),
-                                  enrollmentDate:
-                                    role['dt-iscrizione'] ?? null,
+                                  enrollmentDate: role['dt-iscrizione'] ?? null,
                                   issuingBodyCode:
                                     role['c-ente-rilascio'] ?? null,
                                   issuingBody: role['ente-rilascio'] ?? null,
@@ -3426,8 +3429,9 @@ export class CompanyManager {
                         location['cessazione-localizzazione']?.['dt-domanda'] ??
                         null,
                       notificationDate:
-                        location['cessazione-localizzazione']?.['dt-denuncia'] ??
-                        null,
+                        location['cessazione-localizzazione']?.[
+                          'dt-denuncia'
+                        ] ?? null,
                       reasonCode:
                         location['cessazione-localizzazione']?.['c-causale'] ??
                         null,
@@ -3481,7 +3485,8 @@ export class CompanyManager {
                 name: location.denominazione ?? null,
                 sign: location.insegna ?? null,
                 openingDate: location['dt-apertura'] ?? null,
-                cessationFlag: this.toYesNoFlag(location['f-cessazione']) ?? null,
+                cessationFlag:
+                  this.toYesNoFlag(location['f-cessazione']) ?? null,
                 euidCode: location['c-euid'] ?? null,
                 accountingRecordsFlag:
                   this.toYesNoFlag(location['f-scritture-contabili']) ?? null,

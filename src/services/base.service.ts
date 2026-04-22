@@ -23,7 +23,7 @@ export abstract class BaseService {
         return decode(attrValue);
       }
       return attrValue;
-    }
+    },
   });
 
   constructor() {}
